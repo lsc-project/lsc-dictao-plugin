@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+
+  	D3S API Disclaimer 
+
+	Copyright (c) 2014, Dictao.
+	
+	All rights reserved.
+	
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are met:
+   
+  - Redistributions of source code must retain the above copyright notice,
+    this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+  - Neither the name of the Dictao nor the names of its contributors may
+    be used to endorse or promote products derived from this software without
+    specific prior written permission.
+	 
+  THIS API IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+  CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+	
+	Additional conditions are available on Dictao Developer website:
+		http://www.dictao.com/developer/api/disclaimer
+	
+ -->
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+        xmlns:tns="http://www.dictao.com/d3s/xsd/v2013_11/Storage" 
+        xmlns:dmd="http://dictao.com/schema_metadata/v2012_02.xsd"
+        xmlns:com="http://www.dictao.com/d3s/xsd/v2013_11/Common"
+        xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
+        targetNamespace="http://www.dictao.com/d3s/xsd/v2013_11/Storage" 
+        elementFormDefault="qualified">
+
+    <import namespace="http://www.dictao.com/d3s/xsd/v2013_11/Common" schemaLocation="./Common.xsd"/>
+    <import namespace="http://www.w3.org/2005/05/xmlmime" schemaLocation="./xmlmime.xsd"/>
+
+    <complexType name="Read">
+        <annotation>
+            <documentation xml:lang="en">
+                Input type for reading a deposit.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="securityToken" type="com:SecurityToken">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Security token returned by method <a href="toc.html#accessGrantRead">grantRead</a>.]]>
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <element name="readResponse" type="tns:ReadResponse"/>
+    <complexType name="ReadResponseContent">
+        <annotation>
+            <documentation xml:lang="en">
+                <![CDATA[Simple wrapper around type <a href="#type_ReadResponse">ReadResponse</a>.<br/>
+                This way, the generated stub code uses a single return type.]]>
+            </documentation>
+        </annotation>
+        <sequence>
+            <element ref="tns:readResponse"/>
+        </sequence>
+    </complexType>
+    <complexType name="ReadResponse">
+        <annotation>
+            <documentation xml:lang="en">
+                Output type returned when reading a deposit.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="operationDate" type="dateTime">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Date of the operation traced by the server.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="status" type="tns:IntegrityStatus">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Integrity status of the deposit.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="digest" type="tns:Digest">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Digest of the digital object.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="dataSize" type="long">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Size, in bytes, of the digital object.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="data" type="base64Binary" xmime:expectedContentTypes="application/octet-stream">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Digital object.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="Write">
+        <annotation>
+            <documentation xml:lang="en">
+                Input type for writing a new deposit.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="securityToken" type="com:SecurityToken">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Security token returned by method <a href="toc.html#accessGrantWrite">grantWrite</a>.]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="metadataList" type="com:MetadataList">
+                <annotation>
+                    <documentation xml:lang="en">
+                        List of deposit metadata values.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="data" type="base64Binary" xmime:expectedContentTypes="application/octet-stream">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Digital object.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <element name="writeResponse" type="tns:WriteResponse"/>
+    <complexType name="WriteResponseContent">
+        <annotation>
+            <documentation xml:lang="en">
+                <![CDATA[Simple wrapper around type <a href="#type_WriteResponse">WriteResponse</a>.<br/>
+                This way, the generated stub code uses a single return type.]]>
+            </documentation>
+        </annotation>
+        <sequence>
+            <element ref="tns:writeResponse"/>
+        </sequence>
+    </complexType>
+    <complexType name="WriteResponse">
+        <annotation>
+            <documentation xml:lang="en">
+                Output type returned when writing a new deposit.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="resourcePath" type="com:String">
+                <annotation dmd:sampleValue="/DEPOSIT?_fpPath=&lt;filing plan path&gt;&amp;_id=&lt;GUID&gt;%2F&lt;version&gt;">
+                    <documentation xml:lang="en">
+                        URL encoded path of the newly created deposit.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="operationDate" type="dateTime">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Date of the operation traced by the server.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="dataSize" type="long">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Size, in bytes, of the new digital object.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="digest" type="tns:Digest">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Digest of the new digital object.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="ControlledWrite">
+        <annotation>
+            <documentation xml:lang="en">
+                Input type for writing a new deposit, the controlled way.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="securityToken" type="com:SecurityToken">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Security token returned by method <a href="toc.html#accessGrantWrite">grantWrite</a>.]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="metadataList" type="com:MetadataList">
+                <annotation>
+                    <documentation xml:lang="en">
+                        List of deposit metadata values.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="digest" type="tns:Digest">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Control digest computed by the caller.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="data" type="base64Binary" xmime:expectedContentTypes="application/octet-stream">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Digital object.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="Update">
+        <annotation>
+            <documentation xml:lang="en">
+                Input type for updating a deposit.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="securityToken" type="com:SecurityToken">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Security token returned by method <a href="toc.html#accessGrantUpdate">grantUpdate</a>.]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="metadataList" type="com:MetadataList" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[If provided, define new metadata values on the newly created deposit.<br/>
+                        Otherwise, reuse existing metadata values.]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="data" type="base64Binary" xmime:expectedContentTypes="application/octet-stream">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Digital object.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <element name="updateResponse" type="tns:UpdateResponse"/>
+    <complexType name="UpdateResponseContent">
+        <annotation>
+            <documentation xml:lang="en">
+                <![CDATA[Simple wrapper around type <a href="#type_UpdateResponse">UpdateResponse</a>.<br/>
+                This way, the generated stub code uses a single return type.]]>
+            </documentation>
+        </annotation>
+        <sequence>
+            <element ref="tns:updateResponse"/>
+        </sequence>
+    </complexType>
+    <complexType name="UpdateResponse">
+        <annotation>
+            <documentation xml:lang="en">
+                Output type returned when updating a deposit.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="resourcePath" type="com:String">
+                <annotation dmd:sampleValue="/DEPOSIT?_fpPath=&lt;filing plan path&gt;&amp;_id=&lt;GUID%2Fversion&gt;">
+                    <documentation xml:lang="en">
+                        Path of the newly created deposit.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="operationDate" type="dateTime">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Date of the operation traced by the server.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="dataSize" type="long">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Size, in bytes, of the new digital object.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="digest" type="tns:Digest">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Digest of the new digital object.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="ControlledUpdate">
+        <annotation>
+            <documentation xml:lang="en">
+                Input type for updating a deposit, the controlled way.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="securityToken" type="com:SecurityToken">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Security token returned by method <a href="toc.html#accessGrantUpdate">grantUpdate</a>.]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="metadataList" type="com:MetadataList" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[If provided, define new metadata values on the newly created deposit.<br/>
+                        Otherwise, reuse existing metadata values.]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="digest" type="tns:Digest">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Control digest computed by the caller.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="data" type="base64Binary" xmime:expectedContentTypes="application/octet-stream">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Digital object.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="Delete">
+        <annotation>
+            <documentation xml:lang="en">
+                Input type for deleting a deposit.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="securityToken" type="com:SecurityToken">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Security token returned by method <a href="toc.html#accessGrantDelete">grantDelete</a>.]]>
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <element name="deleteResponse" type="tns:DeleteResponse"/>
+    <complexType name="DeleteResponseContent">
+        <annotation>
+            <documentation xml:lang="en">
+                <![CDATA[Simple wrapper around type <a href="#type_DeleteResponse">DeleteResponse</a>.<br/>
+                This way, the generated stub code uses a single return type.]]>
+            </documentation>
+        </annotation>
+        <sequence>
+            <element ref="tns:deleteResponse"/>
+        </sequence>
+    </complexType>
+    <complexType name="DeleteResponse">
+        <annotation>
+            <documentation xml:lang="en">
+                Output type returned when deleting a deposit.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="operationDate" type="dateTime">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Date of the operation traced by the server.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="integrityStatus" type="tns:IntegrityStatus" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Integrity status of the deleted deposit.<br/>
+                        Set only when this is a response to method <a href="toc.html#storageControlledDelete">controlledDelete</a>.]]>
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="ControlledDelete">
+        <annotation>
+            <documentation xml:lang="en">
+                Input type for deleting a deposit, the controlled way.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="securityToken" type="com:SecurityToken">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Security token returned by method <a href="toc.html#accessGrantDelete">grantDelete</a>.]]>
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <element name="controlledDeleteResponse" type="tns:DeleteResponse"/>
+    <complexType name="ControlledDeleteResponseContent">
+        <annotation>
+            <documentation xml:lang="en">
+                <![CDATA[Simple wrapper around type <a href="#type_DeleteResponse">DeleteResponse</a>.<br/>
+                This way, the generated stub code uses a single return type.]]>
+            </documentation>
+        </annotation>
+        <sequence>
+            <element ref="tns:controlledDeleteResponse"/>
+        </sequence>
+    </complexType>
+    <complexType name="Control">
+        <annotation>
+            <documentation xml:lang="en">
+                Input type for controlling a deposit.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="securityToken" type="com:SecurityToken">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Security token returned by method <a href="toc.html#accessGrantControl">grantControl</a>.]]>
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <element name="controlResponse" type="tns:ControlResponse"/>
+    <complexType name="ControlResponseContent">
+        <annotation>
+            <documentation xml:lang="en">
+                <![CDATA[Simple wrapper around type <a href="#type_ControlResponse">ControlResponse</a>.<br/>
+                This way, the generated stub code uses a single return type.]]>
+            </documentation>
+        </annotation>
+        <sequence>
+            <element ref="tns:controlResponse"/>
+        </sequence>
+    </complexType>
+    <complexType name="ControlResponse">
+        <annotation>
+            <documentation xml:lang="en">
+                Output type returned when controlling a deposit.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="operationDate" type="dateTime">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Date of the operation traced by the server.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="status" type="tns:IntegrityStatus">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Integrity status of the controlled deposit.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+
+    <complexType name="Digest">
+        <annotation>
+            <documentation xml:lang="en">
+                <![CDATA[Digest of a digital object.<br/>
+                A digest is the binary value computed from the digital object using a given secure hash algorithm.]]>
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="value" type="base64Binary">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Digest's binary value.]]>
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+        <attribute name="algorithm" type="anyURI" use="required">
+            <annotation dmd:sampleValue="http://www.w3.org/2001/04/xmlenc#sha256">
+                <documentation xml:lang="en">
+                    <![CDATA[URI of the secure hash algorithm used to compute the digest's binary value.]]>
+                </documentation>
+            </annotation>
+        </attribute>
+    </complexType>
+    <simpleType name="IntegrityStatus">
+        <annotation>
+            <documentation xml:lang="en">
+                Deposit integrity status.
+            </documentation>
+        </annotation>
+        <restriction base="com:String">
+            <enumeration value="DATA_INTEGRITY_NOT_GARANTEED">
+                <annotation>
+                    <documentation xml:lang="en">
+                        D3S could not verify the deposit proof.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="DATA_INTEGRITY_NOT_FOUND">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Reserved. Not used by the web services API.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="DATA_INTEGRITY_CALCULATION_NOT_STARTED">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Reserved. Not used by the web services API.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="DATA_INTEGRITY_CALCULATION_PENDING">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Reserved. Not used by the web services API.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="DATA_INTEGRITY_CALCULATION_CANCELED">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Reserved. Not used by the web services API.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="DATA_INTEGRITY_OK">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Data integrity is guaranteed.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="DATA_INTEGRITY_NOK">
+                <annotation>
+                    <documentation xml:lang="en">
+                        The digital object is corrupted.
+                    </documentation>
+                </annotation>
+            </enumeration>
+        </restriction>
+    </simpleType>
+</schema>

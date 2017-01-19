@@ -1,0 +1,457 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+
+  	D3S API Disclaimer 
+
+	Copyright (c) 2014, Dictao.
+	
+	All rights reserved.
+	
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are met:
+   
+  - Redistributions of source code must retain the above copyright notice,
+    this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+  - Neither the name of the Dictao nor the names of its contributors may
+    be used to endorse or promote products derived from this software without
+    specific prior written permission.
+	 
+  THIS API IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+  CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+	
+	Additional conditions are available on Dictao Developer website:
+		http://www.dictao.com/developer/api/disclaimer
+	
+ -->
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+        xmlns:tns="http://www.dictao.com/d3s/xsd/v2013_11/Access" 
+        xmlns:dmd="http://dictao.com/schema_metadata/v2012_02.xsd"
+        xmlns:com="http://www.dictao.com/d3s/xsd/v2013_11/Common" 
+        targetNamespace="http://www.dictao.com/d3s/xsd/v2013_11/Access" 
+        elementFormDefault="qualified">
+
+    <import namespace="http://dictao.com/schema_metadata/v2012_02.xsd" schemaLocation="./dictao-schema-metadata.xsd"/>
+    <import namespace="http://www.dictao.com/d3s/xsd/v2013_11/Common" schemaLocation="./Common.xsd"/>
+
+    <complexType name="GrantControl">
+        <annotation>
+            <documentation xml:lang="en">
+                Input type for giving permission to control a deposit.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="resourcePath" type="com:Path">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Path of the deposit to control.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="options" type="com:Options" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Additional options.
+                    </documentation>
+                </annotation>
+            </element> 
+        </sequence>
+    </complexType>
+    <element name="grantControlResponse" type="tns:GrantControlResponse"/>
+    <complexType name="GrantControlResponseContent">
+        <annotation>
+            <documentation xml:lang="en">
+                <![CDATA[Simple wrapper around type <a href="Storage.html#type_GrantControlResponse">GrantControlResponse</a>.<br/>
+                This way, the generated stub code uses a single return type.]]>
+            </documentation>
+        </annotation>
+        <sequence>
+            <element ref="tns:grantControlResponse"/>
+        </sequence>
+    </complexType>
+    <complexType name="GrantControlResponse">
+        <annotation>
+            <documentation xml:lang="en">
+                Output type returned when giving permission to control a deposit.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="operationDate" type="dateTime">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Date of the operation traced by the server.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="depositDate" type="dateTime">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Creation date of the controlled deposit.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="securityToken" type="com:SecurityToken">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Security token granting access to the Storage.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="storageId" type="com:String">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Identifier of the Storage instance where the digital object is stored.<br/>
+                        To complete the operation, invoke method <a href="toc.html#storageControl">control</a> on the Storage port of this Storage instance.]]>
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="GrantRead">
+        <annotation>
+            <documentation xml:lang="en">
+                Input type for giving permission to read a deposit.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="resourcePath" type="com:Path">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Path of the deposit to read.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="options" type="com:Options" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Additional options.
+                    </documentation>
+                </annotation>
+            </element> 
+        </sequence>
+    </complexType>
+    <element name="grantReadResponse" type="tns:GrantReadResponse"/>
+    <complexType name="GrantReadResponseContent">
+        <annotation>
+            <documentation xml:lang="en">
+                <![CDATA[Simple wrapper around type <a href="Storage.html#type_GrantReadResponse">GrantReadResponse</a>.<br/>
+                This way, the generated stub code uses a single return type.]]>
+            </documentation>
+        </annotation>
+        <sequence>
+            <element ref="tns:grantReadResponse"/>
+        </sequence>
+    </complexType>
+    <complexType name="GrantReadResponse">
+        <annotation>
+            <documentation xml:lang="en">
+                Output type returned when giving permission to read a deposit.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="operationDate" type="dateTime">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Date of the operation traced by the server.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="securityToken" type="com:SecurityToken">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Security token granting access to the Storage.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="storageId" type="com:String">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Identifier of the Storage instance where the digital object is stored.<br/>
+                        To complete the operation, invoke method <a href="toc.html#storageRead">read</a> on the Storage port of this Storage instance.]]>
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="GrantWrite">
+        <annotation>
+            <documentation xml:lang="en">
+                Input type for giving permission to write a deposit.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="containerPath" type="com:Path">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Path of the safebox where the deposit will be written.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="options" type="com:Options" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Additional options.
+                    </documentation>
+                </annotation>
+            </element> 
+        </sequence>
+    </complexType>
+    <element name="grantWriteResponse" type="tns:GrantWriteResponse"/>
+    <complexType name="GrantWriteResponseContent">
+        <annotation>
+            <documentation xml:lang="en">
+                <![CDATA[Simple wrapper around type <a href="Storage.html#type_GrantWriteResponse">GrantWriteResponse</a>.<br/>
+                This way, the generated stub code uses a single return type.]]>
+            </documentation>
+        </annotation>
+        <sequence>
+            <element ref="tns:grantWriteResponse"/>
+        </sequence>
+    </complexType>
+    <complexType name="GrantWriteResponse">
+        <annotation>
+            <documentation xml:lang="en">
+                Output type returned when giving permission to write a deposit.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="operationDate" type="dateTime">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Date of the operation traced by the server.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="securityToken" type="com:SecurityToken">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Security token granting access to the Storage.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="storageId" type="com:String">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Identifier of a Storage instance suitable for writing a digital object.<br/>
+                        To complete the operation, invoke method <a href="toc.html#storageWrite">write</a> on the Storage port of this Storage instance.]]>
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="GrantUpdate">
+        <annotation>
+            <documentation xml:lang="en">
+                Input type for giving permission to update a deposit.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="resourcePath" type="com:Path">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Path of the deposit to update.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="options" type="com:Options" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Additional options.
+                    </documentation>
+                </annotation>
+            </element> 
+        </sequence>
+    </complexType>
+    <element name="grantUpdateResponse" type="tns:GrantUpdateResponse"/>
+    <complexType name="GrantUpdateResponseContent">
+        <annotation>
+            <documentation xml:lang="en">
+                <![CDATA[Simple wrapper around type <a href="Storage.html#type_GrantUpdateResponse">GrantUpdateResponse</a>.<br/>
+                This way, the generated stub code uses a single return type.]]>
+            </documentation>
+        </annotation>
+        <sequence>
+            <element ref="tns:grantUpdateResponse"/>
+        </sequence>
+    </complexType>
+    <complexType name="GrantUpdateResponse">
+        <annotation>
+            <documentation xml:lang="en">
+                Output type returned when giving permission to update a deposit.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="operationDate" type="dateTime">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Date of the operation traced by the server.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="securityToken" type="com:SecurityToken">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Security token granting access to the Storage.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="storageId" type="com:String">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Identifier of the Storage instance where the digital object is stored.<br/>
+                        To complete the operation, invoke method <a href="toc.html#storageUpdate">update</a> on the Storage port of this Storage instance.]]>
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="GrantDelete">
+        <annotation>
+            <documentation xml:lang="en">
+                Input type for giving permission to delete a deposit.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="resourcePath" type="com:Path">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Path of the deposit to delete.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="options" type="com:Options" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Additional options.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <element name="grantDeleteResponse" type="tns:GrantDeleteResponse"/>
+    <complexType name="GrantDeleteResponseContent">
+        <annotation>
+            <documentation xml:lang="en">
+                <![CDATA[Simple wrapper around type <a href="Storage.html#type_GrantDeleteResponse">GrantDeleteResponse</a>.<br/>
+                This way, the generated stub code uses a single return type.]]>
+            </documentation>
+        </annotation>
+        <sequence>
+            <element ref="tns:grantDeleteResponse"/>
+        </sequence>
+    </complexType>
+    <complexType name="GrantDeleteResponse">
+        <annotation>
+            <documentation xml:lang="en">
+                Output type returned when giving permission to delete a deposit.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="operationDate" type="dateTime">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Date of the operation traced by the server.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="securityToken" type="com:SecurityToken">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Security token granting access to the Storage.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="storageId" type="com:String">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Identifier of the Storage instance where the digital object is stored.<br/>
+                        To complete the operation, invoke method <a href="toc.html#storageDelete">delete</a> on the Storage port of this Storage instance.]]>
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="GrantRestitute">
+        <annotation>
+            <documentation xml:lang="en">
+                Input type for giving permission to restitute deposits.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="filingPlan" type="com:Path">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Path of the filing plan to restitute.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="criteria" type="com:Criterion" minOccurs="0" maxOccurs="100">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Optional filtering criteria.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="options" type="com:Options" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Additional options.
+                    </documentation>
+                </annotation>
+            </element> 
+        </sequence>
+    </complexType>
+    <element name="grantRestituteResponse" type="tns:GrantRestituteResponse"/>
+    <complexType name="GrantRestituteResponseContent">
+        <annotation>
+            <documentation xml:lang="en">
+                <![CDATA[Simple wrapper around type <a href="Storage.html#type_GrantRestituteResponse">GrantRestituteResponse</a>.<br/>
+                This way, the generated stub code uses a single return type.]]>
+            </documentation>
+        </annotation>
+        <sequence>
+            <element ref="tns:grantRestituteResponse"/>
+        </sequence>
+    </complexType>
+    <complexType name="GrantRestituteResponse">
+        <annotation>
+            <documentation xml:lang="en">
+                Output type returned when giving permission to restitute deposits.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="operationDate" type="dateTime">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Date of the operation traced by the server.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="securityToken" type="com:SecurityToken">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Security token granting access to the Storage.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="storageId" type="com:String">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Identifier of the Storage instance where restituted digital objects are stored.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+</schema>

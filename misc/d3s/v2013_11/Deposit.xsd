@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+
+  	D3S API Disclaimer 
+
+	Copyright (c) 2014, Dictao.
+	
+	All rights reserved.
+	
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are met:
+   
+  - Redistributions of source code must retain the above copyright notice,
+    this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+  - Neither the name of the Dictao nor the names of its contributors may
+    be used to endorse or promote products derived from this software without
+    specific prior written permission.
+	 
+  THIS API IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+  CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+	
+	Additional conditions are available on Dictao Developer website:
+		http://www.dictao.com/developer/api/disclaimer
+	
+ -->
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+        xmlns:tns="http://www.dictao.com/d3s/xsd/v2013_11/Deposit" 
+        xmlns:dmd="http://dictao.com/schema_metadata/v2012_02.xsd"
+        xmlns:com="http://www.dictao.com/d3s/xsd/v2013_11/Common" 
+        targetNamespace="http://www.dictao.com/d3s/xsd/v2013_11/Deposit" 
+        elementFormDefault="qualified">
+
+    <import namespace="http://dictao.com/schema_metadata/v2012_02.xsd" schemaLocation="./dictao-schema-metadata.xsd"/>
+    <import namespace="http://www.dictao.com/d3s/xsd/v2013_11/Common" schemaLocation="./Common.xsd"/>
+
+    <complexType name="Count">
+        <annotation>
+            <documentation xml:lang="en">
+                Input type for counting deposits.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="searchPath" type="com:Path">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Where to search for deposits.<br/>
+                        This is either the path of a filing plan or a safebox.]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="criteria" type="com:Criterion" minOccurs="0" maxOccurs="100">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Optional filtering criteria.<br/>
+                        To count deposits with multiple revisions only once, add filter &quot;depositScope=CURRENT&quot;.]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="options" type="com:Options" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Optional input parameters.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="CountResponse">
+        <annotation>
+            <documentation xml:lang="en">
+                Output type returned when counting deposits.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="count" type="long">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[The number of accessible deposits matching the filter criteria.<br/>
+                        Accessible deposits are defined by the user's privileges in their orgunits.]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="operationDate" type="dateTime">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Date of the operation traced by the server.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <element name="countResponse" type="tns:CountResponse"/>
+    <complexType name="CountResponseContent">
+        <annotation>
+            <documentation xml:lang="en">
+                <![CDATA[Simple wrapper around type <a href="#type_CountResponse">CountResponse</a>.<br/>
+                This way, the generated stub code uses a single return type.]]>
+            </documentation>
+        </annotation>
+        <sequence>
+            <element ref="tns:countResponse"/>
+        </sequence>
+    </complexType>
+    <complexType name="ReadResponse">
+        <annotation>
+            <documentation xml:lang="en">
+                Output type returned when reading a deposit.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="deposit" type="tns:Deposit">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Read deposit.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="operationDate" type="dateTime">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Date of the operation traced by the server.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="digestAlgorithm" type="com:String">
+                <annotation dmd:sampleValue="http://www.w3.org/2001/04/xmlenc#sha256">
+                    <documentation xml:lang="en">
+                        W3 URI of the secure hash algorithm used to compute the digest of the digital object.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="digestValue" type="base64Binary">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Base64-encoded digest of the digital object.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="size" type="long" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Size, in bytes, of the digital object.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <element name="readResponse" type="tns:ReadResponse"/>
+    <complexType name="ReadResponseContent">
+        <annotation>
+            <documentation xml:lang="en">
+                <![CDATA[Simple wrapper around type <a href="#type_ReadResponse">ReadResponse</a>.<br/>
+                This way, the generated stub code uses a single return type.]]>
+            </documentation>
+        </annotation>
+        <sequence>
+            <element ref="tns:readResponse"/>
+        </sequence>
+    </complexType>
+    <complexType name="Update">
+        <annotation>
+            <documentation xml:lang="en">
+                Update deposit metadata.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="resourcePath" type="com:Path">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Path of the deposit to update.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="metadataList" type="com:MetadataList">
+                <annotation>
+                    <documentation xml:lang="en">
+                        List of new metadata.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="options" type="com:Options" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Optional input parameters.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="Discard">
+        <annotation>
+            <documentation xml:lang="en">
+                Send a deposit to the recycle bin.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="resourcePath" type="com:Path">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Path of the deposit to discard.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="options" type="com:Options" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Optional input parameters.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="DiscardResponse">
+        <annotation>
+            <documentation xml:lang="en">
+                Empty output type returned when discarding a deposit.
+            </documentation>
+        </annotation>
+    </complexType>
+    <complexType name="Restore">
+        <annotation>
+            <documentation xml:lang="en">
+                Restore a deposit previously sent to the recycle bin.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="resourcePath" type="com:Path">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Path of the deposit to restore.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="options" type="com:Options" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Optional input parameters.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="RestoreResponse">
+        <annotation>
+            <documentation xml:lang="en">
+                Empty output type returned when restoring a deposit.
+            </documentation>
+        </annotation>
+    </complexType>
+    <complexType name="Find">
+        <sequence>
+            <element name="searchPath" type="com:Path">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Where to search for deposits.<br/>
+                        This is either the path of a filing plan or safebox.]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="criteria" type="com:Criterion" minOccurs="0" maxOccurs="100">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Optional filtering criteria.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="orderBy" type="com:OrderBy" minOccurs="0" maxOccurs="100">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Optional ordering requirements.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="maxResult" type="com:MaxResult">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Maximum number of deposits returned in the <a href="#type_FindResponse">response</a>.]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="options" type="com:Options" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Optional input parameters.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="FindResponse">
+        <annotation>
+            <documentation xml:lang="en">
+                Output type returned when searching for deposits.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="cursor" type="com:Cursor">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Cursor to pass when calling method <a href="toc.html#depositNext">next</a>.]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="deposits" type="tns:Deposit" minOccurs="0" maxOccurs="5000">
+                <annotation>
+                    <documentation xml:lang="en">
+                        List of deposits found. If this list is empty, search is complete.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <element name="findResponse" type="tns:FindResponse"/>
+    <complexType name="FindResponseContent">
+        <annotation>
+            <documentation xml:lang="en">
+                <![CDATA[Simple wrapper around type <a href="#type_FindResponse">FindResponse</a>.<br/>
+                This way, the generated stub code uses a single return type.]]>
+            </documentation>
+        </annotation>
+        <sequence>
+            <element ref="tns:findResponse"/>
+        </sequence>
+    </complexType>
+    <complexType name="SetRetentionPeriod">
+        <annotation>
+            <documentation xml:lang="en">
+                Input type for setting the retention period of a deposit.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="resourcePath" type="com:Path">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Path of the deposit on which the retention period is set.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="retentionPeriod" type="long" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Retention period, in milliseconds.<br/>
+                        <ul>
+                        <li>If not set, use the retention period defined on the parent safebox, which may be unset as well. In this case, the retention period is infinite.</li>
+                        <li>If &lt; 0, the retention period is infinite, whatever the retention period of the parent safebox.</li>
+                        <li>If &gt;= 0, the retention period is defined.</li>
+                        </ul>]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="options" type="com:Options" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Optional input parameter.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="SetRetentionPeriodResponse">
+        <annotation>
+            <documentation xml:lang="en">
+                Empty output type returned when setting the retention period of a deposit.
+            </documentation>
+        </annotation>
+    </complexType>
+    <complexType name="Deposit">
+        <annotation>
+            <documentation xml:lang="en">
+                <![CDATA[Input or output type describing a deposit and its list of metadata.<br/>
+                All elements are optional in schema to enable updates of a single attribute.<br/>
+                <strong>But some elements are required by application</strong>, see Content documentation.]]>                
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="GUID" type="com:String" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Deposit GUID generated by server.<br/>
+                        A deposit is uniquely identified by its GUID and its version.<br/>
+                        Ignored if provided by caller.]]>                
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="version" type="long" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Deposit version generated by server.<br/>
+                        A deposit is uniquely identified by its GUID and its version.<br/>
+                        Ignored if provided by caller.]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="creationDate" type="dateTime" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Computed deposit creation date.<br/>
+                        Ignored if provided by caller.]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="discardDate" type="dateTime" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Computed deposit discard date.<br/>
+                        Set only if the deposit is in the recycle bin.<br/>
+                        Ignored if provided by caller.]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="expirationDate" type="dateTime" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Computed deposit expiration date.<br/>
+                        Set only if the deposit or safebox retention period is configured.<br/>
+                        Ignored if provided by caller.]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="depositProof" type="base64Binary" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Base64 encoded deposit proof.<br/>
+                        Ignored if provided by caller.<br/>
+                        See also attribute <tt>validationStatus</tt>.]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="isDeleted" type="boolean" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Is this deposit in the recycle bin?<br/>
+                        Ignored if provided by caller.]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="hasBeenRead" type="boolean" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Has this deposit allready been read once?<br/>
+                        Ignored if provided by caller.]]>                        
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="permissions" type="com:Permissions" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Current deposit permissions.<br/>
+                        Ignored if provided by caller.<br/>
+                        See also method <a href="Deposit.html#type_SetPermissions">SetPermissions</a> on deposit.]]>                       
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="metadataList" type="com:MetadataList" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[List of deposit metadata.<br/>
+                        <strong>Mandatory on creation</strong>.]]>                                              
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="validationStatus" type="com:ValidationStatus" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Deposit proof validation status.<br/>
+                        Ignored if provided by caller.]]>
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+</schema>

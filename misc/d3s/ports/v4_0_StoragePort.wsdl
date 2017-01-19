@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+
+  	D3S API Disclaimer 
+
+	Copyright (c) 2014, Dictao.
+	
+	All rights reserved.
+	
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are met:
+   
+  - Redistributions of source code must retain the above copyright notice,
+    this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+  - Neither the name of the Dictao nor the names of its contributors may
+    be used to endorse or promote products derived from this software without
+    specific prior written permission.
+	 
+  THIS API IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+  CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+	
+	Additional conditions are available on Dictao Developer website:
+		http://www.dictao.com/developer/api/disclaimer
+	
+ -->
+<definitions name="StoragePort"
+             targetNamespace="http://www.dictao.com/d3s/wsdl/v4/StoragePort"
+             xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:v4_0="http://www.dictao.com/d3s/wsdl/v4.0/StoragePort"
+             xmlns:exc="http://www.dictao.com/d3s/wsdl/v4/Exceptions"
+             xmlns:tns="http://www.dictao.com/d3s/wsdl/v4/StoragePort">
+
+    <import namespace="http://www.dictao.com/d3s/wsdl/v4/Exceptions" location="v4_0_Exceptions.wsdl"/>
+
+    <types>
+        <schema targetNamespace="http://www.dictao.com/d3s/wsdl/v4.0/StoragePort"
+                xmlns="http://www.w3.org/2001/XMLSchema"
+                xmlns:com="http://www.dictao.com/d3s/xsd/v2013_11/Common"
+                xmlns:storage="http://www.dictao.com/d3s/xsd/v2013_11/Storage"
+                xmlns:tns="http://www.dictao.com/d3s/wsdl/v4.0/StoragePort">
+
+            <import namespace="http://www.dictao.com/d3s/xsd/v2013_11/Common" schemaLocation="../v2013_11/Common.xsd"/>
+            <import namespace="http://www.dictao.com/d3s/xsd/v2013_11/Storage" schemaLocation="../v2013_11/Storage.xsd"/>
+
+            <element name="read" type="storage:Read"/>
+            <element name="readResponse" type="storage:ReadResponseContent"/>
+            <element name="write" type="storage:Write"/>
+            <element name="writeResponse" type="storage:WriteResponseContent"/>
+            <element name="controlledWrite" type="storage:ControlledWrite"/>
+            <element name="controlledWriteResponse" type="storage:WriteResponseContent"/>
+            <element name="update" type="storage:Update"/>
+            <element name="updateResponse" type="storage:UpdateResponseContent"/>
+            <element name="controlledUpdate" type="storage:ControlledUpdate"/>
+            <element name="controlledUpdateResponse" type="storage:UpdateResponseContent"/>
+            <element name="delete" type="storage:Delete"/>
+            <element name="deleteResponse" type="storage:DeleteResponseContent"/>
+            <element name="controlledDelete" type="storage:ControlledDelete"/>
+            <element name="controlledDeleteResponse" type="storage:DeleteResponseContent"/>
+            <element name="control" type="storage:Control"/>
+            <element name="controlResponse" type="storage:ControlResponseContent"/>
+        </schema>
+    </types>
+
+    <message name="read">
+        <part name="parameter" element="v4_0:read"/>
+    </message>
+    <message name="readResponse">
+        <part name="parameter" element="v4_0:readResponse"/>
+    </message>
+    <message name="write">
+        <part name="parameter" element="v4_0:write"/>
+    </message>
+    <message name="writeResponse">
+        <part name="parameter" element="v4_0:writeResponse"/>
+    </message>
+    <message name="controlledWrite">
+        <part name="parameter" element="v4_0:controlledWrite"/>
+    </message>
+    <message name="controlledWriteResponse">
+        <part name="parameter" element="v4_0:controlledWriteResponse"/>
+    </message>
+    <message name="update">
+        <part name="parameter" element="v4_0:update"/>
+    </message>
+    <message name="updateResponse">
+        <part name="parameter" element="v4_0:updateResponse"/>
+    </message>
+    <message name="controlledUpdate">
+        <part name="parameter" element="v4_0:controlledUpdate"/>
+    </message>
+    <message name="controlledUpdateResponse">
+        <part name="parameter" element="v4_0:controlledUpdateResponse"/>
+    </message>
+    <message name="delete">
+        <part name="parameter" element="v4_0:delete"/>
+    </message>
+    <message name="deleteResponse">
+        <part name="parameter" element="v4_0:deleteResponse"/>
+    </message>
+    <message name="controlledDelete">
+        <part name="parameter" element="v4_0:controlledDelete"/>
+    </message>
+    <message name="controlledDeleteResponse">
+        <part name="parameter" element="v4_0:controlledDeleteResponse"/>
+    </message>
+    <message name="control">
+        <part name="parameter" element="v4_0:control"/>
+    </message>
+    <message name="controlResponse">
+        <part name="parameter" element="v4_0:controlResponse"/>
+    </message>
+
+    <portType name="StoragePort">
+        <operation name="read">
+            <input name="read" message="tns:read"/>
+            <output name="readResponse" message="tns:readResponse"/>
+            <fault name="EnvironmentFaultException" message="exc:EnvironmentFaultException"/>
+            <fault name="UserFaultException" message="exc:UserFaultException"/>
+        </operation>
+        <operation name="write">
+            <input name="write" message="tns:write"/>
+            <output name="writeResponse" message="tns:writeResponse"/>
+            <fault name="EnvironmentFaultException" message="exc:EnvironmentFaultException"/>
+            <fault name="UserFaultException" message="exc:UserFaultException"/>
+        </operation>
+        <operation name="controlledWrite">
+            <input name="controlledWrite" message="tns:controlledWrite"/>
+            <output name="controlledWriteResponse" message="tns:controlledWriteResponse"/>
+            <fault name="EnvironmentFaultException" message="exc:EnvironmentFaultException"/>
+            <fault name="UserFaultException" message="exc:UserFaultException"/>
+        </operation>
+        <operation name="update">
+            <input name="update" message="tns:update"/>
+            <output name="updateResponse" message="tns:updateResponse"/>
+            <fault name="EnvironmentFaultException" message="exc:EnvironmentFaultException"/>
+            <fault name="UserFaultException" message="exc:UserFaultException"/>
+        </operation>
+        <operation name="controlledUpdate">
+            <input name="controlledUpdate" message="tns:controlledUpdate"/>
+            <output name="controlledUpdateResponse" message="tns:controlledUpdateResponse"/>
+            <fault name="EnvironmentFaultException" message="exc:EnvironmentFaultException"/>
+            <fault name="UserFaultException" message="exc:UserFaultException"/>
+        </operation>
+        <operation name="delete">
+            <input name="delete" message="tns:delete"/>
+            <output name="deleteResponse" message="tns:deleteResponse"/>
+            <fault name="EnvironmentFaultException" message="exc:EnvironmentFaultException"/>
+            <fault name="UserFaultException" message="exc:UserFaultException"/>
+        </operation>
+        <operation name="controlledDelete">
+            <input name="controlledDelete" message="tns:controlledDelete"/>
+            <output name="controlledDeleteResponse" message="tns:controlledDeleteResponse"/>
+            <fault name="EnvironmentFaultException" message="exc:EnvironmentFaultException"/>
+            <fault name="UserFaultException" message="exc:UserFaultException"/>
+        </operation>
+        <operation name="control">
+            <input name="control" message="tns:control"/>
+            <output name="controlResponse" message="tns:controlResponse"/>
+            <fault name="EnvironmentFaultException" message="exc:EnvironmentFaultException"/>
+            <fault name="UserFaultException" message="exc:UserFaultException"/>
+        </operation>
+    </portType>
+
+    <binding name="StorageBinding" type="tns:StoragePort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="read">
+            <soap:operation soapAction="Storage:read" style="document"/>
+            <input name="read">
+                <soap:body use="literal"/>
+            </input>
+            <output name="readResponse">
+                <soap:body use="literal"/>
+            </output>
+            <fault name="EnvironmentFaultException">
+                <soap:fault name="EnvironmentFaultException" use="literal"/>
+            </fault>
+            <fault name="UserFaultException">
+                <soap:fault name="UserFaultException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="write">
+            <soap:operation soapAction="Storage:write" style="document"/>
+            <input name="write">
+                <soap:body use="literal"/>
+            </input>
+            <output name="writeResponse">
+                <soap:body use="literal"/>
+            </output>
+            <fault name="EnvironmentFaultException">
+                <soap:fault name="EnvironmentFaultException" use="literal"/>
+            </fault>
+            <fault name="UserFaultException">
+                <soap:fault name="UserFaultException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="controlledWrite">
+            <soap:operation soapAction="Storage:controlledWrite" style="document"/>
+            <input name="controlledWrite">
+                <soap:body use="literal"/>
+            </input>
+            <output name="controlledWriteResponse">
+                <soap:body use="literal"/>
+            </output>
+            <fault name="EnvironmentFaultException">
+                <soap:fault name="EnvironmentFaultException" use="literal"/>
+            </fault>
+            <fault name="UserFaultException">
+                <soap:fault name="UserFaultException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="update">
+            <soap:operation soapAction="Storage:update" style="document"/>
+            <input name="update">
+                <soap:body use="literal"/>
+            </input>
+            <output name="updateResponse">
+                <soap:body use="literal"/>
+            </output>
+            <fault name="EnvironmentFaultException">
+                <soap:fault name="EnvironmentFaultException" use="literal"/>
+            </fault>
+            <fault name="UserFaultException">
+                <soap:fault name="UserFaultException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="controlledUpdate">
+            <soap:operation soapAction="Storage:controlledUpdate" style="document"/>
+            <input name="controlledUpdate">
+                <soap:body use="literal"/>
+            </input>
+            <output name="controlledUpdateResponse">
+                <soap:body use="literal"/>
+            </output>
+            <fault name="EnvironmentFaultException">
+                <soap:fault name="EnvironmentFaultException" use="literal"/>
+            </fault>
+            <fault name="UserFaultException">
+                <soap:fault name="UserFaultException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="delete">
+            <soap:operation soapAction="Storage:delete" style="document"/>
+            <input name="delete">
+                <soap:body use="literal"/>
+            </input>
+            <output name="deleteResponse">
+                <soap:body use="literal"/>
+            </output>
+            <fault name="EnvironmentFaultException">
+                <soap:fault name="EnvironmentFaultException" use="literal"/>
+            </fault>
+            <fault name="UserFaultException">
+                <soap:fault name="UserFaultException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="controlledDelete">
+            <soap:operation soapAction="Storage:controlledDelete" style="document"/>
+            <input name="controlledDelete">
+                <soap:body use="literal"/>
+            </input>
+            <output name="controlledDeleteResponse">
+                <soap:body use="literal"/>
+            </output>
+            <fault name="EnvironmentFaultException">
+                <soap:fault name="EnvironmentFaultException" use="literal"/>
+            </fault>
+            <fault name="UserFaultException">
+                <soap:fault name="UserFaultException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="control">
+            <soap:operation soapAction="Storage:control" style="document"/>
+            <input name="control">
+                <soap:body use="literal"/>
+            </input>
+            <output name="controlResponse">
+                <soap:body use="literal"/>
+            </output>
+            <fault name="EnvironmentFaultException">
+                <soap:fault name="EnvironmentFaultException" use="literal"/>
+            </fault>
+            <fault name="UserFaultException">
+                <soap:fault name="UserFaultException" use="literal"/>
+            </fault>
+        </operation>
+    </binding>
+
+</definitions>

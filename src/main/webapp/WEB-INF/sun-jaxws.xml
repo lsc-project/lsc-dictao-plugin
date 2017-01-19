@@ -1,0 +1,11 @@
+<endpoints xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime" version="2.0">
+
+	<endpoint name="DACSProvisioningFrontEnd"
+		implementation="org.lsc.plugins.connectors.dictao.dacs.DacsVirtualRepositoryService"
+		url-pattern="/DACSProvisioningFrontEnd" wsdl-location="WEB-INF/wsdl/DACSRepositoryWS.wsdl" />
+
+	<endpoint name="DVSSoap"
+		implementation="org.lsc.plugins.connectors.dictao.dvs.DvsVirtualValidationServices"
+		url-pattern="/DVSInterfaceSoap.cgi" wsdl-location="WEB-INF/wsdl/DVSInterfaceFrontEnd.wsdl" />
+
+</endpoints>

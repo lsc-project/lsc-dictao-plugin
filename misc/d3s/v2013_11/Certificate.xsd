@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+
+  	D3S API Disclaimer 
+
+	Copyright (c) 2014, Dictao.
+	
+	All rights reserved.
+	
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are met:
+   
+  - Redistributions of source code must retain the above copyright notice,
+    this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+  - Neither the name of the Dictao nor the names of its contributors may
+    be used to endorse or promote products derived from this software without
+    specific prior written permission.
+	 
+  THIS API IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+  CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+	
+	Additional conditions are available on Dictao Developer website:
+		http://www.dictao.com/developer/api/disclaimer
+	
+ -->
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+        xmlns:tns="http://www.dictao.com/d3s/xsd/v2013_11/Certificate" 
+        xmlns:com="http://www.dictao.com/d3s/xsd/v2013_11/Common" 
+        targetNamespace="http://www.dictao.com/d3s/xsd/v2013_11/Certificate" 
+        elementFormDefault="qualified">
+
+    <import namespace="http://www.dictao.com/d3s/xsd/v2013_11/Common" schemaLocation="./Common.xsd"/>
+
+    <complexType name="Create">
+        <annotation>
+            <documentation xml:lang="en">
+                Input type for creating a new certificate.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="certificate" type="tns:Certificate">
+                <annotation>
+                    <documentation xml:lang="en">
+                        New certificate.
+                    </documentation>
+                </annotation>
+            </element> 
+            <element name="options" type="com:Options" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Additional options.
+                    </documentation>
+                </annotation>
+            </element> 
+        </sequence>
+    </complexType>
+    <complexType name="ReadResponse">
+        <annotation>
+            <documentation xml:lang="en">
+                Output type returned when reading a certificate.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="certificate" type="tns:Certificate">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Read certificate.
+                    </documentation>
+                </annotation>
+            </element> 
+        </sequence>
+    </complexType>
+    <complexType name="Update">
+        <annotation>
+            <documentation xml:lang="en">
+                Input type for updating a certificate.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="resourcePath" type="com:Path">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Path of the certificate to update.
+                    </documentation>
+                </annotation>
+            </element> 
+            <element name="certificate" type="tns:Certificate">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Updated certificate. Only set attributes are modified.
+                    </documentation>
+                </annotation>
+            </element> 
+            <element name="options" type="com:Options" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Additional options.
+                    </documentation>
+                </annotation>
+            </element> 
+        </sequence>
+    </complexType>
+    <complexType name="FindResponse">
+        <annotation>
+            <documentation xml:lang="en">
+                Output type returned when searching for certificates.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="cursor" type="com:Cursor">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Cursor to pass when calling method <a href="toc.html#certificateNext">next</a>.]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="certificates" type="tns:Certificate" minOccurs="0" maxOccurs="5000">
+                <annotation>
+                    <documentation xml:lang="en">
+                        List of certificates found. If this list is empty, search is complete.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <element name="findResponse" type="tns:FindResponse"/>
+    <complexType name="FindResponseContent">
+        <annotation>
+            <documentation xml:lang="en">
+                <![CDATA[Simple wrapper around type <a href="#type_FindResponse">FindResponse</a>.<br/>
+                This way, the generated stub code uses a single return type.]]>
+            </documentation>
+        </annotation>
+        <sequence>
+            <element ref="tns:findResponse"/>
+        </sequence>
+    </complexType>
+    <simpleType name="CertificateType">
+        <annotation>
+            <documentation xml:lang="en">
+                <![CDATA[Defines the certificate types.<br/>
+                Technically both types are equivalent.]]>
+            </documentation>
+        </annotation>
+        <restriction base="com:String">
+            <enumeration value="SEQUESTER">
+                <annotation>
+                    <documentation xml:lang="en">
+                        A sequester certificate should have its private key stored offline to enable emergency recovery.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="CIPHER">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Standard cipher certificate.
+                    </documentation>
+                </annotation>
+            </enumeration>
+        </restriction>
+    </simpleType>
+    <complexType name="Certificate">
+        <annotation>
+            <documentation xml:lang="en">
+                <![CDATA[Input or output type describing a certificate.<br/>
+                All elements are optional in schema to enable updates of a single attribute.<br/>
+                <strong>But some elements are required by application</strong>, see Content documentation.]]>
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="ID" type="com:String" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Certificate unique identifier generated by server.<br/>
+                        Ignored if provided by caller.]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="name" type="com:String" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Certificate name. Must be unique in tenant cipher certificate repository.<br/>
+                        <strong>Mandatory on creation.</strong>]]>                        
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="description" type="com:String" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                     Certificate description.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="type" type="tns:CertificateType" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Certificate type.<br/>
+                        <strong>Mandatory on creation.</strong>]]>                        
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="x509Certificate" type="base64Binary" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Certificate data in X509 format, DER or PEM encoded.<br/>
+                        <strong>Mandatory on creation.</strong>]]>                                             
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+</schema>

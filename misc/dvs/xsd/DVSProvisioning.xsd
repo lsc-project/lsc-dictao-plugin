@@ -1,0 +1,1443 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+  	DVS API Disclaimer 
+
+	Copyright (c) 2014, Dictao.
+	
+	All rights reserved.
+	
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are met:
+   
+  - Redistributions of source code must retain the above copyright notice,
+    this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+  - Neither the name of the Dictao nor the names of its contributors may
+    be used to endorse or promote products derived from this software without
+    specific prior written permission.
+	 
+  THIS API IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+  CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+	
+	Additional conditions are available on Dictao Developer website:
+		http://www.dictao.com/developer/api/disclaimer
+	
+ -->
+<s:schema xmlns:tao="http://www.dictao.com/DVS/FrontEnd/Provisioning" xmlns:s="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.dictao.com/DVS/FrontEnd/Provisioning" elementFormDefault="qualified" xmlns:jaxb="http://java.sun.com/xml/ns/jaxb" jaxb:version="2.0" >
+	<s:annotation>
+		<s:appinfo>
+			<jaxb:globalBindings>
+				<jaxb:serializable/>
+			</jaxb:globalBindings>
+		</s:appinfo>
+	</s:annotation>
+	<s:element name="RequestId" type="s:string"/>
+	<s:element name="UserCertificate" type="s:base64Binary"/>
+	<s:element name="DateTime" type="s:dateTime"/>
+	<s:complexType name="HeaderType">
+		<s:sequence>
+			<s:element ref="tao:RequestId" minOccurs="0"/>
+			<s:element ref="tao:UserCertificate" minOccurs="0"/>
+			<s:element ref="tao:GroupIdentifier" minOccurs="0"/>
+			<s:element ref="tao:UserLevel" minOccurs="0"/>
+			<s:element ref="tao:DateTime" minOccurs="0"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="Header" type="tao:HeaderType"/>
+	<s:complexType name="BaseType">
+		<s:sequence>
+			<s:element ref="tao:Header" minOccurs="0"/>
+		</s:sequence>
+	</s:complexType>
+	<s:simpleType name="LockingStateType">
+		<s:restriction base="s:string">
+			<s:enumeration value="LOCKED"/>
+			<s:enumeration value="UNLOCKED"/>
+		</s:restriction>
+	</s:simpleType>
+	<s:element name="LockingState" type="tao:LockingStateType"/>
+	<s:element name="Name" type="s:string"/>
+	<s:element name="FirstName" type="s:string"/>
+	<s:element name="Birthday" type="s:date"/>
+	<s:element name="ClientRef" type="s:string"/>
+	<s:element name="UsersOffset" type="s:int"/>
+	<s:element name="UsersNbResponses" type="s:int"/>
+	<s:element name="NbUsers" type="s:int"/>
+	<s:element name="NbResults" type="s:int"/>
+	<s:element name="NbResultsMax" type="s:int"/>
+	<s:element name="PAN" type="s:string"/>
+	<s:element name="SerialNumber" type="s:string"/>
+	<s:element name="IssueNumber" type="s:string"/>
+	<s:element name="Login" type="s:string"/>
+	<s:element name="PasswordValue" type="s:string"/>
+	<s:element name="PasswordSalt" type="s:base64Binary"/>
+	<s:element name="PasswordFormat" type="s:token"/>
+	<s:element name="ProvisioningPolicyLabel" type="s:string"/>
+	<s:element name="Scope" type="s:string"/>
+	<s:element name="Valid" type="s:string"/>
+	<s:element name="ExtendedData" type="s:string"/>
+	<s:element name="TimeSpeed" type="s:int"/>
+	<s:element name="Manufacturer" type="s:string"/>
+	<s:element name="Model" type="s:string"/>
+	<s:element name="FirmwareVersion" type="s:string"/>
+	<s:element name="USBDriver" type="s:string"/>
+	<s:element name="Usable" type="s:boolean"/>
+	<s:element name="OTPLength" type="s:int"/>
+	<s:element name="PINServer" type="s:string"/>
+	<s:element name="PINServerMandatory" type="s:boolean"/>
+	<s:simpleType name="CryptoImplType">
+		<s:restriction base="s:string">
+			<s:enumeration value="UNDEFINED"/>
+			<s:enumeration value="SAGEM_V1"/>
+			<s:enumeration value="GOOGLE_HOTP_V1"/>
+		</s:restriction>
+	</s:simpleType>
+	<s:element name="CryptoImpl" type="tao:CryptoImplType"/>
+	<s:simpleType name="DerivationType">
+		<s:restriction base="s:string">
+			<s:enumeration value="UNDEFINED"/>
+			<s:enumeration value="PROVIDED"/>
+			<s:enumeration value="GENERATED"/>
+			<s:enumeration value="EMV_CPS"/>
+			<s:enumeration value="SHA1"/>
+			<s:enumeration value="HSM"/>
+		</s:restriction>
+	</s:simpleType>
+	<s:element name="OneOTPByPlug" type="s:boolean"/>
+	<s:element name="OTPPlug" type="s:boolean"/>
+	<s:simpleType name="FormatKeyType">
+		<s:restriction base="s:string">
+			<s:enumeration value="UNDEFINED"/>
+			<s:enumeration value="DES"/>
+			<s:enumeration value="ALPHANUM"/>
+			<s:enumeration value="DECIMAL"/>
+			<s:enumeration value="HEXADECIMAL"/>
+			<s:enumeration value="RANDOM"/>
+			<s:enumeration value="ALPHA"/>
+			<s:enumeration value="PATTERN"/>
+		</s:restriction>
+	</s:simpleType>
+	<s:element name="FormatType" type="tao:FormatKeyType"/>
+	<s:element name="Format" type="s:string"/>
+	<s:element name="Label" type="s:string"/>
+	<s:simpleType name="KeyTypeType">
+		<s:restriction base="s:string">
+			<s:enumeration value="UNDEFINED"/>
+			<s:enumeration value="K_EXT_PUK"/>
+			<s:enumeration value="K_EXT_ADM"/>
+			<s:enumeration value="K_DEK_DATA"/>
+			<s:enumeration value="K_DEK_PIN"/>
+			<s:enumeration value="K_OTP"/>
+			<s:enumeration value="PIN_USER"/>
+			<s:enumeration value="PIN_PUK"/>
+			<s:enumeration value="PIN_ADM"/>
+			<s:enumeration value="CERT"/>
+		</s:restriction>
+	</s:simpleType>
+	<s:element name="KeyType" type="tao:KeyTypeType"/>
+	<s:simpleType name="OTPType">
+		<s:restriction base="s:string">
+			<s:enumeration value="UNDEFINED"/>
+			<s:enumeration value="SINGLE"/>
+			<s:enumeration value="MUTUAL"/>
+			<s:enumeration value="MUTUAL_LIGHT"/>
+		</s:restriction>
+	</s:simpleType>
+	<s:element name="OTPMode" type="tao:OTPType"/>
+	<s:element name="Localisation" type="s:string"/>
+	<s:element name="Length" type="s:int"/>
+	<s:element name="ProhibitedCharacters" type="s:string"/>
+	<s:element name="QueryLimit" type="s:int"/>
+	<s:element name="MaxLength" type="s:int"/>
+	<s:element name="MinLength" type="s:int"/>
+	<s:element name="MaxRetry" type="s:int"/>
+	<s:element name="IMKLabel" type="s:string"/>
+	<s:element name="IMKKDI" type="s:int"/>
+	<s:element name="IMKLocalisation" type="s:string"/>
+	<s:element name="IMKDerivationType" type="tao:DerivationType"/>
+	<s:element name="TKLabel" type="s:string"/>
+	<s:element name="TKKDI" type="s:int"/>
+	<s:element name="TKLocalisation" type="s:string"/>
+	<s:element name="TKDerivationType" type="tao:DerivationType"/>
+	<s:element name="KeyValue" type="s:base64Binary"/>
+	<s:element name="ProfileName" type="s:string"/>
+	<s:element name="CardProfileName" type="s:string"/>
+	<s:element name="TokenProfileName" type="s:string"/>
+	<s:element name="PSN" type="s:int"/>
+	<s:element name="IPB" type="s:base64Binary"/>
+	<s:element name="ATC" type="s:int"/>
+	<s:element name="AIP" type="s:int"/>
+	<s:element name="IAF" type="s:int"/>
+	<s:element name="KDI" type="s:int"/>
+	<s:element name="CVN" type="s:int"/>
+	<s:element name="CVR" type="s:base64Binary"/>
+	<s:element name="Certificate" type="s:base64Binary"/>
+	<s:element name="Priority" type="s:int"/>
+	<s:element name="Input" type="s:string"/>
+	<s:element name="CredentialValue" type="s:string"/>
+	<s:complexType name="CancellationAuthType">
+		<s:sequence>
+			<s:element ref="tao:CancellationState"/>
+			<s:element ref="tao:CardIdentifier" minOccurs="0"/>
+			<s:element ref="tao:CoordIdentifier" minOccurs="0"/>
+			<s:element ref="tao:CertIdentifier" minOccurs="0"/>
+			<s:element ref="tao:TokenIdentifier" minOccurs="0"/>
+			<s:element ref="tao:PersonalDataIdentifier" minOccurs="0"/>
+		</s:sequence>
+	</s:complexType>
+	<s:simpleType name="CoordSimpleType">
+		<s:restriction base="s:string">
+			<s:enumeration value="SMS"/>
+			<s:enumeration value="MAIL"/>
+		</s:restriction>
+	</s:simpleType>
+	<s:element name="CoordType" type="tao:CoordSimpleType"/>
+	<s:simpleType name="CredTypeType">
+		<s:restriction base="s:string">
+			<s:enumeration value="QUESTION"/>
+		</s:restriction>
+	</s:simpleType>
+	<s:element name="CredType" type="tao:CredTypeType"/>
+	<s:simpleType name="PersonalDataTypeType">
+		<s:restriction base="s:string">
+			<s:enumeration value="BIRTHDATE"/>
+		</s:restriction>
+	</s:simpleType>
+	<s:element name="PersonalDataType" type="tao:PersonalDataTypeType"/>
+	<s:simpleType name="PasswordTypeType">
+		<s:restriction base="s:string">
+			<s:enumeration value="LOGIN"/>
+		</s:restriction>
+	</s:simpleType>
+	<s:element name="PasswordType" type="tao:PasswordTypeType"/>
+	<s:simpleType name="AuthenticationSimpleType">
+		<s:restriction base="s:string">
+			<s:enumeration value="CAP"/>
+			<s:enumeration value="COORD"/>
+			<s:enumeration value="CERTIFICATE"/>
+			<s:enumeration value="TOKEN"/>
+			<s:enumeration value="PERSODATA"/>
+			<s:enumeration value="CREDENTIAL"/>
+			<s:enumeration value="PASSWORD"/>
+		</s:restriction>
+	</s:simpleType>
+	<s:element name="AuthenticationType" type="tao:AuthenticationSimpleType"/>
+	<s:element name="CoordValue" type="s:string"/>
+	<s:simpleType name="CryptoParamsType">
+		<s:restriction base="s:string">
+			<s:enumeration value="PAN_BASED"/>
+			<s:enumeration value="CAP"/>
+			<s:enumeration value="DPA"/>
+		</s:restriction>
+	</s:simpleType>
+	<s:element name="CryptoParams" type="tao:CryptoParamsType"/>
+	<s:simpleType name="CryptoAlgoType">
+		<s:restriction base="s:string">
+			<s:enumeration value="PAN_BASED"/>
+			<s:enumeration value="MCHIP2"/>
+			<s:enumeration value="VIS140"/>
+		</s:restriction>
+	</s:simpleType>
+	<s:element name="CryptoAlgo" type="tao:CryptoAlgoType"/>
+	<s:simpleType name="TokenFormatType">
+		<s:restriction base="s:string">
+			<s:enumeration value="CAP"/>
+			<s:enumeration value="PLA"/>
+			<s:enumeration value="GIECB"/>
+		</s:restriction>
+	</s:simpleType>
+	<s:element name="TokenFormat" type="tao:TokenFormatType"/>
+	<s:element name="DAC" type="s:base64Binary"/>
+	<s:element name="IADUserData" type="s:base64Binary"/>
+	<s:element name="Validity" type="s:date"/>
+	<s:element name="ValidFrom" type="s:date"/>
+	<s:element name="ValidUntil" type="s:date"/>
+	<s:element name="GroupIdentifier" type="s:string"/>
+	<s:element name="Identifier" type="s:string"/>
+	<s:element name="FailureAttemptNumber" type="s:int"/>
+	<s:element name="UserLevel">
+		<s:simpleType>
+			<s:restriction base="s:token">
+				<s:enumeration value="INVALID"/>
+				<s:enumeration value="SUPER-ADMINISTRATOR"/>
+				<s:enumeration value="SUPER-MANAGER"/>
+				<s:enumeration value="ADMINISTRATOR"/>
+				<s:enumeration value="MANAGER"/>
+				<s:enumeration value="OPERATOR"/>
+				<s:enumeration value="HELPDESK"/>
+				<s:enumeration value="SELFDESK"/>
+				<s:enumeration value="PINMAILER"/>
+			</s:restriction>
+		</s:simpleType>
+	</s:element>
+	<s:element name="UserContext">
+		<s:complexType>
+			<s:sequence>
+				<s:element ref="tao:UserLevel" minOccurs="0"/>
+				<s:element ref="tao:GroupIdentifier" minOccurs="0"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="CardFeaturesType">
+		<s:sequence>
+			<s:element ref="tao:IPB" minOccurs="0"/>
+			<s:element ref="tao:AIP" minOccurs="0"/>
+			<s:element ref="tao:IAF" minOccurs="0"/>
+			<s:element ref="tao:CVN" minOccurs="0"/>
+			<s:element ref="tao:CVR" minOccurs="0"/>
+			<s:element ref="tao:CryptoParams" minOccurs="0"/>
+			<s:element ref="tao:CryptoAlgo" minOccurs="0"/>
+			<s:element ref="tao:TokenFormat" minOccurs="0"/>
+			<s:element ref="tao:PINServerMandatory" minOccurs="0"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="CardFeatures" type="tao:CardFeaturesType"/>
+	<s:complexType name="CardProfileType">
+		<s:sequence>
+			<s:element ref="tao:Identifier" minOccurs="0"/>
+			<s:element ref="tao:Name" minOccurs="0"/>
+			<s:element ref="tao:CardFeatures"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="CardProfile" type="tao:CardProfileType"/>
+	<s:complexType name="CardType">
+		<s:sequence>
+			<s:element ref="tao:Identifier" minOccurs="0"/>
+			<s:element ref="tao:CardProfileName" minOccurs="0"/>
+			<s:element ref="tao:CardFeatures" minOccurs="0"/>
+			<s:element ref="tao:KDI" minOccurs="0"/>
+			<s:element ref="tao:IMKLabel" minOccurs="0"/>
+			<s:element ref="tao:PSN" minOccurs="0"/>
+			<s:element ref="tao:PAN"/>
+			<s:element ref="tao:ATC" minOccurs="0"/>
+			<s:element ref="tao:Validity" minOccurs="0"/>
+			<s:element ref="tao:LockingState" minOccurs="0"/>
+			<s:element ref="tao:CancellationState" minOccurs="0"/>
+			<s:element ref="tao:FailureAttemptNumber" minOccurs="0"/>
+			<s:element ref="tao:PINServer" minOccurs="0"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="Card" type="tao:CardType"/>
+	<s:complexType name="CardsType">
+		<s:sequence/>
+	</s:complexType>
+	<s:element name="Cards" type="tao:CardsType"/>
+	<s:complexType name="CardIdentifierType">
+		<s:sequence>
+			<s:element ref="tao:UserAlias" minOccurs="0"/>
+			<s:element ref="tao:PAN"/>
+			<s:element ref="tao:PSN" minOccurs="0"/>
+			<s:element ref="tao:Validity" minOccurs="0"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="CardIdentifier" type="tao:CardIdentifierType"/>
+	<s:complexType name="CardIdentifierListType">
+		<s:sequence>
+			<s:element ref="tao:CardIdentifier" maxOccurs="unbounded"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="CardIdentifierList" type="tao:CardIdentifierListType"/>
+	<s:complexType name="UserInfoTypeList">
+		<s:sequence>
+			<s:element ref="tao:UserInfo" minOccurs="0" maxOccurs="unbounded"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="CardProfileList">
+		<s:complexType>
+			<s:sequence>
+				<s:element ref="tao:CardProfile" maxOccurs="unbounded"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<!--Token -->
+	<s:complexType name="TokenKeyType">
+		<s:sequence>
+			<s:element ref="tao:Identifier" minOccurs="0"/>
+			<s:element ref="tao:Label"/>
+			<s:element ref="tao:KeyType"/>
+			<s:element ref="tao:Localisation" minOccurs="0"/>
+			<s:element ref="tao:Length" minOccurs="0"/>
+			<s:element ref="tao:FormatType" minOccurs="0"/>
+			<s:element ref="tao:IMKLabel" minOccurs="0"/>
+			<s:element ref="tao:IMKKDI" minOccurs="0"/>
+			<s:element ref="tao:IMKLocalisation" minOccurs="0"/>
+			<s:element ref="tao:IMKDerivationType" minOccurs="0"/>
+			<s:element ref="tao:TKLabel" minOccurs="0"/>
+			<s:element ref="tao:TKLocalisation" minOccurs="0"/>
+			<s:element ref="tao:TKDerivationType" minOccurs="0"/>
+			<s:element ref="tao:TKKDI" minOccurs="0"/>
+			<s:element ref="tao:KeyValue" minOccurs="0"/>
+			<s:element ref="tao:MaxRetry" minOccurs="0"/>
+			<s:element ref="tao:MinLength" minOccurs="0"/>
+			<s:element ref="tao:MaxLength" minOccurs="0"/>
+			<s:element ref="tao:ProhibitedCharacters" minOccurs="0"/>
+			<s:element ref="tao:QueryLimit" minOccurs="0"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="Key" type="tao:TokenKeyType"/>
+	<s:complexType name="TokenKeyIdentifierType">
+		<s:sequence>
+			<s:element ref="tao:TokenIdentifier"/>
+			<s:element ref="tao:KeyType"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="TokenKeyIdentifier" type="tao:TokenKeyIdentifierType"/>
+	<s:complexType name="TokenFeaturesType">
+		<s:sequence>
+			<s:element ref="tao:CryptoImpl"/>
+			<s:element ref="tao:Manufacturer" minOccurs="0"/>
+			<s:element ref="tao:Model" minOccurs="0"/>
+			<s:element ref="tao:Format" minOccurs="0"/>
+			<s:element ref="tao:FirmwareVersion" minOccurs="0"/>
+			<s:element ref="tao:OTPMode" minOccurs="0"/>
+			<s:element ref="tao:USBDriver" minOccurs="0"/>
+			<s:element ref="tao:Valid" minOccurs="0"/>
+			<s:element ref="tao:ExtendedData" minOccurs="0"/>
+			<s:element ref="tao:TimeSpeed" minOccurs="0"/>
+			<s:element ref="tao:PINServerMandatory" minOccurs="0"/>
+			<s:element ref="tao:OneOTPByPlug" minOccurs="0"/>
+			<s:element ref="tao:OTPLength" minOccurs="0"/>
+			<s:element ref="tao:OTPPlug" minOccurs="0"/>
+			<s:element name="KeyList">
+				<s:complexType>
+					<s:sequence>
+						<s:element ref="tao:Key" minOccurs="0" maxOccurs="unbounded"/>
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="TokenFeatures" type="tao:TokenFeaturesType"/>
+	<s:complexType name="TokenProfileType">
+		<s:sequence>
+			<s:element ref="tao:Identifier" minOccurs="0"/>
+			<s:element ref="tao:Name" minOccurs="0"/>
+			<s:element ref="tao:TokenFeatures"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="TokenProfile" type="tao:TokenProfileType"/>
+	<s:complexType name="TokenType">
+		<s:sequence>
+			<s:element ref="tao:Identifier" minOccurs="0"/>
+			<s:element ref="tao:TokenProfileName" minOccurs="0"/>
+			<s:element ref="tao:TokenFeatures" minOccurs="0"/>
+			<s:element ref="tao:SerialNumber"/>
+			<s:element ref="tao:LockingState" minOccurs="0"/>
+			<s:element ref="tao:CancellationState" minOccurs="0"/>
+			<s:element ref="tao:FailureAttemptNumber" minOccurs="0"/>
+			<s:element ref="tao:Validity" minOccurs="0"/>
+			<s:element ref="tao:ATC" minOccurs="0"/>
+			<s:element ref="tao:PSN" minOccurs="0"/>
+			<s:element ref="tao:IssueNumber" minOccurs="0"/>
+			<s:element ref="tao:Login" minOccurs="0"/>
+			<s:element ref="tao:Usable" minOccurs="0"/>
+			<s:element ref="tao:PINServer" minOccurs="0"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="Token" type="tao:TokenType"/>
+	<s:complexType name="TokensType"/>
+	<s:element name="Tokens" type="tao:TokensType"/>
+	<s:complexType name="TokenIdentifierType">
+		<s:sequence>
+			<s:element ref="tao:UserAlias" minOccurs="0"/>
+			<s:element ref="tao:SerialNumber"/>
+			<s:element ref="tao:PSN"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="TokenIdentifier" type="tao:TokenIdentifierType"/>
+	<s:element name="TokenProfileList">
+		<s:complexType>
+			<s:sequence>
+				<s:element ref="tao:TokenProfile" maxOccurs="unbounded"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="TokenIdentifierListType">
+		<s:sequence>
+			<s:element ref="tao:TokenIdentifier" maxOccurs="unbounded"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="TokenIdentifierList" type="tao:TokenIdentifierListType"/>
+	<!--Coord-->
+	<s:complexType name="CoordType">
+		<s:sequence>
+			<s:element ref="tao:Identifier" minOccurs="0"/>
+			<s:element ref="tao:CoordType"/>
+			<s:element ref="tao:CoordValue"/>
+			<s:element ref="tao:Priority" minOccurs="0"/>
+			<s:element ref="tao:LockingState" minOccurs="0"/>
+			<s:element ref="tao:CancellationState" minOccurs="0"/>
+			<s:element ref="tao:PINServer" minOccurs="0"/>
+			<s:element ref="tao:PINServerMandatory" minOccurs="0"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="Coord" type="tao:CoordType"/>
+	<s:complexType name="CoordsType"/>
+	<s:element name="Coords" type="tao:CoordsType"/>
+	<s:complexType name="CoordIdentifierType">
+		<s:sequence>
+			<s:element ref="tao:UserAlias" minOccurs="0"/>
+			<s:element ref="tao:CoordType"/>
+			<s:element ref="tao:CoordValue" minOccurs="0"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="CoordIdentifier" type="tao:CoordIdentifierType"/>
+	<s:complexType name="CoordIdentifierListType">
+		<s:sequence>
+			<s:element ref="tao:CoordIdentifier" maxOccurs="unbounded"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="CoordIdentifierList" type="tao:CoordIdentifierListType"/>
+	<!--Cred-->
+	<s:complexType name="CredType">
+		<s:sequence>
+			<s:element ref="tao:Identifier" minOccurs="0"/>
+			<s:element ref="tao:CredType" minOccurs="0"/>
+			<s:element ref="tao:Input"/>
+			<s:element ref="tao:CredentialValue"/>
+			<s:element ref="tao:LockingState" minOccurs="0"/>
+			<s:element ref="tao:CancellationState" minOccurs="0"/>
+			<s:element ref="tao:PINServer" minOccurs="0"/>
+			<s:element ref="tao:PINServerMandatory" minOccurs="0"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="Cred" type="tao:CredType"/>
+	<s:complexType name="CredIdentifierType">
+		<s:sequence>
+			<s:element ref="tao:UserAlias" minOccurs="0"/>
+			<s:element ref="tao:Input"/>
+			<s:element ref="tao:CredType"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="CredIdentifier" type="tao:CredIdentifierType"/>
+	<s:complexType name="CredIdentifierListType">
+		<s:sequence>
+			<s:element ref="tao:CredIdentifier" maxOccurs="unbounded"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="CredIdentifierList" type="tao:CredIdentifierListType"/>
+	<!--Cert-->
+	<s:complexType name="CertType">
+		<s:sequence>
+			<s:element ref="tao:Identifier" minOccurs="0"/>
+			<s:element ref="tao:Scope"/>
+			<s:element ref="tao:Certificate"/>
+			<s:element ref="tao:LockingState" minOccurs="0"/>
+			<s:element ref="tao:CancellationState" minOccurs="0"/>
+			<s:element ref="tao:PINServer" minOccurs="0"/>
+			<s:element ref="tao:PINServerMandatory" minOccurs="0"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="Cert" type="tao:CertType"/>
+	<s:complexType name="CertsType"/>
+	<s:element name="Certs" type="tao:CertsType"/>
+	<s:complexType name="CertIdentifierType">
+		<s:sequence>
+			<s:element ref="tao:UserAlias" minOccurs="0"/>
+			<s:element ref="tao:Scope"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="CertIdentifier" type="tao:CertIdentifierType"/>
+	<s:complexType name="CertIdentifierListType">
+		<s:sequence>
+			<s:element ref="tao:CertIdentifier" maxOccurs="unbounded"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="CertIdentifierList" type="tao:CertIdentifierListType"/>
+	<!--PersonalDataInfo-->
+	<s:element name="PersonalDataValue" type="s:string"/>
+	<s:complexType name="PersonalDataType">
+		<s:sequence>
+			<s:element ref="tao:Identifier" minOccurs="0"/>
+			<s:element ref="tao:PersonalDataType"/>
+			<s:element ref="tao:PersonalDataValue" minOccurs="0"/>
+			<s:element ref="tao:LockingState" minOccurs="0"/>
+			<s:element ref="tao:CancellationState" minOccurs="0"/>
+			<s:element ref="tao:PINServer" minOccurs="0"/>
+			<s:element ref="tao:PINServerMandatory" minOccurs="0"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="PersonalData" type="tao:PersonalDataType"/>
+	<s:complexType name="PersonalDatasType"/>
+	<s:element name="PersonalDatas" type="tao:PersonalDatasType"/>
+	<s:complexType name="PersonalDataIdentifierType">
+		<s:sequence>
+			<s:element ref="tao:UserAlias" minOccurs="0"/>
+			<s:element ref="tao:PersonalDataType"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="PersonalDataIdentifier" type="tao:PersonalDataIdentifierType"/>
+	<s:complexType name="PersonalDataIdentifierListType">
+		<s:sequence>
+			<s:element ref="tao:PersonalDataIdentifier" maxOccurs="unbounded"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="PersonalDataIdentifierList" type="tao:PersonalDataIdentifierListType"/>
+	<!--Password-->
+	<s:complexType name="PasswordType">
+		<s:sequence>
+			<s:element ref="tao:ProvisioningPolicyLabel" minOccurs="0"/>
+			<s:element ref="tao:Identifier" minOccurs="0"/>
+			<s:element ref="tao:Scope"/>
+			<s:element ref="tao:PasswordType" minOccurs="0"/>
+			<s:element ref="tao:PasswordValue"/>
+			<s:element ref="tao:PasswordSalt" minOccurs="0"/>
+			<s:element ref="tao:PasswordFormat" minOccurs="0"/>
+			<s:element ref="tao:LockingState" minOccurs="0"/>
+			<!-- Date de debut de validite -->
+			<s:element ref="tao:ValidFrom" minOccurs="0"/>
+			<!-- Date de fin de validite -->
+			<s:element ref="tao:ValidUntil" minOccurs="0"/>
+			<s:element ref="tao:CancellationState" minOccurs="0"/>
+			<s:element ref="tao:PINServer" minOccurs="0"/>
+			<s:element ref="tao:PINServerMandatory" minOccurs="0"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="Password" type="tao:PasswordType"/>
+	<s:complexType name="PasswordIdentifierType">
+		<s:sequence>
+			<s:element ref="tao:UserAlias" minOccurs="0"/>
+			<s:element ref="tao:Scope"/>
+			<s:element ref="tao:ValidFrom"/>
+			<s:element ref="tao:ValidUntil"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="PasswordIdentifier" type="tao:PasswordIdentifierType"/>
+	<s:complexType name="PasswordIdentifierListType">
+		<s:sequence>
+			<s:element ref="tao:PasswordIdentifier" maxOccurs="unbounded"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="PasswordIdentifierList" type="tao:PasswordIdentifierListType"/>
+	<!-- Alias -->
+	<s:element name="UserAlias" type="s:string"/>
+	<s:complexType name="UserAliasListType">
+		<s:sequence>
+			<s:element ref="tao:UserAlias" minOccurs="0" maxOccurs="unbounded"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="UserAliasList" type="tao:UserAliasListType"/>
+	<s:simpleType name="ActivationStateType">
+		<s:restriction base="s:string">
+			<s:enumeration value="ACTIVE"/>
+			<s:enumeration value="SUSPENDED"/>
+		</s:restriction>
+	</s:simpleType>
+	<s:element name="ActivationState" type="tao:ActivationStateType"/>
+	<s:simpleType name="CancellationStateType">
+		<s:restriction base="s:string">
+			<s:enumeration value="CANCELED"/>
+			<s:enumeration value="VALID"/>
+		</s:restriction>
+	</s:simpleType>
+	<s:element name="CancellationState" type="tao:CancellationStateType"/>
+	<s:complexType name="UserInfoType">
+		<s:sequence>
+			<s:element ref="tao:Identifier" minOccurs="0"/>
+			<s:element ref="tao:UserAliasList" minOccurs="0"/>
+			<s:element ref="tao:ClientRef" minOccurs="0"/>
+			<s:element ref="tao:Name" minOccurs="0"/>
+			<s:element ref="tao:FirstName" minOccurs="0"/>
+			<s:element ref="tao:Birthday" minOccurs="0"/>
+			<s:element ref="tao:ActivationState" minOccurs="0"/>
+			<s:element name="CardAuthent" minOccurs="0">
+				<s:complexType>
+					<s:sequence>
+						<s:element ref="tao:ActivationState" minOccurs="0"/>
+						<s:element ref="tao:LockingState" minOccurs="0"/>
+						<s:element name="CardList" minOccurs="0">
+							<s:complexType>
+								<s:sequence>
+									<s:element ref="tao:Card" maxOccurs="unbounded"/>
+								</s:sequence>
+							</s:complexType>
+						</s:element>
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="CoordAuthent" minOccurs="0">
+				<s:complexType>
+					<s:sequence>
+						<s:element ref="tao:ActivationState" minOccurs="0"/>
+						<s:element ref="tao:LockingState" minOccurs="0"/>
+						<s:element name="CoordList" minOccurs="0">
+							<s:complexType>
+								<s:sequence>
+									<s:element ref="tao:Coord" maxOccurs="unbounded"/>
+								</s:sequence>
+							</s:complexType>
+						</s:element>
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="CertAuthent" minOccurs="0">
+				<s:complexType>
+					<s:sequence>
+						<s:element ref="tao:ActivationState" minOccurs="0"/>
+						<s:element ref="tao:LockingState" minOccurs="0"/>
+						<s:element name="CertList" minOccurs="0">
+							<s:complexType>
+								<s:sequence>
+									<s:element ref="tao:Cert" maxOccurs="unbounded"/>
+								</s:sequence>
+							</s:complexType>
+						</s:element>
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="TokenAuthent" minOccurs="0">
+				<s:complexType>
+					<s:sequence>
+						<s:element ref="tao:ActivationState" minOccurs="0"/>
+						<s:element ref="tao:LockingState" minOccurs="0"/>
+						<s:element name="TokenList" minOccurs="0">
+							<s:complexType>
+								<s:sequence>
+									<s:element ref="tao:Token" maxOccurs="unbounded"/>
+								</s:sequence>
+							</s:complexType>
+						</s:element>
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="CredAuthent" minOccurs="0">
+				<s:complexType>
+					<s:sequence>
+						<s:element ref="tao:ActivationState" minOccurs="0"/>
+						<s:element ref="tao:LockingState" minOccurs="0"/>
+						<s:element name="CredList" minOccurs="0">
+							<s:complexType>
+								<s:sequence>
+									<s:element ref="tao:Cred" maxOccurs="unbounded"/>
+								</s:sequence>
+							</s:complexType>
+						</s:element>
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="PersonalDataAuthent" minOccurs="0">
+				<s:complexType>
+					<s:sequence>
+						<s:element ref="tao:ActivationState" minOccurs="0"/>
+						<s:element ref="tao:LockingState" minOccurs="0"/>
+						<s:element name="PersonalDataList" minOccurs="0">
+							<s:complexType>
+								<s:sequence>
+									<s:element ref="tao:PersonalData" maxOccurs="unbounded"/>
+								</s:sequence>
+							</s:complexType>
+						</s:element>
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+			<s:element name="PasswordAuthent" minOccurs="0">
+				<s:complexType>
+					<s:sequence>
+						<s:element ref="tao:ActivationState" minOccurs="0"/>
+						<s:element ref="tao:LockingState" minOccurs="0"/>
+						<s:element name="PasswordList" minOccurs="0">
+							<s:complexType>
+								<s:sequence>
+									<s:element ref="tao:Password" maxOccurs="unbounded"/>
+								</s:sequence>
+							</s:complexType>
+						</s:element>
+					</s:sequence>
+				</s:complexType>
+			</s:element>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="UserInfo" type="tao:UserInfoType"/>
+	<s:complexType name="UserInfoListType">
+		<s:sequence>
+			<s:element ref="tao:UserInfo" maxOccurs="unbounded"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="UserInfoList" type="tao:UserInfoListType"/>
+	<s:complexType name="SearchCriteriaType"/>
+	<s:element name="SearchCriteria" type="tao:SearchCriteriaType"/>
+	<s:element name="ATCStart" type="s:int"/>
+	<s:element name="OTP1" type="s:string"/>
+	<s:element name="OTP2" type="s:string"/>
+	<s:complexType name="ATCSynchronisationType">
+		<s:sequence>
+			<s:element ref="tao:ATCStart" minOccurs="0"/>
+			<s:element ref="tao:OTP1"/>
+			<s:element ref="tao:OTP2" minOccurs="0"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="ATCSynchronisation" type="tao:ATCSynchronisationType"/>
+	<s:complexType name="CardSynchronizationInfoType">
+		<s:sequence>
+			<s:element ref="tao:UserAlias"/>
+			<s:element ref="tao:PAN"/>
+			<s:element ref="tao:Validity" minOccurs="0"/>
+			<s:element ref="tao:PSN" minOccurs="0"/>
+			<s:choice>
+				<s:element ref="tao:ATC"/>
+				<s:element ref="tao:ATCSynchronisation" minOccurs="0"/>
+			</s:choice>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="CardSynchronizationInfo" type="tao:CardSynchronizationInfoType"/>
+	<s:complexType name="CardSynchronizationInfoListType">
+		<s:sequence>
+			<s:element ref="tao:CardSynchronizationInfo" maxOccurs="unbounded"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="CardSynchroList" type="tao:CardSynchronizationInfoListType"/>
+	<s:complexType name="TokenSynchronizationInfoType">
+		<s:sequence>
+			<s:element ref="tao:UserAlias"/>
+			<s:element ref="tao:SerialNumber"/>
+			<s:element ref="tao:PSN" minOccurs="0"/>
+			<s:choice>
+				<s:element ref="tao:ATC"/>
+				<s:element ref="tao:ATCSynchronisation" minOccurs="0"/>
+			</s:choice>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="TokenSynchronizationInfo" type="tao:TokenSynchronizationInfoType"/>
+	<s:complexType name="TokenSynchronizationInfoListType">
+		<s:sequence>
+			<s:element ref="tao:TokenSynchronizationInfo" maxOccurs="unbounded"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="TokenSynchroList" type="tao:TokenSynchronizationInfoListType"/>
+	<s:complexType name="CommonFailureDetailsType">
+		<s:sequence>
+			<s:element name="ListItemIndex" type="s:int"/>
+			<s:element name="Status" type="s:int"/>
+			<s:element name="Comment" type="s:string" minOccurs="0"/>
+			<s:element name="DetailedComment" type="s:string" minOccurs="0"/>
+		</s:sequence>
+	</s:complexType>
+	<s:complexType name="UserFailureDetailsType">
+		<s:complexContent>
+			<s:extension base="tao:CommonFailureDetailsType">
+				<s:sequence>
+					<s:element ref="tao:UserAlias"/>
+					<s:element ref="tao:AliasFailureDetails" minOccurs="0"/>
+					<s:element ref="tao:CardFailureDetails" minOccurs="0"/>
+					<s:element ref="tao:CoordFailureDetails" minOccurs="0"/>
+					<s:element ref="tao:TokenFailureDetails" minOccurs="0"/>
+					<s:element ref="tao:CredFailureDetails" minOccurs="0"/>
+					<s:element ref="tao:PersonalDataFailureDetails" minOccurs="0"/>
+					<s:element ref="tao:CertFailureDetails" minOccurs="0"/>
+					<s:element ref="tao:PasswordFailureDetails" minOccurs="0"/>
+				</s:sequence>
+			</s:extension>
+		</s:complexContent>
+	</s:complexType>
+	<s:complexType name="AliasFailureDetailsType">
+		<s:complexContent>
+			<s:extension base="tao:CommonFailureDetailsType">
+				<s:sequence>
+					<s:element ref="tao:UserAlias"/>
+				</s:sequence>
+			</s:extension>
+		</s:complexContent>
+	</s:complexType>
+	<s:complexType name="CardFailureDetailsType">
+		<s:complexContent>
+			<s:extension base="tao:CommonFailureDetailsType">
+				<s:sequence>
+					<s:element ref="tao:CardIdentifier"/>
+					<s:element ref="tao:CardProfileFailureDetails" minOccurs="0"/>
+				</s:sequence>
+			</s:extension>
+		</s:complexContent>
+	</s:complexType>
+	<s:complexType name="CoordFailureDetailsType">
+		<s:complexContent>
+			<s:extension base="tao:CommonFailureDetailsType">
+				<s:sequence>
+					<s:element ref="tao:CoordIdentifier"/>
+				</s:sequence>
+			</s:extension>
+		</s:complexContent>
+	</s:complexType>
+	<s:complexType name="CardProfileFailureDetailsType">
+		<s:complexContent>
+			<s:extension base="tao:CommonFailureDetailsType">
+				<s:sequence>
+					<s:element ref="tao:CardProfileName"/>
+				</s:sequence>
+			</s:extension>
+		</s:complexContent>
+	</s:complexType>
+	<s:complexType name="TokenFailureDetailsType">
+		<s:complexContent>
+			<s:extension base="tao:CommonFailureDetailsType">
+				<s:sequence>
+					<s:element ref="tao:TokenIdentifier"/>
+					<s:element ref="tao:TokenProfileFailureDetails" minOccurs="0"/>
+				</s:sequence>
+			</s:extension>
+		</s:complexContent>
+	</s:complexType>
+	<s:complexType name="CredFailureDetailsType">
+		<s:complexContent>
+			<s:extension base="tao:CommonFailureDetailsType">
+				<s:sequence>
+					<s:element ref="tao:CredIdentifier"/>
+				</s:sequence>
+			</s:extension>
+		</s:complexContent>
+	</s:complexType>
+	<s:complexType name="PersonalDataFailureDetailsType">
+		<s:complexContent>
+			<s:extension base="tao:CommonFailureDetailsType">
+				<s:sequence>
+					<s:element ref="tao:PersonalDataIdentifier"/>
+				</s:sequence>
+			</s:extension>
+		</s:complexContent>
+	</s:complexType>
+	<s:complexType name="TokenProfileFailureDetailsType">
+		<s:complexContent>
+			<s:extension base="tao:CommonFailureDetailsType">
+				<s:sequence>
+					<s:element ref="tao:TokenProfileName"/>
+				</s:sequence>
+			</s:extension>
+		</s:complexContent>
+	</s:complexType>
+	<s:complexType name="CertFailureDetailsType">
+		<s:complexContent>
+			<s:extension base="tao:CommonFailureDetailsType">
+				<s:sequence>
+					<s:element ref="tao:CertIdentifier"/>
+				</s:sequence>
+			</s:extension>
+		</s:complexContent>
+	</s:complexType>
+	<s:complexType name="PasswordFailureDetailsType">
+		<s:complexContent>
+			<s:extension base="tao:CommonFailureDetailsType">
+				<s:sequence>
+					<s:element ref="tao:PasswordIdentifier"/>
+				</s:sequence>
+			</s:extension>
+		</s:complexContent>
+	</s:complexType>
+	<s:element name="UserFailureDetails" type="tao:UserFailureDetailsType"/>
+	<s:element name="AliasFailureDetails" type="tao:AliasFailureDetailsType"/>
+	<s:element name="CardFailureDetails" type="tao:CardFailureDetailsType"/>
+	<s:element name="TokenFailureDetails" type="tao:TokenFailureDetailsType"/>
+	<s:element name="CoordFailureDetails" type="tao:CoordFailureDetailsType"/>
+	<s:element name="CardProfileFailureDetails" type="tao:CardProfileFailureDetailsType"/>
+	<s:element name="TokenProfileFailureDetails" type="tao:TokenProfileFailureDetailsType"/>
+	<s:element name="CredFailureDetails" type="tao:CredFailureDetailsType"/>
+	<s:element name="PersonalDataFailureDetails" type="tao:PersonalDataFailureDetailsType"/>
+	<s:element name="CertFailureDetails" type="tao:CertFailureDetailsType"/>
+	<s:element name="PasswordFailureDetails" type="tao:PasswordFailureDetailsType"/>
+	<s:complexType name="FailureDetailsType">
+		<s:sequence>
+			<s:element ref="tao:UserFailureDetails" minOccurs="0"/>
+			<s:element ref="tao:AliasFailureDetails" minOccurs="0"/>
+			<s:element ref="tao:CardFailureDetails" minOccurs="0"/>
+			<s:element ref="tao:TokenFailureDetails" minOccurs="0"/>
+			<s:element ref="tao:CoordFailureDetails" minOccurs="0"/>
+			<s:element ref="tao:CardProfileFailureDetails" minOccurs="0"/>
+			<s:element ref="tao:TokenProfileFailureDetails" minOccurs="0"/>
+			<s:element ref="tao:CredFailureDetails" minOccurs="0"/>
+			<s:element ref="tao:PersonalDataFailureDetails" minOccurs="0"/>
+			<s:element ref="tao:CertFailureDetails" minOccurs="0"/>
+			<s:element ref="tao:PasswordFailureDetails" minOccurs="0"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="FailureDetails" type="tao:FailureDetailsType"/>
+	<s:complexType name="CommandResponseType">
+		<s:sequence>
+			<s:element ref="tao:RequestId" minOccurs="0"/>
+			<s:element name="OpStatus" type="s:int"/>
+			<s:element name="GlobalStatus" type="s:int"/>
+			<s:element ref="tao:FailureDetails" minOccurs="0"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="AddingMode">
+		<s:simpleType>
+			<s:restriction base="s:string">
+				<s:enumeration value="ADD_ONLY"/>
+				<s:enumeration value="ADD_OR_UPDATE"/>
+			</s:restriction>
+		</s:simpleType>
+	</s:element>
+	<s:element name="DeletingMode">
+		<s:simpleType>
+			<s:restriction base="s:string">
+				<s:enumeration value="DELETE_ONLY"/>
+				<s:enumeration value="DELETE_OR_IGNORE"/>
+			</s:restriction>
+		</s:simpleType>
+	</s:element>
+	<s:element name="AddUserListRequest">
+		<s:complexType>
+			<s:complexContent>
+				<s:extension base="tao:BaseType">
+					<s:sequence>
+						<s:element ref="tao:AddingMode" minOccurs="0"/>
+						<s:element ref="tao:UserInfoList"/>
+					</s:sequence>
+				</s:extension>
+			</s:complexContent>
+		</s:complexType>
+	</s:element>
+	<s:element name="AddUserListResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element ref="tao:AddUserListResult"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="AddUserListResult">
+		<s:complexType>
+			<s:complexContent>
+				<s:extension base="tao:CommandResponseType"/>
+			</s:complexContent>
+		</s:complexType>
+	</s:element>
+	<s:element name="GetUserListRequest">
+		<s:complexType>
+			<s:complexContent>
+				<s:extension base="tao:BaseType">
+					<s:sequence>
+						<s:element name="SearchCriteria">
+							<s:complexType>
+								<s:sequence>
+									<s:element ref="tao:UserAlias" minOccurs="0"/>
+									<s:element ref="tao:Name" minOccurs="0"/>
+									<s:element ref="tao:FirstName" minOccurs="0"/>
+									<s:element ref="tao:Birthday" minOccurs="0"/>
+									<s:element ref="tao:ActivationState" minOccurs="0"/>
+									<s:choice minOccurs="0">
+										<s:element name="ReturnAllCards" type="s:boolean"/>
+										<s:element ref="tao:CardIdentifier"/>
+									</s:choice>
+									<s:choice minOccurs="0">
+										<s:element ref="tao:CertIdentifier"/>
+										<s:element name="ReturnAllCerts" type="s:boolean"/>
+									</s:choice>
+									<s:choice minOccurs="0">
+										<s:element name="ReturnAllCoords" type="s:boolean"/>
+										<s:element ref="tao:CoordIdentifier"/>
+									</s:choice>
+									<s:choice minOccurs="0">
+										<s:element name="ReturnAllCreds" type="s:boolean"/>
+										<s:element ref="tao:CredIdentifier"/>
+									</s:choice>
+									<s:choice minOccurs="0">
+										<s:element name="ReturnAllTokens" type="s:boolean"/>
+										<s:element ref="tao:TokenIdentifier"/>
+									</s:choice>
+									<s:choice minOccurs="0">
+										<s:element name="ReturnAllPersonalDatas" type="s:boolean"/>
+										<s:element ref="tao:PersonalDataIdentifier"/>
+									</s:choice>
+									<s:choice minOccurs="0">
+										<s:element name="ReturnAllPasswords" type="s:boolean"/>
+										<s:element ref="tao:PasswordIdentifier"/>
+									</s:choice>
+								</s:sequence>
+							</s:complexType>
+						</s:element>
+						<s:element ref="tao:UsersOffset" minOccurs="0"/>
+						<s:element ref="tao:UsersNbResponses" minOccurs="0"/>
+					</s:sequence>
+				</s:extension>
+			</s:complexContent>
+		</s:complexType>
+	</s:element>
+	<s:element name="GetUserListResult">
+		<s:complexType>
+			<s:complexContent>
+				<s:extension base="tao:CommandResponseType">
+					<s:sequence>
+						<s:element name="UserList">
+							<s:complexType>
+								<s:sequence>
+									<s:element ref="tao:UserInfo" minOccurs="0" maxOccurs="unbounded"/>
+								</s:sequence>
+							</s:complexType>
+						</s:element>
+						<s:element ref="tao:NbUsers" minOccurs="0"/>
+						<s:element ref="tao:NbResults" minOccurs="0"/>
+						<s:element ref="tao:NbResultsMax" minOccurs="0"/>
+					</s:sequence>
+				</s:extension>
+			</s:complexContent>
+		</s:complexType>
+	</s:element>
+	<s:element name="GetUserListResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element ref="tao:GetUserListResult" minOccurs="0"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="DeleteUserInformationListRequest">
+		<s:complexType>
+			<s:complexContent>
+				<s:extension base="tao:BaseType">
+					<s:sequence>
+						<s:element ref="tao:DeletingMode" minOccurs="0"/>
+						<s:element name="UserInformationList">
+							<s:complexType>
+								<s:sequence>
+									<s:element name="UserInformation" maxOccurs="unbounded">
+										<s:complexType>
+											<s:sequence>
+												<s:element ref="tao:UserAlias"/>
+												<s:choice>
+													<s:element name="DropUser" type="s:boolean"/>
+													<s:element name="DropInformations">
+														<s:complexType>
+															<s:sequence>
+																<s:element ref="tao:CardIdentifierList" minOccurs="0"/>
+																<s:element ref="tao:CoordIdentifierList" minOccurs="0"/>
+																<s:element ref="tao:CertIdentifierList" minOccurs="0"/>
+																<s:element ref="tao:TokenIdentifierList" minOccurs="0"/>
+																<s:element ref="tao:CredIdentifierList" minOccurs="0"/>
+																<s:element ref="tao:PersonalDataIdentifierList" minOccurs="0"/>
+																<s:element ref="tao:PasswordIdentifierList" minOccurs="0"/>
+																<s:element ref="tao:UserAliasList" minOccurs="0"/>
+															</s:sequence>
+														</s:complexType>
+													</s:element>
+												</s:choice>
+											</s:sequence>
+										</s:complexType>
+									</s:element>
+								</s:sequence>
+							</s:complexType>
+						</s:element>
+					</s:sequence>
+				</s:extension>
+			</s:complexContent>
+		</s:complexType>
+	</s:element>
+	<s:element name="DeleteUserInformationListResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element ref="tao:DeleteUserInformationListResult"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="DeleteUserInformationListResult">
+		<s:complexType>
+			<s:complexContent>
+				<s:extension base="tao:CommandResponseType"/>
+			</s:complexContent>
+		</s:complexType>
+	</s:element>
+	<s:element name="AddProfileListRequest">
+		<s:complexType>
+			<s:complexContent>
+				<s:extension base="tao:BaseType">
+					<s:sequence>
+						<s:element ref="tao:AddingMode" minOccurs="0"/>
+						<s:element ref="tao:CardProfileList" minOccurs="0"/>
+						<s:element ref="tao:TokenProfileList" minOccurs="0"/>
+					</s:sequence>
+				</s:extension>
+			</s:complexContent>
+		</s:complexType>
+	</s:element>
+	<s:element name="AddProfileListResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element ref="tao:AddProfileListResult"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="AddProfileListResult">
+		<s:complexType>
+			<s:complexContent>
+				<s:extension base="tao:CommandResponseType"/>
+			</s:complexContent>
+		</s:complexType>
+	</s:element>
+	<s:element name="GetProfileListRequest">
+		<s:complexType>
+			<s:complexContent>
+				<s:extension base="tao:BaseType">
+					<s:sequence>
+						<s:element name="SearchCriteria">
+							<s:complexType>
+								<s:sequence>
+									<s:choice minOccurs="0">
+										<s:element name="ReturnAllCardProfiles" type="s:boolean"/>
+										<s:element ref="tao:CardProfileName"/>
+									</s:choice>
+									<s:choice minOccurs="0">
+										<s:element name="ReturnAllTokenProfiles" type="s:boolean"/>
+										<s:element ref="tao:TokenProfileName"/>
+									</s:choice>
+								</s:sequence>
+							</s:complexType>
+						</s:element>
+					</s:sequence>
+				</s:extension>
+			</s:complexContent>
+		</s:complexType>
+	</s:element>
+	<s:element name="GetProfileListResult">
+		<s:complexType>
+			<s:complexContent>
+				<s:extension base="tao:CommandResponseType">
+					<s:sequence>
+						<s:element ref="tao:CardProfileList" minOccurs="0"/>
+						<s:element ref="tao:TokenProfileList" minOccurs="0"/>
+					</s:sequence>
+				</s:extension>
+			</s:complexContent>
+		</s:complexType>
+	</s:element>
+	<s:element name="GetProfileListResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element ref="tao:GetProfileListResult"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:complexType name="ProfileNameListType">
+		<s:sequence>
+			<s:element ref="tao:ProfileName" maxOccurs="unbounded"/>
+		</s:sequence>
+	</s:complexType>
+	<s:element name="DeleteProfileListRequest">
+		<s:complexType>
+			<s:complexContent>
+				<s:extension base="tao:BaseType">
+					<s:sequence>
+						<s:element ref="tao:DeletingMode" minOccurs="0"/>
+						<s:element name="CardProfileNameList" type="tao:ProfileNameListType" minOccurs="0"/>
+						<s:element name="TokenProfileNameList" type="tao:ProfileNameListType" minOccurs="0"/>
+					</s:sequence>
+				</s:extension>
+			</s:complexContent>
+		</s:complexType>
+	</s:element>
+	<s:element name="DeleteProfileListResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element ref="tao:DeleteProfileListResult"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="DeleteProfileListResult">
+		<s:complexType>
+			<s:complexContent>
+				<s:extension base="tao:CommandResponseType"/>
+			</s:complexContent>
+		</s:complexType>
+	</s:element>
+	<s:element name="GetTokenKeyValueRequest">
+		<s:complexType>
+			<s:complexContent>
+				<s:extension base="tao:BaseType">
+					<s:sequence>
+						<s:element ref="tao:TokenKeyIdentifier"/>
+						<s:element name="Challenge" type="s:string" minOccurs="0"/>
+					</s:sequence>
+				</s:extension>
+			</s:complexContent>
+		</s:complexType>
+	</s:element>
+	<s:element name="GetTokenKeyValueResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element ref="tao:GetTokenKeyValueResult"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="GetTokenKeyValueResult">
+		<s:complexType>
+			<s:complexContent>
+				<s:extension base="tao:CommandResponseType">
+					<s:sequence>
+						<s:element name="Value" type="s:string" minOccurs="0"/>
+					</s:sequence>
+				</s:extension>
+			</s:complexContent>
+		</s:complexType>
+	</s:element>
+	<s:element name="LinkDeviceListRequest">
+		<s:complexType>
+			<s:complexContent>
+				<s:extension base="tao:BaseType">
+					<s:sequence>
+						<s:element name="LinkingMode" minOccurs="0">
+							<s:simpleType>
+								<s:restriction base="s:string">
+									<s:enumeration value="LINK"/>
+									<s:enumeration value="UNLINK"/>
+								</s:restriction>
+							</s:simpleType>
+						</s:element>
+						<s:element ref="tao:UserAlias" minOccurs="0"/>
+						<s:element ref="tao:CardIdentifierList" minOccurs="0"/>
+						<s:element ref="tao:CoordIdentifierList" minOccurs="0"/>
+						<s:element ref="tao:CertIdentifierList" minOccurs="0"/>
+						<s:element ref="tao:TokenIdentifierList" minOccurs="0"/>
+						<s:element ref="tao:CredIdentifierList" minOccurs="0"/>
+						<s:element ref="tao:PersonalDataIdentifierList" minOccurs="0"/>
+						<s:element ref="tao:PasswordIdentifierList" minOccurs="0"/>
+					</s:sequence>
+				</s:extension>
+			</s:complexContent>
+		</s:complexType>
+	</s:element>
+	<s:element name="LinkDeviceListResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element ref="tao:LinkDeviceListResult"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="LinkDeviceListResult">
+		<s:complexType>
+			<s:complexContent>
+				<s:extension base="tao:CommandResponseType"/>
+			</s:complexContent>
+		</s:complexType>
+	</s:element>
+	<s:element name="GetDeviceSensitiveValueRequest">
+		<s:complexType>
+			<s:complexContent>
+				<s:extension base="tao:BaseType">
+					<s:sequence>
+						<s:choice>
+							<s:element ref="tao:CardIdentifier"/>
+							<s:element ref="tao:CoordIdentifier"/>
+							<s:element ref="tao:CertIdentifier"/>
+							<s:element ref="tao:TokenIdentifier"/>
+							<s:element ref="tao:CredIdentifier"/>
+							<s:element ref="tao:PersonalDataIdentifier"/>
+							<s:element ref="tao:PasswordIdentifier"/>
+						</s:choice>
+					</s:sequence>
+				</s:extension>
+			</s:complexContent>
+		</s:complexType>
+	</s:element>
+	<s:element name="GetDeviceSensitiveValueResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element ref="tao:GetDeviceSensitiveValueResult"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="GetDeviceSensitiveValueResult">
+		<s:complexType>
+			<s:complexContent>
+				<s:extension base="tao:CommandResponseType">
+					<s:sequence>
+						<s:element name="Value" type="s:string" minOccurs="0"/>
+					</s:sequence>
+				</s:extension>
+			</s:complexContent>
+		</s:complexType>
+	</s:element>
+	<s:element name="SynchronizeUserListRequest">
+		<s:complexType>
+			<s:complexContent>
+				<s:extension base="tao:BaseType">
+					<s:sequence>
+						<s:element ref="tao:CardSynchroList" minOccurs="0"/>
+						<s:element ref="tao:TokenSynchroList" minOccurs="0"/>
+					</s:sequence>
+				</s:extension>
+			</s:complexContent>
+		</s:complexType>
+	</s:element>
+	<s:element name="SynchronizeUserListResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element ref="tao:SynchronizeUserListResult"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="SynchronizeUserListResult">
+		<s:complexType>
+			<s:complexContent>
+				<s:extension base="tao:CommandResponseType"/>
+			</s:complexContent>
+		</s:complexType>
+	</s:element>
+	<s:element name="SearchTokenKeyListRequest">
+		<s:complexType>
+			<s:complexContent>
+				<s:extension base="tao:BaseType">
+					<s:sequence>
+						<s:element name="SearchCriteria">
+							<s:complexType>
+								<s:sequence>
+									<s:element ref="tao:UserAlias" minOccurs="0"/>
+									<s:element ref="tao:SerialNumber" minOccurs="0"/>
+									<s:element ref="tao:PSN" minOccurs="0"/>
+									<s:element ref="tao:KeyType" minOccurs="0"/>
+									<s:element name="OnlyPendingKey" type="s:boolean" minOccurs="0"/>
+								</s:sequence>
+							</s:complexType>
+						</s:element>
+					</s:sequence>
+				</s:extension>
+			</s:complexContent>
+		</s:complexType>
+	</s:element>
+	<s:element name="SearchTokenKeyListResponse">
+		<s:complexType>
+			<s:sequence>
+				<s:element ref="tao:SearchTokenKeyListResult"/>
+			</s:sequence>
+		</s:complexType>
+	</s:element>
+	<s:element name="SearchTokenKeyListResult">
+		<s:complexType>
+			<s:complexContent>
+				<s:extension base="tao:CommandResponseType">
+					<s:sequence>
+						<s:element name="TokenKeyIdentifierList">
+							<s:complexType>
+								<s:sequence>
+									<s:element ref="tao:TokenKeyIdentifier" minOccurs="0" maxOccurs="unbounded"/>
+								</s:sequence>
+							</s:complexType>
+						</s:element>
+					</s:sequence>
+				</s:extension>
+			</s:complexContent>
+		</s:complexType>
+	</s:element>
+	<s:element name="CallerRequest">
+		<s:complexType>
+			<s:choice>
+				<s:element ref="tao:AddUserListRequest"/>
+				<s:element ref="tao:GetUserListRequest"/>
+				<s:element ref="tao:DeleteUserInformationListRequest"/>
+				<s:element ref="tao:AddProfileListRequest"/>
+				<s:element ref="tao:GetProfileListRequest"/>
+				<s:element ref="tao:DeleteProfileListRequest"/>
+				<s:element ref="tao:SynchronizeUserListRequest"/>
+				<s:element ref="tao:GetDeviceSensitiveValueRequest"/>
+				<s:element ref="tao:LinkDeviceListRequest"/>
+				<s:element ref="tao:SearchTokenKeyListRequest"/>
+				<s:element ref="tao:GetTokenKeyValueRequest"/>
+			</s:choice>
+		</s:complexType>
+	</s:element>
+</s:schema>

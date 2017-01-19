@@ -1,0 +1,523 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  	DACS API Disclaimer 
+
+	Copyright (c) 2014, Dictao.
+	
+	All rights reserved.
+	
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are met:
+   
+  - Redistributions of source code must retain the above copyright notice,
+    this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+  - Neither the name of the Dictao nor the names of its contributors may
+    be used to endorse or promote products derived from this software without
+    specific prior written permission.
+	 
+  THIS API IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+  CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+	
+	Additional conditions are available on Dictao Developer website:
+		http://www.dictao.com/developer/api/disclaimer
+	
+ -->
+ <xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<!-- TYPE DEFINITION -->
+	<!--  type STATUS -->
+	<xs:simpleType name="PaymentSchemeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="VISA"/>
+			<xs:enumeration value="MASTERCARD"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!--  type USER -->
+	<xs:complexType name="UserInfoType">
+		<xs:sequence>
+			<xs:element ref="UserAliasList" minOccurs="0"/>
+			<xs:element ref="FriendlyName" minOccurs="0"/>
+			<xs:element ref="ClientRef" minOccurs="0"/>
+			<xs:element ref="GroupId" minOccurs="0"/>
+			<xs:element ref="CardInformationList" minOccurs="0"/>
+			<xs:element ref="IdentityInformationList" minOccurs="0"/>
+			<xs:element ref="AttributeList" minOccurs="0"/>
+			<xs:element ref="AuthPluginInfo" minOccurs="0"/>
+			<xs:element ref="MetadataList" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UserInfoListType">
+		<xs:sequence>
+			<xs:element ref="UserInfo" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UserInfoToUpdateType" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="UserInfoType">
+				<xs:sequence>
+					<xs:element ref="ExistingUserAlias" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="UserInfoToUpdateListType">
+		<xs:sequence>
+			<xs:element ref="UserInfoToUpdate" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- type CARD -->
+	<xs:complexType name="CardInformationType">
+		<xs:sequence>
+			<xs:element ref="PAN"/>
+			<xs:element ref="FriendlyName"/>
+			<xs:element ref="Validity" minOccurs="0"/>
+			<xs:element ref="PaymentScheme" minOccurs="0"/>
+			<xs:element ref="Authorized" minOccurs="0"/>
+			<xs:element ref="LastAccess" minOccurs="0"/>
+			<xs:element ref="AuthPluginInfo" minOccurs="0"/>
+			<xs:element ref="Activated" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CardInformationListType">
+		<xs:sequence>
+			<xs:element ref="CardInformation" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ExistingCardInfoType">
+		<xs:sequence>
+			<xs:element ref="ExistingUserAlias"/>
+			<xs:element ref="PAN"/>
+			<xs:element ref="Validity" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ExistingCardInfoTypeList">
+		<xs:sequence>
+			<xs:element ref="ExistingCardInfo" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--  type ALIAS -->
+	<xs:complexType name="UserAliasListType">
+		<xs:sequence>
+			<xs:element ref="UserAlias" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--   type AUTHENT PLUGIN-->
+	<xs:complexType name="BaseAuthPluginInfoType">
+		<xs:sequence>
+			<xs:element ref="NbFailures" minOccurs="0"/>
+			<xs:element ref="Unlocked" minOccurs="0"/>
+			<xs:element ref="Activated" minOccurs="0"/>
+			<xs:element ref="Available" minOccurs="0"/>
+			<xs:element ref="Enrolled" minOccurs="0"/>
+			<xs:element ref="NbFallbacks" minOccurs="0"/>
+			<xs:element ref="LastAccess" minOccurs="0"/>
+			<xs:choice minOccurs="0">
+				<xs:element ref="Scope"/>
+				<xs:element ref="AllScopes"/>
+			</xs:choice>
+			<xs:element ref="NbOfFailuresAfterAutomaticUnlocking" minOccurs="0"/>
+			<xs:element ref="AutomaticUnlockingDate" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AuthPluginInfoBirthdateType" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="BaseAuthPluginInfoType">
+				<xs:sequence>
+					<xs:element name="AliasBirthdate" type="xs:string" minOccurs="0"/>
+					<xs:choice>
+						<xs:element ref="Birthdate" minOccurs="0"/>
+						<xs:element name="BirthdateStr" type="xs:string" minOccurs="0"/>
+					</xs:choice>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AuthPluginInfoCertificateType" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="BaseAuthPluginInfoType">
+				<xs:sequence>
+					<xs:element name="AliasCertificate" type="xs:string" minOccurs="0"/>
+					<xs:element name="Certificate" type="xs:string" minOccurs="0"/>
+					<xs:element name="CertifSpecificValue" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AuthPluginInfoSIMType" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="BaseAuthPluginInfoType">
+				<xs:sequence>
+					<xs:element name="AliasSIM" type="xs:string" minOccurs="0"/>
+					<xs:element name="MobileNumber" type="xs:string" minOccurs="0"/>
+					<xs:element name="SimStatus" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AuthPluginInfoSMSType" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="BaseAuthPluginInfoType">
+				<xs:sequence>
+					<xs:element name="AliasSMS" type="xs:string" minOccurs="0"/>
+					<xs:element name="Mode" type="xs:string" minOccurs="0"/>
+					<xs:element name="Parameters" type="xs:string" minOccurs="0"/>
+					<xs:element name="TransactionId" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AuthPluginInfoCapType" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="BaseAuthPluginInfoType">
+				<xs:sequence>
+					<xs:element name="AliasCap" type="xs:string" minOccurs="0"/>
+					<xs:element name="Mode" type="xs:string" minOccurs="0"/>
+					<xs:element name="Parameters" type="xs:string" minOccurs="0"/>
+					<xs:element name="TransactionId" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AuthPluginInfoChallengeResponseType" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="BaseAuthPluginInfoType">
+				<xs:sequence>
+					<xs:element name="AliasResponse" type="xs:string" minOccurs="0"/>
+					<xs:element name="Challenge" type="xs:string" minOccurs="0"/>
+					<xs:element ref="Response" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AuthPluginInfoPasswordType" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="BaseAuthPluginInfoType">
+				<xs:sequence>
+					<xs:element name="AliasPassword" type="xs:string" minOccurs="0"/>
+					<xs:element ref="Password" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AuthPluginInfoEmailType" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="BaseAuthPluginInfoType">
+				<xs:sequence>
+					<xs:element name="AliasEmail" type="xs:string" minOccurs="0"/>
+					<xs:element name="EmailAdress" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AuthPluginInfoOATHType" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="BaseAuthPluginInfoType">
+				<xs:sequence>
+					<xs:element name="AliasOATH" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AuthPluginInfoCustomType" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="BaseAuthPluginInfoType">
+				<xs:sequence>
+					<xs:element name="Type" type="xs:string"/>
+					<xs:element name="Alias" type="xs:string" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AuthPluginInfoType">
+		<xs:sequence>
+			<xs:element ref="AuthPluginInfoBirthdate" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="AuthPluginInfoSMS" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="AuthPluginInfoCap" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="AuthPluginInfoChallengeResponse" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="AuthPluginInfoPassword" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="AuthPluginInfoCertificate" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="AuthPluginInfoEmail" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="AuthPluginInfoOATH" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="AuthPluginInfoSIM" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="AuthPluginInfoCustom" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- type IDENTITY -->
+	<xs:complexType name="IdentityInformationType">
+		<xs:sequence>
+			<xs:element ref="ApplicationName"/>
+			<xs:element ref="UserIdentity"/>
+			<xs:element ref="FriendlyName"/>
+			<xs:element ref="LastAccess" minOccurs="0" />
+			<xs:element ref="Authorized" minOccurs="0" />
+			<xs:element ref="Activated" minOccurs="0" />
+            <xs:element ref="LastAccessSuccess" minOccurs="0" />
+            <xs:element ref="IdentityLoginList" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+<!--     <xs:simpleType name="IdentityLoginAction">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="MERGE"/>
+            <xs:enumeration value="MERGE"/>
+        </xs:restriction>      
+    </xs:simpleType>
+ -->
+ 
+  <xs:simpleType name="IdentityLoginActionType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="MERGE"/>
+            <xs:enumeration value="REPLACE"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+<!--     <xs:element name="IdentityLoginAction">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="local" type="IdentityLoginActionType"/>
+                <xs:element name="ref" type="IdentityLoginActionType"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+         -->
+    <xs:element name="IdentityLoginList" type="IdentityLoginListType" />
+    <xs:complexType name="IdentityLoginListType">
+        <xs:sequence>
+            <xs:element name="IdentityLogin" minOccurs="0" maxOccurs="unbounded" type="xs:string"/>
+        </xs:sequence>
+        <xs:attribute name="Action" type="IdentityLoginActionType" />
+    </xs:complexType>
+        
+	<xs:complexType name="IdentityInformationListType">
+		<xs:sequence>
+			<xs:element ref="IdentityInformation" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ExistingIdentityInfoType">
+		<xs:sequence>
+			<xs:element ref="ExistingUserAlias"/>
+			<xs:element ref="ApplicationName"/>
+			<xs:element ref="UserIdentity"/>
+			<xs:element ref="FriendlyName"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ExistingIdentityInfoTypeList">
+		<xs:sequence>
+			<xs:element ref="ExistingIdentityInfo" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+    
+	<!-- type APPLICATION -->
+	<xs:complexType name="ApplicationInformationType">
+		<xs:sequence>
+			<xs:element ref="ApplicationName"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ApplicationInformationListType">
+		<xs:sequence>
+			<xs:element ref="ApplicationInformation" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- type ATTRIBUTE -->
+	<xs:complexType name="AttributeType">
+        <xs:sequence>
+			<xs:element ref="AttributeName"/>
+			<xs:element ref="AttributeValue" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="removeExisting" type="xs:boolean"/>
+        <xs:attribute name="replaceExisting" type="xs:boolean"/>
+    </xs:complexType>
+	<xs:complexType name="AttributeListType">
+		<xs:sequence>
+			<xs:element ref="Attribute" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!--xs:attribute name="replaceExisting" type="xs:boolean"/>-->
+	</xs:complexType>
+	<!-- type METADATA -->
+	<xs:complexType name="MetadataType">
+        <xs:sequence>
+			<xs:element ref="MetadataKey"/>
+			<xs:element ref="MetadataValue" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="removeExisting" type="xs:boolean"/>
+    </xs:complexType>
+	<xs:complexType name="MetadataListType">
+		<xs:sequence>
+			<xs:element ref="Metadata" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--    type RESPONSE-->
+	<xs:complexType name="CommonFailureDetailsType">
+		<xs:sequence>
+			<xs:element name="ListItemIndex" type="xs:int"/>
+			<xs:element name="Status" type="xs:int"/>
+			<xs:element name="Comment" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FailureDetailsType">
+		<xs:sequence>
+			<xs:element ref="UserFailureDetails" minOccurs="0"/>
+			<xs:element ref="AliasFailureDetails" minOccurs="0"/>
+			<xs:element ref="CardFailureDetails" minOccurs="0"/>
+			<xs:element ref="AuthPluginFailureDetails" minOccurs="0"/>
+			<xs:element ref="IdentityFailureDetails" minOccurs="0"/>
+			<xs:element ref="ApplicationFailureDetails" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CommandRequestBaseType"/>
+	<xs:complexType name="CommandResponseBaseType">
+		<xs:sequence>
+			<xs:element name="Result" type="CommandResponseType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CommandResponseType">
+		<xs:sequence>
+			<xs:element name="OpStatus" type="xs:int"/>
+			<xs:element name="GlobalStatus" type="xs:int"/>
+			<xs:element ref="FailureDetails" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AliasFailureDetailsType" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="CommonFailureDetailsType">
+				<xs:sequence>
+					<xs:element ref="ExistingUserAlias"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="CardFailureDetailsType" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="CommonFailureDetailsType">
+				<xs:sequence>
+					<xs:element ref="ExistingCardInfo"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="UserFailureDetailsType" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="CommonFailureDetailsType">
+				<xs:sequence>
+					<xs:element ref="ExistingUserAlias"/>
+					<xs:element ref="AliasFailureDetails" minOccurs="0"/>
+					<xs:element ref="CardFailureDetails" minOccurs="0"/>
+					<xs:element ref="IdentityFailureDetails" minOccurs="0"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="AuthPluginFailureDetailsType" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="CommonFailureDetailsType">
+				<xs:sequence>
+					<xs:element ref="ExistingUserAlias"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="IdentityFailureDetailsType" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="CommonFailureDetailsType">
+				<xs:sequence>
+					<xs:element ref="ExistingIdentityInfo"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ApplicationFailureDetailsType" mixed="false">
+		<xs:complexContent mixed="false">
+			<xs:extension base="CommonFailureDetailsType">
+				<xs:sequence>
+					<xs:element ref="ApplicationInformation"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- COMMON  -->
+	<xs:element name="NbFailures" type="xs:int"/>
+	<xs:element name="NbOfFailuresAfterAutomaticUnlocking" type="xs:int"/>
+	<xs:element name="NbFallbacks" type="xs:int"/>
+	<xs:element name="LastAccess" type="xs:dateTime"/>	
+    <xs:element name="LastAccessSuccess" type="xs:dateTime"/>
+	<xs:element name="AutomaticUnlockingDate" type="xs:dateTime"/>
+	<xs:element name="Scope" type="xs:string"/>
+	<xs:element name="AllScopes" type="xs:boolean"/>
+	<!-- USER-->
+	<xs:element name="GroupId" type="xs:string"/>
+	<xs:element name="ClientRef" type="xs:string"/>
+	<xs:element name="FriendlyName" type="xs:string"/>
+	<xs:element name="UserInfo" type="UserInfoType"/>
+	<xs:element name="UserInfoList" type="UserInfoListType"/>
+	<xs:element name="UserInfoToUpdate" type="UserInfoToUpdateType"/>
+	<xs:element name="UserInfoToUpdateList" type="UserInfoToUpdateListType"/>
+	<!-- CARD-->
+	<xs:element name="PaymentScheme" type="PaymentSchemeType"/>
+	<xs:element name="Authorized" type="xs:boolean"/>
+	<xs:element name="CardInformation" type="CardInformationType"/>
+	<xs:element name="CardInformationList" type="CardInformationListType"/>
+	<xs:element name="ExistingCardInfo" type="ExistingCardInfoType"/>
+	<xs:element name="ExistingCardInfoList" type="ExistingCardInfoTypeList"/>
+	<!-- ALIAS -->
+	<xs:element name="UserAlias" type="xs:string"/>
+	<xs:element name="UserAliasList" type="UserAliasListType"/>
+	<xs:element name="ExistingUserAlias" type="xs:string"/>
+	<xs:element name="ExistingUserAliasList" type="UserAliasListType"/>
+	<!-- AUTH PLUGIN-->
+	<xs:element name="Activated" type="xs:boolean"/>
+	<xs:element name="Unlocked" type="xs:boolean"/>
+	<xs:element name="Available" type="xs:boolean"/>
+	<xs:element name="Enrolled" type="xs:boolean"/>
+	<xs:element name="AuthPluginInfoBirthdate" type="AuthPluginInfoBirthdateType"/>
+	<xs:element name="AuthPluginInfoCertificate" type="AuthPluginInfoCertificateType"/>
+	<xs:element name="AuthPluginInfoChallengeResponse" type="AuthPluginInfoChallengeResponseType"/>
+	<xs:element name="AuthPluginInfoEmail" type="AuthPluginInfoEmailType"/>
+	<xs:element name="AuthPluginInfoOATH" type="AuthPluginInfoOATHType"/>
+	<xs:element name="AuthPluginInfoPassword" type="AuthPluginInfoPasswordType"/>
+	<xs:element name="AuthPluginInfoSIM" type="AuthPluginInfoSIMType"/>
+	<xs:element name="AuthPluginInfoSMS" type="AuthPluginInfoSMSType"/>
+	<xs:element name="AuthPluginInfoCap" type="AuthPluginInfoCapType"/>
+	<xs:element name="AuthPluginInfoCustom" type="AuthPluginInfoCustomType"/>
+	<xs:element name="AuthPluginInfo" type="AuthPluginInfoType"/>
+	<!-- IDENTITY-->
+	<xs:element name="UserIdentity" type="xs:string"/>
+	<xs:element name="IdentityInformation" type="IdentityInformationType"/>
+	<xs:element name="IdentityInformationList" type="IdentityInformationListType"/>
+	<xs:element name="ExistingIdentityInfo" type="ExistingIdentityInfoType"/>
+	<xs:element name="ExistingIdentityInfoList" type="ExistingIdentityInfoTypeList"/>
+	<!-- APPLICATION -->
+	<xs:element name="ApplicationName" type="xs:string"/>
+	<xs:element name="ExistingApplicationName" type="xs:string"/>
+	<xs:element name="ApplicationInformation" type="ApplicationInformationType"/>
+	<xs:element name="ApplicationInformationList" type="ApplicationInformationListType"/>
+	<!-- ATTRIBUTE-->
+	<xs:element name="AttributeName" type="xs:string"/>
+	<xs:element name="AttributeValue" type="xs:string"/>
+	<xs:element name="Attribute" type="AttributeType"/>
+	<xs:element name="AttributeList" type="AttributeListType"/>
+	<!-- METADATA -->
+	<xs:element name="MetadataKey" type="xs:string"/>
+	<xs:element name="MetadataValue" type="xs:string"/>
+	<xs:element name="Metadata" type="MetadataType"/>
+	<xs:element name="MetadataList" type="MetadataListType"/>
+	<!-- TYPE RESPONSE -->
+	<xs:element name="UserFailureDetails" type="UserFailureDetailsType"/>
+	<xs:element name="AliasFailureDetails" type="AliasFailureDetailsType"/>
+	<xs:element name="CardFailureDetails" type="CardFailureDetailsType"/>
+	<xs:element name="AuthPluginFailureDetails" type="AuthPluginFailureDetailsType"/>
+	<xs:element name="IdentityFailureDetails" type="IdentityFailureDetailsType"/>
+	<xs:element name="ApplicationFailureDetails" type="ApplicationFailureDetailsType"/>
+	<xs:element name="FailureDetails" type="FailureDetailsType"/>
+</xs:schema>

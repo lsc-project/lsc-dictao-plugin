@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<bindings version="2.1" xmlns="http://java.sun.com/xml/ns/jaxb">
+  <!--
+
+Ce fichier a été généré par l'implémentation de référence JavaTM Architecture for XML Binding (JAXB), v2.2.6 
+Voir <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
+Toute modification apportée à ce fichier sera perdue lors de la recompilation du schéma source. 
+Généré le : 2016.09.01 à 04:09:41 PM CEST 
+
+  -->
+  <bindings scd="x-schema::tns" xmlns:tns="http://dictao.com/ns/dacs/lsc-agent-1.0">
+    <schemaBindings map="false">
+      <package name="org.lsc.plugins.connectors.dictao.configuration.generated"/>
+    </schemaBindings>
+    <bindings scd="tns:dacsProvisioningConnectionSettings">
+      <class ref="org.lsc.plugins.connectors.dictao.configuration.generated.DacsProvisioningConnectionSettings"/>
+    </bindings>
+    <bindings scd="~tns:storeType">
+      <class ref="org.lsc.plugins.connectors.dictao.configuration.generated.StoreType"/>
+    </bindings>
+    <bindings scd="~tns:ProxySettingsType">
+      <class ref="org.lsc.plugins.connectors.dictao.configuration.generated.ProxySettingsType"/>
+    </bindings>
+    <bindings scd="tns:virtualServiceConnectionSettings">
+      <class ref="org.lsc.plugins.connectors.dictao.configuration.generated.VirtualServiceConnectionSettings"/>
+    </bindings>
+    <bindings scd="tns:dvsValidationServiceSettings">
+      <class ref="org.lsc.plugins.connectors.dictao.configuration.generated.DvsValidationServiceSettings"/>
+    </bindings>
+    <bindings scd="tns:dvsProvisioningConnectionSettings">
+      <class ref="org.lsc.plugins.connectors.dictao.configuration.generated.DvsProvisioningConnectionSettings"/>
+    </bindings>
+    <bindings scd="tns:dvsProvisioningServiceSettings">
+      <class ref="org.lsc.plugins.connectors.dictao.configuration.generated.DvsProvisioningServiceSettings"/>
+    </bindings>
+    <bindings scd="tns:dacsProvisioningServiceSettings">
+      <class ref="org.lsc.plugins.connectors.dictao.configuration.generated.DacsProvisioningServiceSettings"/>
+    </bindings>
+    <bindings scd="tns:d3sProvisioningServiceSettings">
+      <class ref="org.lsc.plugins.connectors.dictao.configuration.generated.D3SProvisioningServiceSettings"/>
+    </bindings>
+    <bindings scd="tns:dacsRepositoryServiceSettings">
+      <class ref="org.lsc.plugins.connectors.dictao.configuration.generated.DacsRepositoryServiceSettings"/>
+    </bindings>
+    <bindings scd="tns:d3sProvisioningConnectionSettings">
+      <class ref="org.lsc.plugins.connectors.dictao.configuration.generated.D3SProvisioningConnectionSettings"/>
+    </bindings>
+    <bindings scd="~tns:userLevelType">
+      <typesafeEnumClass ref="org.lsc.plugins.connectors.dictao.configuration.generated.UserLevelType"/>
+    </bindings>
+  </bindings>
+</bindings>
+

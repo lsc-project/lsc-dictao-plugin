@@ -1,0 +1,41 @@
+<!--	Build the distribution archive for LSC	-->
+
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.0 http://maven.apache.org/xsd/assembly-1.1.0.xsd">
+	<id>dist</id>
+	<formats>
+		<format>zip</format>
+		<format>tar.gz</format>
+	</formats>
+	<baseDirectory>lsc-dictao-${project.version}</baseDirectory>
+
+	<fileSets>
+		<fileSet>
+			<directory>misc</directory>
+			<fileMode>0644</fileMode>
+			<directoryMode>0755</directoryMode>
+			<outputDirectory>resources</outputDirectory>
+		</fileSet>
+	</fileSets>
+
+	<!-- Include all runtime dependencies of the project -->
+	<dependencySets>
+		<dependencySet>
+			<scope>runtime</scope>
+			<outputDirectory>lib</outputDirectory>
+			<fileMode>0644</fileMode>
+			<directoryMode>0755</directoryMode>
+		</dependencySet>
+		<dependencySet>
+			<outputDirectory>sample/lib</outputDirectory>
+			<includes>
+				<include>org.forgerock.opendj:opendj-server</include>
+				<include>postgresql:postgresql</include>
+				<!-- see also the tests jar included in a fileSet above -->
+			</includes>
+			<fileMode>0644</fileMode>
+			<directoryMode>0755</directoryMode>
+		</dependencySet>
+	</dependencySets>
+</assembly>

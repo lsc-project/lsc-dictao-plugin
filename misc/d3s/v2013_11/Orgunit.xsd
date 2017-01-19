@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+
+  	D3S API Disclaimer 
+
+	Copyright (c) 2014, Dictao.
+	
+	All rights reserved.
+	
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are met:
+   
+  - Redistributions of source code must retain the above copyright notice,
+    this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+  - Neither the name of the Dictao nor the names of its contributors may
+    be used to endorse or promote products derived from this software without
+    specific prior written permission.
+	 
+  THIS API IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+  CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+	
+	Additional conditions are available on Dictao Developer website:
+		http://www.dictao.com/developer/api/disclaimer
+	
+ -->
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+        xmlns:tns="http://www.dictao.com/d3s/xsd/v2013_11/Orgunit" 
+        xmlns:com="http://www.dictao.com/d3s/xsd/v2013_11/Common" 
+        targetNamespace="http://www.dictao.com/d3s/xsd/v2013_11/Orgunit" 
+        elementFormDefault="qualified">
+
+    <import namespace="http://www.dictao.com/d3s/xsd/v2013_11/Common" schemaLocation="./Common.xsd"/>
+
+    <complexType name="Create">
+        <annotation>
+            <documentation xml:lang="en">
+                Input type for creating a new orgunit.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="containerPath" type="com:Path">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Path of the parent orgunit.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="orgunit" type="tns:Orgunit">
+                <annotation>
+                    <documentation xml:lang="en">
+                        New orgunit.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="firstUserPath" type="com:Path">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Path of the first user to link to this new orgunit.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="firstUserRolePath" type="com:Path">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Path of the role of the first user within this new orgunit.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="options" type="com:Options" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Additional options.
+                    </documentation>
+                </annotation>
+            </element> 
+        </sequence>
+    </complexType>
+    <complexType name="ReadResponse">
+        <annotation>
+            <documentation xml:lang="en">
+                Output type returned when reading an orgunit.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="orgunit" type="tns:Orgunit">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Read orgunit.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="Update">
+        <annotation>
+            <documentation xml:lang="en">
+                Input type for updating an orgunit.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="resourcePath" type="com:Path">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Path of the orgunit to update.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="orgunit" type="tns:Orgunit">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Updated orgunit. Only set attributes are modified.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="options" type="com:Options" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Additional options.
+                    </documentation>
+                </annotation>
+            </element> 
+        </sequence>
+    </complexType>
+    <complexType name="Orgunit">
+        <annotation>
+            <documentation xml:lang="en">
+                <![CDATA[Input or output type describing a orgunit (group of users).<br/>
+                All elements are optional in schema to enable updates of a single attribute.<br/>
+                <strong>But some elements are required by application</strong>, see Content documentation.]]>
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="ID" type="com:String" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Orgunit unique identifier generated by server.<br/>
+                        Ignored if provided by caller.]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="name" type="com:String" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Orgunit name. Must be unique within the parent orgunit.<br/>
+                        <strong>Mandatory on creation.</strong>]]>                        
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="description" type="com:String" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Orgunit description.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="creationDate" type="dateTime" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Computed Orgunit creation date.<br/>
+                        <strong>Ignored if provided by caller.</strong>]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="updateDate" type="dateTime" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Computed Orgunit update date.<br/>
+                        <strong>Ignored if provided by caller.</strong>]]>
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+</schema>

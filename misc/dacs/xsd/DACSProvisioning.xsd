@@ -1,0 +1,649 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  	DACS API Disclaimer 
+
+	Copyright (c) 2014, Dictao.
+	
+	All rights reserved.
+	
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are met:
+   
+  - Redistributions of source code must retain the above copyright notice,
+    this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+  - Neither the name of the Dictao nor the names of its contributors may
+    be used to endorse or promote products derived from this software without
+    specific prior written permission.
+	 
+  THIS API IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+  CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+	
+	Additional conditions are available on Dictao Developer website:
+		http://www.dictao.com/developer/api/disclaimer
+	
+ -->
+<xs:schema xmlns:tao="http://www.dictao.com/DACS/FrontEnd/Provisioning" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.dictao.com/DACS/FrontEnd/Provisioning" elementFormDefault="qualified">
+	<xs:include schemaLocation="DACSRepositoryTypes.xsd"/>
+	<!-- type ENCODAGE -->
+	<xs:simpleType name="EncodageType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SHA256"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- specific format -->
+	<xs:element name="Validity" type="xs:date"/>
+	<xs:element name="PAN">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="Encodage" type="xs:string"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Birthdate">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:date">
+					<xs:attribute name="Encodage" type="xs:string"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Response">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="Encodage" type="xs:string"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Password">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="Encodage" type="xs:string"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+    <xs:complexType name="GroupIdListType">
+		<xs:sequence>
+			<xs:element ref="tao:GroupId" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ApplicationNameListListType">
+		<xs:sequence>
+			<xs:element ref="tao:ApplicationName" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Expiration" type="xs:string"/>
+	<xs:element name="NbUsers" type="xs:int"/>
+	<xs:element name="FirstIdx" type="xs:int"/>
+	<xs:element name="LastIdx" type="xs:int"/>
+	<xs:element name="GroupIdList" type="tao:GroupIdListType"/>
+	<xs:element name="ApplicationNameList" type="tao:ApplicationNameListListType"/>
+	<!-- OBJECT FOR CALLER -->
+	<xs:element name="CallerRequest">
+		<xs:annotation>
+			<xs:documentation>REQUEST for caller provisioning</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tao:AddUserListRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="tao:RemoveUserListRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="tao:AddAliasesToUserRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="tao:RemoveAliasesFromUserRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="tao:AddCardsToUserRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="tao:RemoveCardsFromUserRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="tao:AddAuthPluginInfoToUserRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="tao:RemoveAuthPluginInfoFromUserRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="tao:AddAuthPluginInfoToUserListRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="tao:RemoveAuthPluginInfoFromUserListRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="tao:UpdateUserInfoListRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="tao:AddOrUpdateUserInfoListRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="tao:AddIdentitiesToUserRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="tao:RemoveIdentitiesFromUserRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="tao:AddApplicationsRequest" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element ref="tao:GetUserListRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="tao:GetUserInfoRequest" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element ref="tao:AddIdentityLoginToUserRequest" minOccurs="0" maxOccurs="unbounded"/>
+                <xs:element ref="tao:RemoveIdentityLoginFromUserRequest" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AddUserListRequest">
+		<xs:annotation>
+			<xs:documentation>REQUEST:_add_a_list_of_USER_informations</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="tao:CommandRequestBaseType">
+					<xs:sequence>
+						<xs:element ref="tao:UserInfoList"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AddUserListResponse">
+		<xs:annotation>
+			<xs:documentation>RESPONSE:_add_a_list_of_USER_informations</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="tao:CommandResponseBaseType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RemoveUserListRequest">
+		<xs:annotation>
+			<xs:documentation>REQUEST: remove a list of USER informations</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="tao:CommandRequestBaseType">
+					<xs:sequence>
+						<xs:element ref="tao:ExistingUserAliasList"/>
+					</xs:sequence>
+					<xs:attribute name="ignoreIfAbsent" type="xs:boolean"/>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RemoveUserListResponse">
+		<xs:annotation>
+			<xs:documentation>RESPONSE: remove a list of USER informations</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="tao:CommandResponseBaseType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AddAliasesToUserRequest">
+		<xs:annotation>
+			<xs:documentation>REQUEST: add aliases to USER</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="tao:CommandRequestBaseType">
+					<xs:sequence>
+						<xs:element ref="tao:ExistingUserAlias"/>
+						<xs:element ref="tao:UserAliasList"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AddAliasesToUserResponse">
+		<xs:annotation>
+			<xs:documentation>RESPONSE: add aliases to USER</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="tao:CommandResponseBaseType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RemoveAliasesFromUserRequest">
+		<xs:annotation>
+			<xs:documentation>REQUEST: remove aliases from USER</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="tao:CommandRequestBaseType">
+					<xs:sequence>
+						<xs:element ref="tao:UserAliasList"/>
+					</xs:sequence>
+					<xs:attribute name="ignoreIfAbsent" type="xs:boolean"/>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RemoveAliasesFromUserResponse">
+		<xs:annotation>
+			<xs:documentation>RESPONSE: remove aliases from USER</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="tao:CommandResponseBaseType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AddCardsToUserRequest">
+		<xs:annotation>
+			<xs:documentation>REQUEST: add cards informations to USER</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="tao:CommandRequestBaseType">
+					<xs:sequence>
+						<xs:element ref="tao:ExistingUserAlias"/>
+						<xs:element ref="tao:CardInformationList"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AddCardsToUserResponse">
+		<xs:annotation>
+			<xs:documentation>RESPONSE: add cards informations to USER</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="tao:CommandResponseBaseType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RemoveCardsFromUserRequest">
+		<xs:annotation>
+			<xs:documentation>REQUEST: remove cards informations from USER</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="tao:CommandRequestBaseType">
+					<xs:sequence>
+						<xs:element ref="tao:ExistingCardInfoList"/>
+					</xs:sequence>
+					<xs:attribute name="ignoreIfAbsent" type="xs:boolean"/>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RemoveCardsFromUserResponse">
+		<xs:annotation>
+			<xs:documentation>RESPONSE: remove cards informations from USER</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="tao:CommandResponseBaseType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AddAuthPluginInfoToUserRequest">
+		<xs:annotation>
+			<xs:documentation>REQUEST: add authent plugins informations for a USER</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="tao:CommandRequestBaseType">
+					<xs:sequence>
+						<xs:element ref="tao:ExistingUserAlias"/>
+						<xs:element ref="tao:AuthPluginInfo"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AddAuthPluginInfoToUserResponse">
+		<xs:annotation>
+			<xs:documentation> RESPONSE: add authent plugins informations for a USER </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="tao:CommandResponseBaseType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RemoveAuthPluginInfoFromUserRequest">
+		<xs:annotation>
+			<xs:documentation> REQUEST: remove authent plugins informations from a USER</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="tao:CommandRequestBaseType">
+					<xs:sequence>
+						<xs:element ref="tao:ExistingUserAlias"/>
+						<xs:element name="RemoveAuthPluginInfoBirthdate" type="xs:boolean" minOccurs="0"/>
+						<xs:element name="RemoveAuthPluginInfoSMS" type="xs:boolean" minOccurs="0"/>
+						<xs:element name="RemoveAuthPluginInfoCAP" type="xs:boolean" minOccurs="0"/>
+						<xs:element name="RemoveAuthPluginInfoChallengeResponse" type="xs:boolean" minOccurs="0"/>
+						<xs:element name="RemoveAuthPluginInfoPassword" type="xs:boolean" minOccurs="0"/>
+						<xs:element name="RemoveAuthPluginInfoCertificate" type="xs:boolean" minOccurs="0"/>
+						<xs:element name="RemoveAuthPluginInfoEmail" type="xs:boolean" minOccurs="0"/>
+						<xs:element name="RemoveAuthPluginInfoOATH" type="xs:boolean" minOccurs="0"/>
+						<xs:element name="RemoveAuthPluginInfoSIM" type="xs:boolean" minOccurs="0"/>
+					</xs:sequence>
+					<xs:attribute name="ignoreIfAbsent" type="xs:boolean"/>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RemoveAuthPluginInfoFromUserResponse">
+		<xs:annotation>
+			<xs:documentation>RESPONSE: remove authent plugins informations from a USER</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="tao:CommandResponseBaseType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AddAuthPluginInfoToUserListRequest">
+		<xs:annotation>
+			<xs:documentation>REQUEST: add authent plugins informations for a USER</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="tao:CommandRequestBaseType">
+					<xs:sequence>
+						<xs:element ref="tao:AddAuthPluginInfoToUserRequest" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AddAuthPluginInfoToUserListResponse">
+		<xs:annotation>
+			<xs:documentation> RESPONSE: add authent plugins informations for a USER </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="tao:CommandResponseBaseType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RemoveAuthPluginInfoFromUserListRequest">
+		<xs:annotation>
+			<xs:documentation> REQUEST: remove authent plugins informations from a USER</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="tao:CommandRequestBaseType">
+					<xs:sequence>
+						<xs:element ref="tao:RemoveAuthPluginInfoFromUserRequest" maxOccurs="unbounded"/>
+					</xs:sequence>
+					<xs:attribute name="ignoreIfAbsent" type="xs:boolean"/>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RemoveAuthPluginInfoFromUserListResponse">
+		<xs:annotation>
+			<xs:documentation>RESPONSE: remove authent plugins informations from a USER</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="tao:CommandResponseBaseType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="UpdateUserInfoListRequest">
+		<xs:annotation>
+			<xs:documentation>REQUEST: update a list of USER informations</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="tao:CommandRequestBaseType">
+					<xs:sequence>
+						<xs:element ref="tao:UserInfoToUpdateList"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="UpdateUserInfoListResponse">
+		<xs:annotation>
+			<xs:documentation>RESPONSE: update a list of USER informations</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="tao:CommandResponseBaseType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AddOrUpdateUserInfoListRequest">
+		<xs:annotation>
+			<xs:documentation>REQUEST: add or update a list of USER informations</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="tao:CommandRequestBaseType">
+					<xs:sequence>
+						<xs:element ref="tao:UserInfoToUpdateList"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AddOrUpdateUserInfoListResponse">
+		<xs:annotation>
+			<xs:documentation>RESPONSE: add or update a list of USER informations</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="tao:CommandResponseBaseType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AddIdentitiesToUserRequest">
+		<xs:annotation>
+			<xs:documentation>REQUEST: add identities informations to USER</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="tao:CommandRequestBaseType">
+					<xs:sequence>
+						<xs:element ref="tao:ExistingUserAlias"/>
+						<xs:element ref="tao:IdentityInformationList"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AddIdentitiesToUserResponse">
+		<xs:annotation>
+			<xs:documentation>RESPONSE: add identities informations to USER</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="tao:CommandResponseBaseType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RemoveIdentitiesFromUserRequest">
+		<xs:annotation>
+			<xs:documentation>REQUEST: remove identities informations from USER</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="tao:CommandRequestBaseType">
+					<xs:sequence>
+						<xs:element ref="tao:ExistingIdentityInfoList"/>
+					</xs:sequence>
+					<xs:attribute name="ignoreIfAbsent" type="xs:boolean"/>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RemoveIdentitiesFromUserResponse">
+		<xs:annotation>
+			<xs:documentation>RESPONSE: remove identities informations from USER</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="tao:CommandResponseBaseType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AddApplicationsRequest">
+		<xs:annotation>
+			<xs:documentation>REQUEST: add applications informations</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="tao:CommandRequestBaseType">
+					<xs:sequence>
+						<xs:element ref="tao:ApplicationInformationList"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+   
+	<xs:element name="AddApplicationsResponse">
+		<xs:annotation>
+			<xs:documentation>RESPONSE: add applications informations</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="tao:CommandResponseBaseType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+    <xs:element name="GetUserListRequest">
+		<xs:annotation>
+			<xs:documentation>REQUEST: Get user list</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="tao:CommandRequestBaseType">
+					<xs:sequence>
+						<xs:choice>
+							<xs:sequence>
+								<xs:element ref="tao:PAN" minOccurs="0"/>
+								<xs:element ref="tao:Expiration" minOccurs="0"/>
+							</xs:sequence>
+							<xs:sequence>
+								<xs:element ref="tao:ApplicationNameList" minOccurs="0"/>
+								<xs:element ref="tao:UserIdentity" minOccurs="0"/>
+							</xs:sequence>
+						</xs:choice>
+						<xs:element ref="tao:FriendlyName" minOccurs="0"/>
+						<xs:element ref="tao:ClientRef" minOccurs="0"/>
+						<xs:element ref="tao:UserAlias" minOccurs="0"/>
+						<xs:element ref="tao:GroupIdList" minOccurs="0"/>
+						<xs:element ref="tao:FirstIdx" minOccurs="0"/>
+						<xs:element ref="tao:LastIdx" minOccurs="0"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GetUserListResponse">
+		<xs:annotation>
+			<xs:documentation>RESPONSE: Get user list</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="tao:CommandResponseBaseType">
+					<xs:sequence>
+						<xs:element ref="tao:NbUsers" minOccurs="0"/>
+						<xs:element ref="tao:UserInfoList" minOccurs="0"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GetUserInfoRequest">
+		<xs:annotation>
+			<xs:documentation>REQUEST: Get user informations from a PAN</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="tao:CommandRequestBaseType">
+					<xs:sequence>
+						<xs:choice>
+							<xs:sequence>
+								<xs:element ref="tao:PAN"/>
+								<xs:element ref="tao:Validity" minOccurs="0"/>
+							</xs:sequence>
+							<xs:sequence>
+								<xs:element ref="tao:ApplicationName"/>
+								<xs:element ref="tao:UserIdentity"/>
+							</xs:sequence>
+						</xs:choice>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GetUserInfoResponse">
+		<xs:annotation>
+			<xs:documentation>RESPONSE: Get user informations from a PAN</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="tao:CommandResponseBaseType">
+					<xs:sequence>
+						<xs:element ref="tao:UserInfo" minOccurs="0"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+    
+    <xs:element name="AddIdentityLoginToUserRequest">
+        <xs:annotation>
+            <xs:documentation>REQUEST: add IdentityLogin to User</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="tao:CommandRequestBaseType">
+                    <xs:sequence>
+                        <xs:element ref="tao:ExistingUserAlias" />
+                        <xs:element ref="tao:ApplicationName" />
+                        <xs:element ref="tao:UserIdentity" />
+                        <xs:element ref="tao:IdentityLoginList" />
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="AddIdentityLoginToUserResponse">
+        <xs:annotation>
+            <xs:documentation>Response: add IdentityLogin to User</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="tao:CommandResponseBaseType" />
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="RemoveIdentityLoginFromUserRequest">
+        <xs:annotation>
+            <xs:documentation>REQUEST: Delete IdentityLogin from User</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="tao:CommandRequestBaseType">
+                    <xs:sequence>
+                        <xs:element ref="tao:ExistingUserAlias" />
+                        <xs:element ref="tao:ApplicationName" />
+                        <xs:element ref="tao:UserIdentity" />
+                        <xs:element ref="tao:IdentityLoginList" />
+                    </xs:sequence>
+                </xs:extension>
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="RemoveIdentityLoginFromUserResponse">
+        <xs:annotation>
+            <xs:documentation>Response: delete IdentityLogin from User</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:complexContent>
+                <xs:extension base="tao:CommandResponseBaseType" />
+            </xs:complexContent>
+        </xs:complexType>
+    </xs:element>
+    
+</xs:schema>

@@ -1,0 +1,179 @@
+<?xml version="1.0" ?>
+<lsc xmlns="http://lsc-project.org/XSD/lsc-core-2.2.xsd" xmlns:dla="http://dictao.com/ns/dacs/lsc-agent-1.0"
+	revision="0">
+	<connections>
+		<ldapConnection>
+			<name>ldap-src-conn</name>
+			<url>ldap://localhost:33389/dc=lsc-project,dc=org</url>
+			<username>cn=Directory Manager</username>
+			<password>secret</password>
+			<authentication>SIMPLE</authentication>
+			<referral>IGNORE</referral>
+			<derefAliases>NEVER</derefAliases>
+			<version>VERSION_3</version>
+			<pageSize>-1</pageSize>
+			<factory>com.sun.jndi.ldap.LdapCtxFactory</factory>
+			<tlsActivated>false</tlsActivated>
+			<saslMutualAuthentication>false</saslMutualAuthentication>
+			<binaryAttributes>
+				<string>userpassword</string>
+				<string>userCertificate</string>
+			</binaryAttributes>
+		</ldapConnection>
+		<pluginConnection>
+			<name>dacs-dst-conn</name>
+			<url>NOT-USED</url>
+			<username></username>
+			<password></password>
+			<dla:dacsProvisioningConnectionSettings>
+				<dla:provisioningUrl>https://vm-dacsdev.dictao.com:25000/dacsprovisioning/DACSProvisioningWS</dla:provisioningUrl>
+				<dla:repositoryUrl>https://vm-dacsdev.dictao.com:25000/dacsrepositoryws/DACSRepositoryWS</dla:repositoryUrl>
+				<dla:TrustStore>
+					<dla:File>cacerts.dacs.jks</dla:File>
+					<dla:Type>JKS</dla:Type>
+					<dla:Password>changeit</dla:Password>
+				</dla:TrustStore>
+				<dla:ClientStore>
+					<dla:File>DXSDevGroupServer.p12</dla:File>
+					<dla:Type>PKCS12</dla:Type>
+					<dla:Password>password</dla:Password>
+				</dla:ClientStore>
+			</dla:dacsProvisioningConnectionSettings>
+		</pluginConnection>
+		<pluginConnection>
+			<name>dvs-dst-conn</name>
+			<url>NOT-USED</url>
+			<username></username>
+			<password></password>
+			<dla:dvsProvisioningConnectionSettings>
+				<dla:url>https://dxsdev49.dictao.com:24000/DVSCommand/DVSProvisioningFrontEnd</dla:url>
+				<dla:TrustStore>
+					<dla:File>clientCa.jks</dla:File>
+					<dla:Type>JKS</dla:Type>
+					<dla:Password>changeit</dla:Password>
+				</dla:TrustStore>
+				<dla:ClientStore>
+					<dla:File>DXSDevGroupServer.p12</dla:File>
+					<dla:Type>PKCS12</dla:Type>
+					<dla:Password>password</dla:Password>
+				</dla:ClientStore>
+			</dla:dvsProvisioningConnectionSettings>
+		</pluginConnection>
+	</connections>
+	<audits />
+	<tasks>
+		<task>
+			<name>SyncToDacs</name>
+			<bean>org.lsc.beans.SimpleBean</bean>
+			<asyncLdapSourceService>
+				<name>openldap-source-service-to-dacs</name>
+				<connection reference="ldap-src-conn" />
+				<baseDn>dc=lsc-project,dc=org</baseDn>
+				<pivotAttributes>
+					<string>entryDN</string>
+				</pivotAttributes>
+				<fetchedAttributes>
+					<string>givenName</string>
+					<string>sn</string>
+					<string>mobile</string>
+					<string>uid</string>
+					<string>userPassword</string>
+					<string>entryDN</string>
+				</fetchedAttributes>
+				<getAllFilter><![CDATA[(&(objectClass=inetorgperson)(givenName=*)(sn=*)(uid=*)(entryDN=*))]]></getAllFilter>
+				<getOneFilter><![CDATA[(&(objectClass=inetorgperson)(entryDN={entryDN}))]]></getOneFilter>
+				<cleanFilter><![CDATA[(&(objectClass=inetorgperson)(entryDN={id}))]]></cleanFilter>
+				<serverType>OpenDS</serverType>
+			</asyncLdapSourceService>
+			<!--  This DACS service will use the following attributes: givenName, sn, uid, description, userPassword, mobile, 
+				userCertificate, serialNumber.
+				"givenName" and "sn" values are used to fill the friendly name field. "uid" value is used as the application login.
+				"description" is parsed and used as birth date. "userPassword" is used to identify if the user can be authenticated
+				through his password. "mobile" is used to identify if the user can be authenticated by SMS TAN/OTP.  
+				"userCertificate" is used to identify if the user can be authenticated by X509v3 certificate. 
+				"serialNumber" is used to identify if the user can be authenticated by OATH authenticator which
+				is identified by its serial number.-->
+			<pluginDestinationService implementationClass="org.lsc.plugins.connectors.dictao.dacs.DacsProvisioningService">
+				<name>dacs-dst</name>
+				<connection reference="dacs-dst-conn" />
+				<dla:dacsProvisioningServiceSettings>
+					<dla:groupId>GRP_SERVEUR</dla:groupId>
+					<dla:applicationId>APP_TEST_PROVISIONING</dla:applicationId>
+					<dla:applicationId>APP_TEST_PROVISIONING2</dla:applicationId>
+					<dla:dateFormat>dd/MM/yyyy</dla:dateFormat>
+				</dla:dacsProvisioningServiceSettings>
+			</pluginDestinationService>
+			<propertiesBasedSyncOptions>
+				<mainIdentifier>srcBean.getDatasetFirstValueById("entryDN")</mainIdentifier>
+				<defaultDelimiter>;</defaultDelimiter>
+				<!-- Default policy to FORCE means that exact values from source service will replace corresponding data on destination 
+					service -->
+				<defaultPolicy>FORCE</defaultPolicy>
+				<dataset>
+					<!-- This dataset ensure that the password authentication factor will always be activated on DACS -->
+					<name>userPassword</name>
+					<policy>FORCE</policy>
+					<forceValues>
+						<string>"ALWAYS-ENABLE-PASSWORD-AUTHENTICATION"</string>
+					</forceValues>
+				</dataset>
+				<dataset>
+					<name>birthdate</name>
+					<policy>FORCE</policy>
+					<forceValues>
+						<string>srcBean.getDatasetFirstValueById("description")</string>
+					</forceValues>
+				</dataset>
+			</propertiesBasedSyncOptions>
+		</task>
+		<task>
+			<name>SyncToDvs</name>
+			<bean>org.lsc.beans.SimpleBean</bean>
+			<asyncLdapSourceService>
+				<name>openldap-source-service-to-dvs</name>
+				<connection reference="ldap-src-conn" />
+				<baseDn>dc=lsc-project,dc=org</baseDn>
+				<pivotAttributes>
+					<string>entryDN</string>
+				</pivotAttributes>
+				<fetchedAttributes>
+					<!-- <string>description</string> -->
+					<string>entryDN</string>
+					<string>givenName</string>
+					<string>sn</string>
+					<string>mobile</string>
+					<string>uid</string>
+					<string>mail</string>
+					<string>modifyTimestamp</string>
+					<string>description</string>
+					<string>userPassword</string>
+				</fetchedAttributes>
+				<getAllFilter><![CDATA[(&(objectClass=inetorgperson)(givenName=*)(sn=*)(uid=*)(entryDN=*))]]></getAllFilter>
+				<getOneFilter><![CDATA[(&(objectClass=inetorgperson)(entryDN={entryDN}))]]></getOneFilter>
+				<cleanFilter><![CDATA[(&(objectClass=inetorgperson)(entryDN={id}))]]></cleanFilter>
+				<serverType>OpenDS</serverType>
+			</asyncLdapSourceService>
+			<pluginDestinationService implementationClass="org.lsc.plugins.connectors.dictao.dvs.DvsProvisioningService">
+				<name>dvs-dst</name>
+				<connection reference="dvs-dst-conn" />
+				<dla:dvsProvisioningServiceSettings>
+					<dla:groupId>GRP_Server</dla:groupId>
+					<dla:userLevel>OPERATOR</dla:userLevel>
+					<dla:dateFormat>dd/MM/yyyy</dla:dateFormat>
+				</dla:dvsProvisioningServiceSettings>
+			</pluginDestinationService>
+			<propertiesBasedSyncOptions>
+				<mainIdentifier>srcBean.getDatasetFirstValueById("entryDN")</mainIdentifier>
+				<defaultDelimiter>;</defaultDelimiter>
+				<defaultPolicy>FORCE</defaultPolicy>
+				<dataset>
+					<name>birthdate</name>
+					<policy>FORCE</policy>
+					<forceValues>
+						<string>srcBean.getDatasetFirstValueById("description")</string>
+					</forceValues>
+				</dataset>
+			</propertiesBasedSyncOptions>
+		</task>
+	</tasks>
+</lsc>

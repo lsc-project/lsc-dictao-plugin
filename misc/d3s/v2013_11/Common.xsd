@@ -1,0 +1,1061 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+
+  	D3S API Disclaimer 
+
+	Copyright (c) 2014, Dictao.
+	
+	All rights reserved.
+	
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are met:
+   
+  - Redistributions of source code must retain the above copyright notice,
+    this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+  - Neither the name of the Dictao nor the names of its contributors may
+    be used to endorse or promote products derived from this software without
+    specific prior written permission.
+	 
+  THIS API IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+  CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+	
+	Additional conditions are available on Dictao Developer website:
+		http://www.dictao.com/developer/api/disclaimer
+	
+ -->
+<schema xmlns="http://www.w3.org/2001/XMLSchema" 
+        xmlns:tns="http://www.dictao.com/d3s/xsd/v2013_11/Common"
+        xmlns:dmd="http://dictao.com/schema_metadata/v2012_02.xsd"
+        targetNamespace="http://www.dictao.com/d3s/xsd/v2013_11/Common" 
+        elementFormDefault="qualified">
+
+    <import namespace="http://dictao.com/schema_metadata/v2012_02.xsd" schemaLocation="./dictao-schema-metadata.xsd"/>
+
+    <element name="EnvironmentFaultElement" type="tns:EnvironmentFaultInfo"/>
+    <element name="UserFaultElement" type="tns:UserFaultInfo"/>
+    <element name="metadataList" type="tns:MetadataList"/>
+
+    <simpleType name="EnvironmentFaultCodeType">
+        <restriction base="string">
+            <enumeration value="D3S_ENV_AUTH_TOKEN">
+                <annotation>
+                    <documentation xml:lang="en">
+                        The Authority is unable to sign the authentification token.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_ENV_CONFIGURATION">
+                <annotation>
+                    <documentation xml:lang="en">
+                        The server is badly configured.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_ENV_DATABASE">
+                <annotation>
+                    <documentation xml:lang="en">
+                        The server encountered a database error.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_ENV_DXS">
+                <annotation>
+                    <documentation xml:lang="en">
+                        The server received an error when communicating with DxS.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_ENV_FILE">
+                <annotation>
+                    <documentation xml:lang="en">
+                        The server encountered a filesystem error.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_ENV_INTERNAL_ERROR">
+                <annotation>
+                    <documentation xml:lang="en">
+                        The server encountered an unexpected error. Please contact support.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_ENV_MAIL">
+                <annotation>
+                    <documentation xml:lang="en">
+                        The server encountered an error when generating or sending a notification e-mail.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_ENV_NETWORK">
+                <annotation>
+                    <documentation xml:lang="en">
+                    The Storage encountered an error when communicating with the Authority.
+                    </documentation>
+                </annotation>
+            </enumeration>
+        </restriction>
+    </simpleType>
+    <complexType name="EnvironmentFaultInfo">
+        <annotation>
+            <documentation xml:lang="en">
+                <![CDATA[An environment error indicates something wrong on the server side.<br/>
+                The client should retry the operation later, except in case of <tt>D3S_ENV_INTERNAL_ERROR</tt>.]]>
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="code" type="tns:EnvironmentFaultCodeType">
+                <annotation dmd:sampleValue="D3S_ENV_DXS">
+                    <documentation xml:lang="en">
+                        Environment error code.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <simpleType name="UserFaultCodeType">
+        <restriction base="string">
+            <enumeration value="D3S_USER_APPROBATION_NEEDED">
+                <annotation>
+                    <documentation xml:lang="en">
+                        The user needs an approbation to complete this operation.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_APPROBATION_ALREADY_REQUESTED">
+                <annotation>
+                    <documentation xml:lang="en">
+                        The user already requested this approbation.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_APPROBATION_ALREADY_GIVEN_BY_APPROVER">
+                <annotation>
+                    <documentation xml:lang="en">
+                        The approver has already granted or rejected this approbation.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_USER_CAN_NOT_APPROVE_HIMSELF">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Requester and approver cannot be the same person.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_BOX_NOT_EMPTY">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Cannot perform this operation while the box is not empty.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_ACTION_FORBIDEN_BY_DEPOSIT_STATUS">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Cannot perform this operation because of the current deposit status.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_ACTION_FORBIDEN_BY_BOX_STATUS">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Cannot perform this operation because of the current box status.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_GROUP_STILL_LINKED_TO_BOXES">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Cannot perform this operation because the group is still linked to a box.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_WRONG_OWNERSHIP">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Cannot perform this operation because the target resource does not belong to the current user.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_INCOMPATIBLE_ROLES">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Cannot add authorization to user: the user already owns one incompatible role.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_BOX_QUOTA_EXCEEDED">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Cannot perform this operation because the box quota has been exceeded.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_BOX_HISTORIC_SIZE_EXCEEDED">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Cannot perform this operation because the box history has been exceeded.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_URG_ASSOC_ALREADY_EXISTS">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Cannot add authorization to user: the user already owns this authorization.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_INVALID_BOX_TYPE">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Cannot perform this operation because of the target box type.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_EDITABLE_CONSTRAINT_VIOLATION">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Cannot update a read-only attribute.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_INVALID_PARAMETER">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Cannot perform this operation because an input parameter is invalid.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_MISSING_PARAMETER">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Cannot perform this operation because an input parameter is missing.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_INVALID_X509_CERTIFICATE">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Cannot perform this operation because the input certificate is not a valid X509 certificate.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_USER_PASSWORD_NOT_MATCHING">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Input and confirmation passwords do not match.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_INVALID_USER_PASSWORD">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Input and stored passwords do not match.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_INVALID_SECURITY_TOKEN">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Cannot validate the authentication token.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_MISSING_PRIVILEGE">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Cannot perform this operation because the user does not own the required privileges.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_DEPOSIT_NOT_FOUND">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Unable to find a deposit with the provided path.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_IMPORT_ARCHIVE_INVALID">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Cannot import deposits because the deposit archive is invalid.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_IMPORT_DUPLICATE_MISMATCH">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Cannot import deposits because a duplicate deposit proof already exists with a different content.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_IMPORT_DUPLICATE_RECLASSIFIED">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Cannot import deposits because a duplicate deposit already exists in another filing plan.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_IMPORT_TARGET_FILING_PLAN_INVALID">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Cannot import deposits because the target box has not the same filing plan as the deposit archive.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_IMPORT_TARGET_SAFEBOX_INVALID">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Cannot import deposits because a duplicate deposit already exists in another box.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_INVALID_DEPOSIT_PROOF">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Cannot perform this operation because cannot validate a deposit proof.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_INTEGRITY_CHECK_FAILED">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Cannot perform this operation because the integrity check of a digital object failed.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_NO_SIGN_EXT_REPORT_FOUND">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Detailed signature extension report not found.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_SIGNATURE_EXTENSION_ALREADY_RUNNING">
+                <annotation>
+                    <documentation xml:lang="en">
+                        The signature extension process is already running.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_INVALID_DEPOSIT_STATE">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Operation cannot complete because the deposit state does not permit it.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_RECLASSIFY_DEPOSIT_INVALID">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Deposit does not allow reclassification.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_MISSING_SECURITY_TOKEN">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Operation requires an authentication token.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_SECURITY_TOKEN_OUT_OF_VALIDITY_PERIOD">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Authentication token is out of its validity period.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_CONSTRAINT_VIOLATION">
+                <annotation>
+                    <documentation xml:lang="en">
+                        A database constraint violation prevents the operation from completing.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="D3S_USER_NOT_SUPPORTED">
+                <annotation>
+                    <documentation xml:lang="en">
+                        This operation is not yet supported.
+                    </documentation>
+                </annotation>
+            </enumeration>
+        </restriction>
+    </simpleType>
+    <complexType name="UserFaultInfo">
+        <annotation>
+            <documentation xml:lang="en">
+                <![CDATA[A user error indicates something wrong with the operation's input parameters.<br/>
+                The client must not attempt to retry the operation before the parameters are fixed.]]>
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="code" type="tns:UserFaultCodeType">
+                <annotation dmd:sampleValue="D3S_USER_INVALID_PARAMETER">
+                    <documentation xml:lang="en">
+                        User error code.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+
+    <simpleType name="Path">
+        <annotation>
+            <documentation xml:lang="en">
+                <![CDATA[A path can address all resources with D3S.</br></br>
+                Standard and simplified syntaxes for a hierarchical resource (safebox, orgunit):
+                <ul>
+                <li><tt>/&lt;SAFEBOX|ORGUNIT&gt;?&lt;natural key&gt;</tt></li>
+                <li><tt>/&lt;SAFEBOX|ORGUNIT&gt;/&lt;path&gt;/&lt;to&gt;/&lt;resource&gt;</tt></li>
+                </ul>
+                Standard and simplified syntax for a non-hierarchical resource (user, certificate, role, filing plan):
+                <ul>
+                <li><tt>/&lt;USER|CERTIFICATE|ROLE|FILINGPLAN&gt;?&lt;natural key&gt;</tt></li>
+                <li><tt>/&lt;USER|CERTIFICATE|ROLE|FILINGPLAN&gt;/&lt;name&gt;</tt></li>
+                </ul>
+                Syntaxes for a business resource (deposit):
+                <ul>
+                <li><tt>/DEPOSIT?_fpPath=&lt;path&gt;(&amp;&lt;key&gt;=&lt;value&gt;)*[&amp;_version=&lt;LAST|number&gt;]</tt></li>
+                <li><tt>/DEPOSIT?_boxPath=&lt;path&gt;(&amp;&lt;key&gt;=&lt;value&gt;)*[&amp;_version=&lt;LAST|number&gt;]</tt></li>
+                </ul>]]>
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="2048"/>
+        </restriction>
+    </simpleType>
+    <simpleType name="String">
+        <annotation>
+            <documentation xml:lang="en">
+                String with a limited length.
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="2048"/>
+        </restriction>
+    </simpleType>
+    <simpleType name="SecurityToken">
+        <annotation>
+            <documentation xml:lang="en">
+                Base64-encoded authentication token returned when access to the Storage is granted.
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <maxLength value="100000"/>
+        </restriction>
+    </simpleType>
+
+    <complexType name="Permissions">
+        <annotation>
+            <documentation xml:lang="en">
+                <![CDATA[Describes the current permissions of a safebox or deposit.<br/>
+                When setting permissions, only present flags are modified. Unset flags are left unchanged.]]>
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="readable" type="boolean" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Applies to safebox and deposit objects.<br/>
+                        Can the object be read?]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="updatable" type="boolean" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Applies to safebox and deposit objects.<br/>
+                        Can the object be updated?]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="deletable" type="boolean" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Applies to safebox and deposit objects.<br/>
+                        Can the object be deleted?]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="contentCreatable" type="boolean" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Applies only to safebox objects.<br/>
+                        Can new deposits be created in the safebox?]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="contentUpdatable" type="boolean" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Applies to safebox and deposit objects.<br/>
+                        Safebox: can new deposits be created in the safebox?<br/>
+                        Deposit: can the digital object of this deposit be updated?]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="contentDeletable" type="boolean" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Applies to safebox and deposit objects.<br/>
+                        Safebox: can deposits in the safebox be deleted?<br/>
+                        Deposit: can the digital object of this deposit be deleted?]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="contentReadable" type="boolean" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Applies to safebox and deposit objects.<br/>
+                        Safebox: can deposits in the safebox be read?<br/>
+                        Deposit: can the digital object of this deposit be read?]]>
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="OrderBy">
+        <annotation>
+            <documentation xml:lang="en">
+                When searching for resources, controls the order of the result.
+            </documentation>
+        </annotation>
+        <attribute name="field" type="tns:String" use="required">
+            <annotation>
+                <documentation xml:lang="en">
+                    Name of the field to order by.
+                </documentation>
+            </annotation>
+        </attribute>
+        <attribute default="false" name="descending" type="boolean">
+            <annotation>
+                <documentation xml:lang="en">
+                    By default, results are ordered by ascending order.
+                </documentation>
+            </annotation>
+        </attribute>
+    </complexType>
+    <complexType name="Criterion">
+        <annotation>
+            <documentation xml:lang="en">
+                When searching for resources, gives a filtering criterion that returned objects must satisfy.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="value" type="tns:Value" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Criterion value. If not set, the value field is compared to <tt>null</tt>.]]>
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+        <attribute name="field" type="tns:String" use="required">
+            <annotation>
+                <documentation xml:lang="en">
+                    Field name.
+                </documentation>
+            </annotation>
+        </attribute>
+        <attribute name="operator" type="tns:CriterionOperatorType" use="required">
+            <annotation>
+                <documentation xml:lang="en">
+                    Criterion operator.
+                </documentation>
+            </annotation>
+        </attribute>
+        <attribute name="caseSensitive" type="boolean" default="true">
+            <annotation>
+                <documentation xml:lang="en">
+                    <![CDATA[Is the comparison case-sensitive?<br/>
+                    Flag used only if the value element is a <tt>StringValue</tt> (see type <a href="#type_Value">Value</a>).]]>
+                </documentation>
+            </annotation>
+        </attribute>
+    </complexType>
+    <complexType name="Value">
+        <annotation>
+            <documentation xml:lang="en">Typed value.</documentation>
+        </annotation>
+        <choice>
+            <element name="StringValue" type="tns:String"/>
+            <element name="DateValue" type="dateTime"/>
+            <element name="LongValue" type="long"/>
+            <element name="BooleanValue" type="boolean"/>
+            <element name="DecimalValue" type="decimal"/>
+        </choice>
+    </complexType>
+    <simpleType name="CriterionOperatorType">
+        <annotation>
+            <documentation xml:lang="en">
+                Comparison operator used by criterion.
+            </documentation>
+        </annotation>
+        <restriction base="string">
+            <enumeration value="EQUAL_TO">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Field == Value.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="NOT_EQUAL_TO">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Field != Value.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="GREATER_THAN">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Field &gt; Value (always false if Value is null).
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="LESS_THAN">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Field &lt; Value (always false if Value is null).
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="GREATER_THAN_OR_EQUAL_TO">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Field &gt;= Value (always false if Value is null).
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="LESS_THAN_OR_EQUAL_TO">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Field &lt;= Value (always false if Value is null).
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="IN">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Field in &quot;'value1', 'value2', ...&quot; (Value is a string giving the list of possibles values between quotes).
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="CONTAINS">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Field contains &quot;matching substring&quot; (Value is a string).
+                    </documentation>
+                </annotation>
+            </enumeration>
+        </restriction>
+    </simpleType>
+    <complexType name="Options">
+        <annotation>
+            <documentation xml:lang="en">
+                Common optional input type set only when doing impersonation and/or logging.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="applicantPath" type="tns:Path" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Impersonation only: path of the user to impersonate.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="motivation" type="tns:String" minOccurs="0">
+                <annotation dmd:sampleValue="&lt;Free text&gt;">
+                    <documentation xml:lang="en">
+                        Motivation of the operation. This will be part of the operation trace.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="tagId" type="tns:String" minOccurs="0">
+                <annotation dmd:sampleValue="&lt;GUID&gt;">
+                    <documentation xml:lang="en">
+                        Transaction tag identifier. This will be written to all technical logs to track the operation across the application stack.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+
+    <complexType name="CreateResponse">
+        <annotation>
+            <documentation xml:lang="en">
+                Common output type returned when creating a new resource.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="createdResourcePath" type="tns:Path">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Path of the newly created resource.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="Read">
+        <annotation>
+            <documentation xml:lang="en">
+                Common input type for reading a resource.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="resourcePath" type="tns:Path">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Path of the resource to read.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="options" type="tns:Options" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Optional input parameters.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="UpdateResponse">
+        <annotation>
+            <documentation xml:lang="en">
+                Common output type returned when updating a resource.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="updatedResourcePath" type="tns:Path" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Path of the updated resource.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="Delete">
+        <annotation>
+            <documentation xml:lang="en">
+                Common input type for deleting a resource.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="resourcePath" type="tns:Path">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Path of the resource to delete.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="options" type="tns:Options" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Optional input parameter.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="DeleteResponse">
+        <annotation>
+            <documentation xml:lang="en">
+                Common empty output type returned when deleting a resource.
+            </documentation>
+        </annotation>
+    </complexType>
+    <simpleType name="MaxResult">
+        <annotation>
+            <documentation xml:lang="en">
+                Maximum number of elements returned when searching for resources.
+            </documentation>
+        </annotation>
+        <restriction base="integer">
+            <minInclusive value="1"/>
+            <maxInclusive value="5000"/>
+        </restriction>
+    </simpleType>
+    <complexType name="GlobalFind">
+        <annotation>
+            <documentation xml:lang="en">
+                Common input type for searching for global resources.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="criteria" type="tns:Criterion" minOccurs="0" maxOccurs="100">
+                <annotation>
+                    <documentation xml:lang="en">
+                        This list of filters, combined with &quot;AND&quot;, defines the search clause.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="orderBy" type="tns:OrderBy" minOccurs="0" maxOccurs="100">
+                <annotation>
+                    <documentation xml:lang="en">
+                        List of ordering clauses applied to the result list.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="maxResult" type="tns:MaxResult">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Maximum number of elements returned in the result list.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="options" type="tns:Options" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Optional input parameter.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="Find">
+        <annotation>
+            <documentation xml:lang="en">
+                Common input type for searching for resources.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="searchPath" type="tns:Path" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Path of the resource where search occurs.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="criteria" type="tns:Criterion" minOccurs="0" maxOccurs="100">
+                <annotation>
+                    <documentation xml:lang="en">
+                        This list of filters, combined with &quot;AND&quot;, defines the search clause.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="orderBy" type="tns:OrderBy" minOccurs="0" maxOccurs="100">
+                <annotation>
+                    <documentation xml:lang="en">
+                        List of ordering clauses applied to the result list.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="maxResult" type="tns:MaxResult">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Maximum number of elements returned in the result list.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="options" type="tns:Options" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Optional input parameter.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <simpleType name="Cursor">
+        <annotation>
+            <documentation xml:lang="en">
+                Common cursor type returned with results and used for searching for the next elements.
+            </documentation>
+        </annotation>
+        <restriction base="base64Binary">
+            <maxLength value="10000"/>
+        </restriction>
+    </simpleType>
+    <complexType name="Next">
+        <annotation>
+            <documentation xml:lang="en">
+                Common input type for searching for the next resources.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="cursor" type="tns:Cursor">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Cursor returned with the last results.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="SetPermissions">
+        <annotation>
+            <documentation xml:lang="en">
+                Common input type used when setting permissions on a resource.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="resourcePath" type="tns:Path">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Path of the resource on which permissions are set.<br/>
+                        This is either a safebox or a deposit.]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="permissions" type="tns:Permissions">
+                <annotation>
+                    <documentation xml:lang="en">
+                        New permissions.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="options" type="tns:Options" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Optional input parameter.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="SetPermissionsResponse">    
+        <annotation>
+            <documentation xml:lang="en">
+                Common empty output type returned when setting permissions on a resource.
+            </documentation>
+        </annotation>
+    </complexType>
+
+    <complexType name="ValidationStatus">
+        <annotation>
+            <documentation xml:lang="en">
+                Deposit proof validation status.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="code" type="tns:ValidationStatusCode">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Validation status code.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="message" type="tns:String" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Optional message.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <simpleType name="ValidationStatusCode">
+        <restriction base="string">
+            <enumeration value="DP_VALID_SIGNATURE">
+                <annotation>
+                    <documentation xml:lang="en">
+                        The deposit proof is valid.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="DP_SIGNATURE_COULD_NOT_BE_VERIFIED">
+                <annotation>
+                    <documentation xml:lang="en">
+                        The deposit proof could not be verified because DVS is unreachable.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="DP_VALIDATION_OPERATION_DISABLED">
+                <annotation>
+                    <documentation xml:lang="en">
+                        The deposit proof validation is disabled.
+                    </documentation>
+                </annotation>
+            </enumeration>
+        </restriction>
+    </simpleType>    
+    <complexType name="MetadataList">
+        <annotation>
+            <documentation xml:lang="en">
+                List of deposit metadata.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="metadata" type="tns:Metadata" minOccurs="0" maxOccurs="1000"/>
+        </sequence>
+    </complexType>
+    <complexType name="Metadata">
+        <sequence>
+            <element name="value" type="tns:Value" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Typed metadata value.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+        <attribute name="name" type="tns:String" use="required">
+            <annotation>
+                <documentation xml:lang="en">
+                    Metadata name.
+                </documentation>
+            </annotation>
+        </attribute>
+        <attribute name="type" type="tns:MetadataValueType">
+            <annotation>
+                <documentation xml:lang="en">
+                    Metadata value type.
+                </documentation>
+            </annotation>
+        </attribute>
+    </complexType>
+    <simpleType name="MetadataValueType">
+        <restriction base="string">
+            <enumeration value="STRING_TYPE">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Metadata string value type.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="DATE_TYPE">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Metadata date value type.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="LONG_TYPE">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Metadata long value type.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="BOOLEAN_TYPE">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Metadata boolean value type.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="DECIMAL_TYPE">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Metadata decimal value type.
+                    </documentation>
+                </annotation>
+            </enumeration>
+        </restriction>
+    </simpleType>
+</schema>

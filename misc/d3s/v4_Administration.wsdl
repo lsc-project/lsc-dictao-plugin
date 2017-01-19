@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+
+  	D3S API Disclaimer 
+
+	Copyright (c) 2014, Dictao.
+	
+	All rights reserved.
+	
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are met:
+   
+  - Redistributions of source code must retain the above copyright notice,
+    this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+  - Neither the name of the Dictao nor the names of its contributors may
+    be used to endorse or promote products derived from this software without
+    specific prior written permission.
+	 
+  THIS API IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+  CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+	
+	Additional conditions are available on Dictao Developer website:
+		http://www.dictao.com/developer/api/disclaimer
+	
+ -->
+<definitions name="Administration"
+             targetNamespace="http://www.dictao.com/d3s/wsdl/v4/Administration"
+             xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:safebox="http://www.dictao.com/d3s/wsdl/v4/SafeboxPort"
+             xmlns:user="http://www.dictao.com/d3s/wsdl/v4/UserPort"
+             xmlns:authz="http://www.dictao.com/d3s/wsdl/v4/AuthzPort"
+             xmlns:orgunit="http://www.dictao.com/d3s/wsdl/v4/OrgunitPort"
+             xmlns:certificate="http://www.dictao.com/d3s/wsdl/v4/CertificatePort"
+             xmlns:tns="http://www.dictao.com/d3s/wsdl/v4/Administration">
+             
+    <import namespace="http://www.dictao.com/d3s/wsdl/v4/SafeboxPort" location="ports/v4_0_SafeboxPort.wsdl"/>
+    <import namespace="http://www.dictao.com/d3s/wsdl/v4/UserPort" location="ports/v4_0_UserPort.wsdl"/>
+    <import namespace="http://www.dictao.com/d3s/wsdl/v4/AuthzPort" location="ports/v4_0_AuthzPort.wsdl"/>
+    <import namespace="http://www.dictao.com/d3s/wsdl/v4/OrgunitPort" location="ports/v4_0_OrgunitPort.wsdl"/>
+    <import namespace="http://www.dictao.com/d3s/wsdl/v4/CertificatePort" location="ports/v4_0_CertificatePort.wsdl"/>
+
+    <service name="Administration">
+        <port name="SafeboxPort" binding="safebox:SafeboxBinding">
+            <soap:address location="http://d3s.dictao.com/d3s-authority"/>
+        </port>
+        <port name="UserPort" binding="user:UserBinding">
+            <soap:address location="http://d3s.dictao.com/d3s-authority"/>
+        </port>
+        <port name="AuthzPort" binding="authz:AuthzBinding">
+            <soap:address location="http://d3s.dictao.com/d3s-authority"/>
+        </port>
+        <port name="OrgunitPort" binding="orgunit:OrgunitBinding">
+            <soap:address location="http://d3s.dictao.com/d3s-authority"/>
+        </port>
+        <port name="CertificatePort" binding="certificate:CertificateBinding">
+            <soap:address location="http://d3s.dictao.com/d3s-authority"/>
+        </port>
+    </service>
+
+</definitions>

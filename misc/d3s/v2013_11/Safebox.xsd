@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+
+  	D3S API Disclaimer 
+
+	Copyright (c) 2014, Dictao.
+	
+	All rights reserved.
+	
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are met:
+   
+  - Redistributions of source code must retain the above copyright notice,
+    this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+  - Neither the name of the Dictao nor the names of its contributors may
+    be used to endorse or promote products derived from this software without
+    specific prior written permission.
+	 
+  THIS API IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+  CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+	
+	Additional conditions are available on Dictao Developer website:
+		http://www.dictao.com/developer/api/disclaimer
+	
+ -->
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.dictao.com/d3s/xsd/v2013_11/Safebox"
+        xmlns:com="http://www.dictao.com/d3s/xsd/v2013_11/Common"
+        targetNamespace="http://www.dictao.com/d3s/xsd/v2013_11/Safebox"
+        elementFormDefault="qualified">
+
+    <import namespace="http://www.dictao.com/d3s/xsd/v2013_11/Common"
+            schemaLocation="./Common.xsd" />
+
+    <complexType name="Create">
+        <annotation>
+            <documentation xml:lang="en">
+                Input type for creating a new safebox.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="containerPath" type="com:Path">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Path of the parent safebox.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="safebox" type="tns:Safebox">
+                <annotation>
+                    <documentation xml:lang="en">
+                        New safebox.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="orgunitPaths" type="com:Path" maxOccurs="1000">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Paths of the orgunits linked to this new safebox.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="options" type="com:Options" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Additional options.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="ReadResponse">
+        <annotation>
+            <documentation xml:lang="en">
+                Output type returned when reading a safebox.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="safebox" type="tns:Safebox">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Read safebox.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="Update">
+        <annotation>
+            <documentation xml:lang="en">
+                Input type for updating a safebox.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="resourcePath" type="com:Path">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Path of the safebox to update.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="safebox" type="tns:Safebox">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Updated safebox. Only set attributes are modified.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="options" type="com:Options" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Additional options.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <complexType name="FindResponse">
+        <annotation>
+            <documentation xml:lang="en">
+                Output type returned when searching for safeboxes.
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="cursor" type="com:Cursor">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Cursor to pass when calling method <a href="toc.html#safeboxNext">next</a>.]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="safeboxes" type="tns:Safebox" minOccurs="0"
+                     maxOccurs="5000">
+                <annotation>
+                    <documentation xml:lang="en">
+                        List of safeboxes found. If this list is empty, search is complete.
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <element name="findResponse" type="tns:FindResponse" />
+    <complexType name="FindResponseContent">
+        <annotation>
+            <documentation xml:lang="en">
+                <![CDATA[Simple wrapper around type <a href="#type_FindResponse">FindResponse</a>.<br/>
+                This way, the generated stub code uses a single return type.]]>
+            </documentation>
+        </annotation>
+        <sequence>
+            <element ref="tns:findResponse" />
+        </sequence>
+    </complexType>
+
+    <complexType name="Safebox">
+        <annotation>
+            <documentation xml:lang="en">
+                <![CDATA[Input or output type describing a safebox.<br/>
+                All elements are optional in schema to enable updates of a single attribute.<br/>
+                <strong>But some elements are required by application</strong>, see Content documentation.]]>
+            </documentation>
+        </annotation>
+        <sequence>
+            <element name="ID" type="com:String" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Safebox unique identifier generated by server.<br/>
+                        Ignored if provided by caller.]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="name" type="com:String" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Safebox name. Must be unique within the parent container.<br/>
+                        <strong>Mandatory on creation.</strong>]]>                        
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="description" type="com:String" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Safebox description.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="mimeType" type="tns:MimeType" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Safebox type.<br/>
+                        <strong>Mandatory on creation.</strong>]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="creationDate" type="dateTime" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Computed safebox creation date.<br/>
+                        <strong>Ignored if provided by caller.</strong>]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="updateDate" type="dateTime" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Computed safebox update date.<br/>
+                        <strong>Ignored if provided by caller.</strong>]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="depositGracePeriod" type="long" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Grace period in milliseconds for discarded deposits in this safebox.<br/>
+                        If not set, there is no limit.]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="depositRetentionPeriod" type="long" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Retention period in milliseconds for deposits in this safebox.<br/>
+                        If not set, there is no limit.<br/>
+                        See also method <a href="Deposit.html#type_SetRetentionPeriod">SetRetentionPeriod</a> on deposit.]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="depositHistoricSize" type="long" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Number of deposit revisions to keep in this safebox.<br/>
+                        If not set, there is no limit.]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="depositPermissions" type="com:Permissions"
+                     minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Default deposit permissions for this safebox.<br/>
+                        If not set, defaults to true for all flags.<br/>
+                        See also method <a href="Deposit.html#type_SetPermissions">SetPermissions</a> on deposit.]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="approbationsNumber" type="long" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Number of required approbations to access deposits in this safebox.<br/>
+                        If not set, defaults to zero.]]>                        
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="signaturePolicy" type="com:String" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Specific deposit proof signature policy for this safebox.<br/>
+                        If not set, defaults to container or global instance policy.]]>                                                
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="validationPolicy" type="com:String" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Specific deposit proof signature validation policy for this safebox.<br/>
+                        If not set, defaults to container or global instance policy.]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="extensionPolicy" type="com:String" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Specific deposit proof signature extension policy for this safebox.<br/>
+                        If not set, defaults to container or global instance policy.]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="traceLifeTime" type="long" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Not used.
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="permissions" type="com:Permissions" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Default permissions for this safebox.<br/>
+                        If not set, defaults to true for all flags.<br/>
+                        See also method <a href="Safebox.html#type_SetPermissions">SetPermissions</a> on safeboxe.]]>
+                    </documentation>
+                </annotation>
+            </element>
+            <element name="filingPlanPath" type="com:Path" minOccurs="0">
+                <annotation>
+                    <documentation xml:lang="en">
+                        <![CDATA[Path of the filing plan linked to this safebox.<br/>
+                        <strong>Mandatory on creation.</strong>]]>                        
+                    </documentation>
+                </annotation>
+            </element>
+        </sequence>
+    </complexType>
+    <simpleType name="MimeType">
+        <annotation>
+            <documentation xml:lang="en">
+                Defines the type of a safebox.
+            </documentation>
+        </annotation>
+        <restriction base="com:String">
+            <enumeration value="STRONGBOX">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Strong box, first level of container. Contains locker boxes.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="LOCKER">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Locker box, intermediate level of container. Contains safeboxes.
+                    </documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="SAFEBOX">
+                <annotation>
+                    <documentation xml:lang="en">
+                        Safebox, last level of container. Contains deposits.
+                    </documentation>
+                </annotation>
+            </enumeration>
+        </restriction>
+    </simpleType>
+</schema>

@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+
+  	D3S API Disclaimer 
+
+	Copyright (c) 2014, Dictao.
+	
+	All rights reserved.
+	
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are met:
+   
+  - Redistributions of source code must retain the above copyright notice,
+    this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+  - Neither the name of the Dictao nor the names of its contributors may
+    be used to endorse or promote products derived from this software without
+    specific prior written permission.
+	 
+  THIS API IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+  CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+	
+	Additional conditions are available on Dictao Developer website:
+		http://www.dictao.com/developer/api/disclaimer
+	
+ -->
+<definitions name="SafeboxPort"
+             targetNamespace="http://www.dictao.com/d3s/wsdl/v4/SafeboxPort"
+             xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:v4_0="http://www.dictao.com/d3s/wsdl/v4.0/SafeboxPort"
+             xmlns:exc="http://www.dictao.com/d3s/wsdl/v4/Exceptions"
+             xmlns:tns="http://www.dictao.com/d3s/wsdl/v4/SafeboxPort">
+
+    <import namespace="http://www.dictao.com/d3s/wsdl/v4/Exceptions" location="v4_0_Exceptions.wsdl"/>
+
+    <types>
+        <schema targetNamespace="http://www.dictao.com/d3s/wsdl/v4.0/SafeboxPort"
+                xmlns="http://www.w3.org/2001/XMLSchema"
+                xmlns:com="http://www.dictao.com/d3s/xsd/v2013_11/Common"
+                xmlns:safebox="http://www.dictao.com/d3s/xsd/v2013_11/Safebox"
+                xmlns:tns="http://www.dictao.com/d3s/wsdl/v4.0/SafeboxPort">
+
+            <import namespace="http://www.dictao.com/d3s/xsd/v2013_11/Common" schemaLocation="../v2013_11/Common.xsd"/>
+            <import namespace="http://www.dictao.com/d3s/xsd/v2013_11/Safebox" schemaLocation="../v2013_11/Safebox.xsd"/>
+
+            <element name="create" type="safebox:Create"/>
+            <element name="createResponse" type="com:CreateResponse"/>
+            <element name="read" type="com:Read"/>
+            <element name="readResponse" type="safebox:ReadResponse"/>
+            <element name="update" type="safebox:Update"/>
+            <element name="updateResponse" type="com:UpdateResponse"/>
+            <element name="delete" type="com:Delete"/>
+            <element name="deleteResponse" type="com:DeleteResponse"/>
+            <element name="find" type="com:Find"/>
+            <element name="findResponse" type="safebox:FindResponseContent"/>
+            <element name="next" type="com:Next"/>
+            <element name="nextResponse" type="safebox:FindResponseContent"/>
+            <element name="globalFind" type="com:Find"/>
+            <element name="globalFindResponse" type="safebox:FindResponseContent"/>
+            <element name="setPermissions" type="com:SetPermissions"/>
+            <element name="setPermissionsResponse" type="com:SetPermissionsResponse"/>
+        </schema>
+    </types>
+
+    <message name="create">
+        <part name="parameter" element="v4_0:create"/>
+    </message>
+    <message name="createResponse">
+        <part name="parameter" element="v4_0:createResponse"/>
+    </message>
+    <message name="read">
+        <part name="parameter" element="v4_0:read"/>
+    </message>
+    <message name="readResponse">
+        <part name="parameter" element="v4_0:readResponse"/>
+    </message>
+    <message name="update">
+        <part name="parameter" element="v4_0:update"/>
+    </message>
+    <message name="updateResponse">
+        <part name="parameter" element="v4_0:updateResponse"/>
+    </message>
+    <message name="delete">
+        <part name="parameter" element="v4_0:delete"/>
+    </message>
+    <message name="deleteResponse">
+        <part name="parameter" element="v4_0:deleteResponse"/>
+    </message>
+    <message name="find">
+        <part name="parameter" element="v4_0:find"/>
+    </message>
+    <message name="findResponse">
+        <part name="parameter" element="v4_0:findResponse"/>
+    </message>
+    <message name="next">
+        <part name="parameter" element="v4_0:next"/>
+    </message>
+    <message name="nextResponse">
+        <part name="parameter" element="v4_0:nextResponse"/>
+    </message>
+    <message name="globalFind">
+        <part name="parameter" element="v4_0:globalFind"/>
+    </message>
+    <message name="globalFindResponse">
+        <part name="parameter" element="v4_0:globalFindResponse"/>
+    </message>
+    <message name="setPermissions">
+        <part name="parameter" element="v4_0:setPermissions"/>
+    </message>
+    <message name="setPermissionsResponse">
+        <part name="parameter" element="v4_0:setPermissionsResponse"/>
+    </message>
+
+    <portType name="SafeboxPort">
+        <operation name="create">
+            <input name="create" message="tns:create"/>
+            <output name="createResponse" message="tns:createResponse"/>
+            <fault name="EnvironmentFaultException" message="exc:EnvironmentFaultException"/>
+            <fault name="UserFaultException" message="exc:UserFaultException"/>
+        </operation>
+        <operation name="read">
+            <input name="read" message="tns:read"/>
+            <output name="readResponse" message="tns:readResponse"/>
+            <fault name="EnvironmentFaultException" message="exc:EnvironmentFaultException"/>
+            <fault name="UserFaultException" message="exc:UserFaultException"/>
+        </operation>
+        <operation name="update">
+            <input name="update" message="tns:update"/>
+            <output name="updateResponse" message="tns:updateResponse"/>
+            <fault name="EnvironmentFaultException" message="exc:EnvironmentFaultException"/>
+            <fault name="UserFaultException" message="exc:UserFaultException"/>
+        </operation>
+        <operation name="delete">
+            <input name="delete" message="tns:delete"/>
+            <output name="deleteResponse" message="tns:deleteResponse"/>
+            <fault name="EnvironmentFaultException" message="exc:EnvironmentFaultException"/>
+            <fault name="UserFaultException" message="exc:UserFaultException"/>
+        </operation>
+        <operation name="find">
+            <input name="find" message="tns:find"/>
+            <output name="findResponse" message="tns:findResponse"/>
+            <fault name="EnvironmentFaultException" message="exc:EnvironmentFaultException"/>
+            <fault name="UserFaultException" message="exc:UserFaultException"/>
+        </operation>
+        <operation name="next">
+            <input name="next" message="tns:next"/>
+            <output name="nextResponse" message="tns:nextResponse"/>
+            <fault name="EnvironmentFaultException" message="exc:EnvironmentFaultException"/>
+            <fault name="UserFaultException" message="exc:UserFaultException"/>
+        </operation>
+        <operation name="globalFind">
+            <input name="globalFind" message="tns:globalFind"/>
+            <output name="globalFindResponse" message="tns:globalFindResponse"/>
+            <fault name="EnvironmentFaultException" message="exc:EnvironmentFaultException"/>
+            <fault name="UserFaultException" message="exc:UserFaultException"/>
+        </operation>
+        <operation name="setPermissions">
+            <input name="setPermissions" message="tns:setPermissions"/>
+            <output name="setPermissionsResponse" message="tns:setPermissionsResponse"/>
+            <fault name="EnvironmentFaultException" message="exc:EnvironmentFaultException"/>
+            <fault name="UserFaultException" message="exc:UserFaultException"/>
+        </operation>
+    </portType>
+
+    <binding name="SafeboxBinding" type="tns:SafeboxPort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="create">
+            <soap:operation soapAction="Safebox:create" style="document"/>
+            <input name="create">
+                <soap:body use="literal"/>
+            </input>
+            <output name="createResponse">
+                <soap:body use="literal"/>
+            </output>
+            <fault name="EnvironmentFaultException">
+                <soap:fault name="EnvironmentFaultException" use="literal"/>
+            </fault>
+            <fault name="UserFaultException">
+                <soap:fault name="UserFaultException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="read">
+            <soap:operation soapAction="Safebox:read" style="document"/>
+            <input name="read">
+                <soap:body use="literal"/>
+            </input>
+            <output name="readResponse">
+                <soap:body use="literal"/>
+            </output>
+            <fault name="EnvironmentFaultException">
+                <soap:fault name="EnvironmentFaultException" use="literal"/>
+            </fault>
+            <fault name="UserFaultException">
+                <soap:fault name="UserFaultException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="update">
+            <soap:operation soapAction="Safebox:update" style="document"/>
+            <input name="update">
+                <soap:body use="literal"/>
+            </input>
+            <output name="updateResponse">
+                <soap:body use="literal"/>
+            </output>
+            <fault name="EnvironmentFaultException">
+                <soap:fault name="EnvironmentFaultException" use="literal"/>
+            </fault>
+            <fault name="UserFaultException">
+                <soap:fault name="UserFaultException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="delete">
+            <soap:operation soapAction="Safebox:delete" style="document"/>
+            <input name="delete">
+                <soap:body use="literal"/>
+            </input>
+            <output name="deleteResponse">
+                <soap:body use="literal"/>
+            </output>
+            <fault name="EnvironmentFaultException">
+                <soap:fault name="EnvironmentFaultException" use="literal"/>
+            </fault>
+            <fault name="UserFaultException">
+                <soap:fault name="UserFaultException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="find">
+            <soap:operation soapAction="Safebox:find" style="document"/>
+            <input name="find">
+                <soap:body use="literal"/>
+            </input>
+            <output name="findResponse">
+                <soap:body use="literal"/>
+            </output>
+            <fault name="EnvironmentFaultException">
+                <soap:fault name="EnvironmentFaultException" use="literal"/>
+            </fault>
+            <fault name="UserFaultException">
+                <soap:fault name="UserFaultException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="next">
+            <soap:operation soapAction="Safebox:next" style="document"/>
+            <input name="next">
+                <soap:body use="literal"/>
+            </input>
+            <output name="nextResponse">
+                <soap:body use="literal"/>
+            </output>
+            <fault name="EnvironmentFaultException">
+                <soap:fault name="EnvironmentFaultException" use="literal"/>
+            </fault>
+            <fault name="UserFaultException">
+                <soap:fault name="UserFaultException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="globalFind">
+            <soap:operation soapAction="Safebox:globalFind" style="document"/>
+            <input name="globalFind">
+                <soap:body use="literal"/>
+            </input>
+            <output name="globalFindResponse">
+                <soap:body use="literal"/>
+            </output>
+            <fault name="EnvironmentFaultException">
+                <soap:fault name="EnvironmentFaultException" use="literal"/>
+            </fault>
+            <fault name="UserFaultException">
+                <soap:fault name="UserFaultException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="setPermissions">
+            <soap:operation soapAction="Safebox:setPermissions" style="document"/>
+            <input name="setPermissions">
+                <soap:body use="literal"/>
+            </input>
+            <output name="setPermissionsResponse">
+                <soap:body use="literal"/>
+            </output>
+            <fault name="EnvironmentFaultException">
+                <soap:fault name="EnvironmentFaultException" use="literal"/>
+            </fault>
+            <fault name="UserFaultException">
+                <soap:fault name="UserFaultException" use="literal"/>
+            </fault>
+        </operation>
+    </binding>
+
+</definitions>

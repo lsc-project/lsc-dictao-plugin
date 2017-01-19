@@ -1,0 +1,32 @@
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee">
+	<display-name>LscDacsRepository</display-name>
+	<description>LSC DACS Repository emulation</description>
+	<listener>
+		<listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
+	</listener>
+	<servlet>
+		<servlet-name>DACSProvisioningFrontEnd</servlet-name>
+		<display-name>DACS Virtual Service</display-name>
+		<description>Endpoint for LSC Dacs Repository service</description>
+		<servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>DVSSoap</servlet-name>
+		<display-name>DVS Virtual Service</display-name>
+		<description>Endpoint for LSC Dacs Repository service</description>
+		<servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DACSProvisioningFrontEnd</servlet-name>
+		<url-pattern>/DACSRepositoryWS</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>DVSSoap</servlet-name>
+		<url-pattern>/DVSInterfaceSoap.cgi</url-pattern>
+	</servlet-mapping>
+	<session-config>
+		<session-timeout>60</session-timeout>
+	</session-config>
+</web-app>

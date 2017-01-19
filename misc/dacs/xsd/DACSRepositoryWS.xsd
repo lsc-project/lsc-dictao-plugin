@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+  	DACS API Disclaimer 
+
+	Copyright (c) 2014, Dictao.
+	
+	All rights reserved.
+	
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are met:
+   
+  - Redistributions of source code must retain the above copyright notice,
+    this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+  - Neither the name of the Dictao nor the names of its contributors may
+    be used to endorse or promote products derived from this software without
+    specific prior written permission.
+	 
+  THIS API IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+  CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+	
+	Additional conditions are available on Dictao Developer website:
+		http://www.dictao.com/developer/api/disclaimer
+	
+ -->
+ <xs:schema xmlns:tao="http://www.dictao.com/DACS/FrontEnd/RepositoryWS" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.dictao.com/DACS/FrontEnd/RepositoryWS" elementFormDefault="qualified">
+	<xs:include schemaLocation="DACSRepositoryTypes.xsd"/>
+	<!-- specific format -->
+	<xs:complexType name="GroupIdListType">
+		<xs:sequence>
+			<xs:element ref="tao:GroupId" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ApplicationNameListListType">
+		<xs:sequence>
+			<xs:element ref="tao:ApplicationName" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Validity" type="xs:int"/>
+	<xs:element name="Expiration" type="xs:string"/>
+	<xs:element name="PAN" type="xs:string"/>
+	<xs:element name="Birthdate" type="xs:string"/>
+	<xs:element name="Response" type="xs:string"/>
+	<xs:element name="Password" type="xs:string"/>
+	<xs:element name="NbUsers" type="xs:int"/>
+	<xs:element name="FirstIdx" type="xs:int"/>
+	<xs:element name="LastIdx" type="xs:int"/>
+	<xs:element name="GroupIdList" type="tao:GroupIdListType"/>
+	<xs:element name="ApplicationNameList" type="tao:ApplicationNameListListType"/>
+	<!-- OBJECT FOR CALLER -->
+	<xs:element name="CallerRequest">
+		<xs:annotation>
+			<xs:documentation>REQUEST for caller Remote Repository</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tao:GetUserListRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="tao:GetUserInfoRequest" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element ref="tao:UpdateUserInfoRequest" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GetUserListRequest">
+		<xs:annotation>
+			<xs:documentation>REQUEST: Get user list</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="tao:CommandRequestBaseType">
+					<xs:sequence>
+						<xs:choice>
+							<xs:sequence>
+								<xs:element ref="tao:PAN" minOccurs="0"/>
+								<xs:element ref="tao:Expiration" minOccurs="0"/>
+							</xs:sequence>
+							<xs:sequence>
+								<xs:element ref="tao:ApplicationNameList" minOccurs="0"/>
+								<xs:element ref="tao:UserIdentity" minOccurs="0"/>
+							</xs:sequence>
+						</xs:choice>
+						<xs:element ref="tao:FriendlyName" minOccurs="0"/>
+						<xs:element ref="tao:ClientRef" minOccurs="0"/>
+						<xs:element ref="tao:UserAlias" minOccurs="0"/>
+						<xs:element ref="tao:GroupIdList" minOccurs="0"/>
+						<xs:element ref="tao:FirstIdx" minOccurs="0"/>
+						<xs:element ref="tao:LastIdx" minOccurs="0"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GetUserListResponse">
+		<xs:annotation>
+			<xs:documentation>RESPONSE: Get user list</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="tao:CommandResponseBaseType">
+					<xs:sequence>
+						<xs:element ref="tao:NbUsers" minOccurs="0"/>
+						<xs:element ref="tao:UserInfoList" minOccurs="0"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GetUserInfoRequest">
+		<xs:annotation>
+			<xs:documentation>REQUEST: Get user informations from a PAN</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="tao:CommandRequestBaseType">
+					<xs:sequence>
+						<xs:choice>
+							<xs:sequence>
+								<xs:element ref="tao:PAN"/>
+								<xs:element ref="tao:Validity" minOccurs="0"/>
+							</xs:sequence>
+							<xs:sequence>
+								<xs:element ref="tao:ApplicationName"/>
+								<xs:element ref="tao:UserIdentity"/>
+							</xs:sequence>
+						</xs:choice>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="GetUserInfoResponse">
+		<xs:annotation>
+			<xs:documentation>RESPONSE: Get user informations from a PAN</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="tao:CommandResponseBaseType">
+					<xs:sequence>
+						<xs:element ref="tao:UserInfo" minOccurs="0"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="UpdateUserInfoRequest">
+		<xs:annotation>
+			<xs:documentation>REQUEST: Update a USER informations</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="tao:CommandRequestBaseType">
+					<xs:sequence>
+						<xs:element ref="tao:UserInfoToUpdate" minOccurs="0"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="UpdateUserInfoResponse">
+		<xs:annotation>
+			<xs:documentation>REQUEST: Update a USER informations</xs:documentation>
+		</xs:annotation>
+		<xs:complexType mixed="false">
+			<xs:complexContent mixed="false">
+				<xs:extension base="tao:CommandResponseBaseType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

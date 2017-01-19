@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 
+ ****************************************************************************
+ * Ldap Synchronization Connector provides tools to synchronize
+ * electronic identities from a list of data sources including
+ * any database with a JDBC connector, another LDAP directory,
+ * flat files...
+ *
+ *                  ==LICENSE NOTICE==
+ * 
+ * Copyright (c) 2008 - 2014 LSC Project 
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are met:
+
+ *    * Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above copyright
+ * notice, this list of conditions and the following disclaimer in the
+ * documentation and/or other materials provided with the distribution.
+ *     * Neither the name of the LSC Project nor the names of its
+ * contributors may be used to endorse or promote products derived from
+ * this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+ * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+ * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+ * PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER
+ * OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ *                  ==LICENSE NOTICE==
+ *
+ *               (c) 2008 - 2014 LSC Project
+ *         Sebastien Bahloul <seb@lsc-project.org>
+ *         Thomas Chemineau <thomas@lsc-project.org>
+ *         Jonathan Clarke <jon@lsc-project.org>
+ *         Remy-Christophe Schermesser <rcs@lsc-project.org>
+ ****************************************************************************
+ -->
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns="http://dictao.com/ns/dacs/lsc-agent-1.0"
+	targetNamespace="http://dictao.com/ns/dacs/lsc-agent-1.0"
+	elementFormDefault="qualified"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:lsc-core="http://lsc-project.org/XSD/lsc-core-2.1.xsd"
+	jaxb:version="2.0">
+    
+    <xsd:import namespace="http://lsc-project.org/XSD/lsc-core-2.1.xsd"/>
+    
+    <xsd:complexType name="storeType">
+    	<xsd:sequence>
+    		<xsd:element name="File" type="xsd:string">
+		    </xsd:element>
+    		<xsd:element name="Type">
+    			<xsd:simpleType>
+    				<xsd:restriction base="xsd:string">
+    					<xsd:enumeration value="JKS"/>
+    					<xsd:enumeration value="PKCS12"/>
+    				</xsd:restriction>
+    			</xsd:simpleType>
+    		</xsd:element>
+    		<xsd:element name="Password" type="xsd:string" />
+    	</xsd:sequence>
+    </xsd:complexType>
+    
+    <xsd:complexType name="ProxySettingsType">
+    	<xsd:sequence>
+    		<xsd:element name="hostname" type="xsd:string" />
+    		<xsd:element name="port" type="xsd:int" />
+    		<xsd:element name="username" type="xsd:string" minOccurs="0" />
+    		<xsd:element name="password" type="xsd:string" minOccurs="0" />
+    	</xsd:sequence>
+    </xsd:complexType>
+    
+   	<xsd:element name="dacsProvisioningConnectionSettings">
+	   	<xsd:complexType>
+			<xsd:sequence>
+		 		<xsd:element name="provisioningUrl" type="xsd:string">
+		 		</xsd:element>
+		 		<xsd:element name="repositoryUrl" type="xsd:string">
+		 		</xsd:element>
+		 		<xsd:element name="TrustStore" type="storeType">
+		 		</xsd:element>
+		 		<xsd:element name="ClientStore" type="storeType">
+		 		</xsd:element>
+		 		<xsd:element name="ProxySettings" type="ProxySettingsType" minOccurs="0">
+		 		</xsd:element>
+			</xsd:sequence>
+	   	</xsd:complexType>
+   	</xsd:element>
+
+   	<xsd:element name="virtualServiceConnectionSettings">
+	   	<xsd:complexType>
+			<xsd:sequence>
+		 		<xsd:element name="endpointUrl" type="xsd:string">
+		 		</xsd:element>
+		 		<xsd:element name="TrustStore" type="storeType">
+		 		</xsd:element>
+		 		<xsd:element name="ServerStore" type="storeType">
+		 		</xsd:element>
+			</xsd:sequence>
+	   	</xsd:complexType>
+   	</xsd:element>
+
+   	<xsd:element name="dvsProvisioningConnectionSettings">
+	   	<xsd:complexType>
+			<xsd:sequence>
+		 		<xsd:element name="url" type="xsd:string">
+		 		</xsd:element>
+		 		<xsd:element name="TrustStore" type="storeType">
+		 		</xsd:element>
+		 		<xsd:element name="ClientStore" type="storeType">
+		 		</xsd:element>
+		 		<xsd:element name="ProxySettings" type="ProxySettingsType" minOccurs="0">
+		 		</xsd:element>
+			</xsd:sequence>
+	   	</xsd:complexType>
+   	</xsd:element>
+
+   	<xsd:element name="d3sProvisioningConnectionSettings">
+	   	<xsd:complexType>
+			<xsd:sequence>
+		 		<xsd:element name="url" type="xsd:string">
+		 		</xsd:element>
+		 		<xsd:element name="TrustStore" type="storeType">
+		 		</xsd:element>
+		 		<xsd:element name="ClientStore" type="storeType">
+		 		</xsd:element>
+		 		<xsd:element name="ProxySettings" type="ProxySettingsType" minOccurs="0">
+		 		</xsd:element>
+			</xsd:sequence>
+	   	</xsd:complexType>
+   	</xsd:element>
+
+   	<xsd:element name="dacsProvisioningServiceSettings">
+	   	<xsd:complexType>
+			<xsd:sequence>
+ 				<xsd:element name="groupId" type="xsd:string">
+		 		</xsd:element>
+ 				<xsd:element name="applicationId" type="xsd:string" maxOccurs="unbounded">
+		 		</xsd:element>
+ 				<xsd:element name="dateFormat" type="xsd:string" minOccurs="0">
+		 		</xsd:element>
+		 		<xsd:element name="entryCacheSize" type="xsd:int" minOccurs="0" default="1000">
+		 		</xsd:element>
+		 		<xsd:element name="entryCacheExpiracy" type="xsd:int" minOccurs="0" default="120">
+		 		</xsd:element>
+		 		<xsd:element name="scope" type="xsd:string" minOccurs="0">
+		 		</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+   	</xsd:element>
+   	
+   	<xsd:element name="dacsRepositoryServiceSettings">
+	   	<xsd:complexType>
+			<xsd:sequence>
+ 				<xsd:element name="groupId" type="xsd:string" minOccurs="0">
+		 		</xsd:element>
+ 				<xsd:element name="applicationId" type="xsd:string" maxOccurs="unbounded">
+		 		</xsd:element>
+ 				<xsd:element name="dateFormat" type="xsd:string" minOccurs="0">
+		 		</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+   	</xsd:element>
+
+	<xsd:simpleType name="userLevelType">
+		<xsd:restriction base="xsd:token">
+			<xsd:enumeration value="INVALID"/>
+			<xsd:enumeration value="SUPER-ADMINISTRATOR"/>
+			<xsd:enumeration value="SUPER-MANAGER"/>
+			<xsd:enumeration value="ADMINISTRATOR"/>
+			<xsd:enumeration value="MANAGER"/>
+			<xsd:enumeration value="OPERATOR"/>
+			<xsd:enumeration value="HELPDESK"/>
+			<xsd:enumeration value="SELFDESK"/>
+			<xsd:enumeration value="PINMAILER"/>
+		</xsd:restriction>
+	</xsd:simpleType>
+   	
+   	<xsd:element name="dvsProvisioningServiceSettings">
+	   	<xsd:complexType>
+			<xsd:sequence>
+ 				<xsd:element name="groupId" type="xsd:string" minOccurs="0">
+		 		</xsd:element>
+				<xsd:element name="userLevel" type="userLevelType">
+		 		</xsd:element>
+ 				<xsd:element name="dateFormat" type="xsd:string" minOccurs="0">
+		 		</xsd:element>
+		 		<xsd:element name="entryCacheSize" type="xsd:int" minOccurs="0" default="1000">
+		 		</xsd:element>
+		 		<xsd:element name="entryCacheExpiracy" type="xsd:int" minOccurs="0" default="120">
+		 		</xsd:element>
+				<xsd:element name="scope" type="xsd:string" minOccurs="0" default="NONE">
+		 		</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+   	</xsd:element>
+
+   	<xsd:element name="dvsValidationServiceSettings">
+	   	<xsd:complexType>
+			<xsd:sequence>
+ 				<xsd:element name="groupId" type="xsd:string" minOccurs="0">
+		 		</xsd:element>
+ 				<xsd:element name="transactionId" type="xsd:string" maxOccurs="unbounded">
+		 		</xsd:element>
+ 				<xsd:element name="dateFormat" type="xsd:string" minOccurs="0">
+		 		</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+   	</xsd:element>
+
+   	<xsd:element name="d3sProvisioningServiceSettings">
+	   	<xsd:complexType>
+			<xsd:sequence>
+ 				<xsd:element name="groupId" type="xsd:string" minOccurs="0">
+		 		</xsd:element>
+				<xsd:element name="userLevel" type="userLevelType">
+		 		</xsd:element>
+ 				<xsd:element name="dateFormat" type="xsd:string" minOccurs="0">
+		 		</xsd:element>
+		 		<xsd:element name="entryCacheSize" type="xsd:int" minOccurs="0" default="1000">
+		 		</xsd:element>
+		 		<xsd:element name="entryCacheExpiracy" type="xsd:int" minOccurs="0" default="120">
+		 		</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+   	</xsd:element>
+
+</xsd:schema>

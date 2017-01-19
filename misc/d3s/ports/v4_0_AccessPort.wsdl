@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+
+  	D3S API Disclaimer 
+
+	Copyright (c) 2014, Dictao.
+	
+	All rights reserved.
+	
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are met:
+   
+  - Redistributions of source code must retain the above copyright notice,
+    this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+  - Neither the name of the Dictao nor the names of its contributors may
+    be used to endorse or promote products derived from this software without
+    specific prior written permission.
+	 
+  THIS API IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+  CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+	
+	Additional conditions are available on Dictao Developer website:
+		http://www.dictao.com/developer/api/disclaimer
+	
+ -->
+<definitions name="AccessPort"
+             targetNamespace="http://www.dictao.com/d3s/wsdl/v4/AccessPort"
+             xmlns="http://schemas.xmlsoap.org/wsdl/"
+             xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:v4_0="http://www.dictao.com/d3s/wsdl/v4.0/AccessPort"
+             xmlns:exc="http://www.dictao.com/d3s/wsdl/v4/Exceptions"
+             xmlns:tns="http://www.dictao.com/d3s/wsdl/v4/AccessPort">
+
+    <import namespace="http://www.dictao.com/d3s/wsdl/v4/Exceptions" location="v4_0_Exceptions.wsdl"/>
+
+    <types>
+        <schema targetNamespace="http://www.dictao.com/d3s/wsdl/v4.0/AccessPort"
+                xmlns="http://www.w3.org/2001/XMLSchema"
+                xmlns:com="http://www.dictao.com/d3s/xsd/v2013_11/Common"
+                xmlns:access="http://www.dictao.com/d3s/xsd/v2013_11/Access"
+                xmlns:tns="http://www.dictao.com/d3s/wsdl/v4.0/AccessPort">
+
+            <import namespace="http://www.dictao.com/d3s/xsd/v2013_11/Common" schemaLocation="../v2013_11/Common.xsd"/>
+            <import namespace="http://www.dictao.com/d3s/xsd/v2013_11/Access" schemaLocation="../v2013_11/Access.xsd"/>
+
+            <element name="grantControl" type="access:GrantControl"/>
+            <element name="grantControlResponse" type="access:GrantControlResponseContent"/>
+            <element name="grantRead" type="access:GrantRead"/>
+            <element name="grantReadResponse" type="access:GrantReadResponseContent"/>
+            <element name="grantWrite" type="access:GrantWrite"/>
+            <element name="grantWriteResponse" type="access:GrantWriteResponseContent"/>
+            <element name="grantUpdate" type="access:GrantUpdate"/>
+            <element name="grantUpdateResponse" type="access:GrantUpdateResponseContent"/>
+            <element name="grantDelete" type="access:GrantDelete"/>
+            <element name="grantDeleteResponse" type="access:GrantDeleteResponseContent"/>
+            <element name="grantRestitute" type="access:GrantRestitute"/>
+            <element name="grantRestituteResponse" type="access:GrantRestituteResponseContent"/>
+        </schema>
+    </types>
+
+    <message name="grantControl">
+        <part name="parameter" element="v4_0:grantControl"/>
+    </message>
+    <message name="grantControlResponse">
+        <part name="parameter" element="v4_0:grantControlResponse"/>
+    </message>
+    <message name="grantRead">
+        <part name="parameter" element="v4_0:grantRead"/>
+    </message>
+    <message name="grantReadResponse">
+        <part name="parameter" element="v4_0:grantReadResponse"/>
+    </message>
+    <message name="grantWrite">
+        <part name="parameter" element="v4_0:grantWrite"/>
+    </message>
+    <message name="grantWriteResponse">
+        <part name="parameter" element="v4_0:grantWriteResponse"/>
+    </message>
+    <message name="grantUpdate">
+        <part name="parameter" element="v4_0:grantUpdate"/>
+    </message>
+    <message name="grantUpdateResponse">
+        <part name="parameter" element="v4_0:grantUpdateResponse"/>
+    </message>
+    <message name="grantDelete">
+        <part name="parameter" element="v4_0:grantDelete"/>
+    </message>
+    <message name="grantDeleteResponse">
+        <part name="parameter" element="v4_0:grantDeleteResponse"/>
+    </message>
+    <message name="grantRestitute">
+        <part name="parameter" element="v4_0:grantRestitute"/>
+    </message>
+    <message name="grantRestituteResponse">
+        <part name="parameter" element="v4_0:grantRestituteResponse"/>
+    </message>
+    <portType name="AccessPort">
+        <operation name="grantControl">
+            <input name="grantControl" message="tns:grantControl"/>
+            <output name="grantControlResponse" message="tns:grantControlResponse"/>
+            <fault name="EnvironmentFaultException" message="exc:EnvironmentFaultException"/>
+            <fault name="UserFaultException" message="exc:UserFaultException"/>
+        </operation>
+        <operation name="grantRead">
+            <input name="grantRead" message="tns:grantRead"/>
+            <output name="grantReadResponse" message="tns:grantReadResponse"/>
+            <fault name="EnvironmentFaultException" message="exc:EnvironmentFaultException"/>
+            <fault name="UserFaultException" message="exc:UserFaultException"/>
+        </operation>
+        <operation name="grantWrite">
+            <input name="grantWrite" message="tns:grantWrite"/>
+            <output name="grantWriteResponse" message="tns:grantWriteResponse"/>
+            <fault name="EnvironmentFaultException" message="exc:EnvironmentFaultException"/>
+            <fault name="UserFaultException" message="exc:UserFaultException"/>
+        </operation>
+        <operation name="grantUpdate">
+            <input name="grantUpdate" message="tns:grantUpdate"/>
+            <output name="grantUpdateResponse" message="tns:grantUpdateResponse"/>
+            <fault name="EnvironmentFaultException" message="exc:EnvironmentFaultException"/>
+            <fault name="UserFaultException" message="exc:UserFaultException"/>
+        </operation>
+        <operation name="grantDelete">
+            <input name="grantDelete" message="tns:grantDelete"/>
+            <output name="grantDeleteResponse" message="tns:grantDeleteResponse"/>
+            <fault name="EnvironmentFaultException" message="exc:EnvironmentFaultException"/>
+            <fault name="UserFaultException" message="exc:UserFaultException"/>
+        </operation>
+        <operation name="grantRestitute">
+            <input name="grantRestitute" message="tns:grantRestitute"/>
+            <output name="grantRestituteResponse" message="tns:grantRestituteResponse"/>
+            <fault name="EnvironmentFaultException" message="exc:EnvironmentFaultException"/>
+            <fault name="UserFaultException" message="exc:UserFaultException"/>
+        </operation>    
+    </portType>
+
+    <binding name="AccessBinding" type="tns:AccessPort">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="grantControl">
+            <soap:operation soapAction="Access:grantControl" style="document"/>
+            <input name="grantControl">
+                <soap:body use="literal"/>
+            </input>
+            <output name="grantControlResponse">
+                <soap:body use="literal"/>
+            </output>
+            <fault name="EnvironmentFaultException">
+                <soap:fault name="EnvironmentFaultException" use="literal"/>
+            </fault>
+            <fault name="UserFaultException">
+                <soap:fault name="UserFaultException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="grantRead">
+            <soap:operation soapAction="Access:grantRead" style="document"/>
+            <input name="grantRead">
+                <soap:body use="literal"/>
+            </input>
+            <output name="grantReadResponse">
+                <soap:body use="literal"/>
+            </output>
+            <fault name="EnvironmentFaultException">
+                <soap:fault name="EnvironmentFaultException" use="literal"/>
+            </fault>
+            <fault name="UserFaultException">
+                <soap:fault name="UserFaultException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="grantWrite">
+            <soap:operation soapAction="Access:grantWrite" style="document"/>
+            <input name="grantWrite">
+                <soap:body use="literal"/>
+            </input>
+            <output name="grantWriteResponse">
+                <soap:body use="literal"/>
+            </output>
+            <fault name="EnvironmentFaultException">
+                <soap:fault name="EnvironmentFaultException" use="literal"/>
+            </fault>
+            <fault name="UserFaultException">
+                <soap:fault name="UserFaultException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="grantUpdate">
+            <soap:operation soapAction="Access:grantUpdate" style="document"/>
+            <input name="grantUpdate">
+                <soap:body use="literal"/>
+            </input>
+            <output name="grantUpdateResponse">
+                <soap:body use="literal"/>
+            </output>
+            <fault name="EnvironmentFaultException">
+                <soap:fault name="EnvironmentFaultException" use="literal"/>
+            </fault>
+            <fault name="UserFaultException">
+                <soap:fault name="UserFaultException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="grantDelete">
+            <soap:operation soapAction="Access:grantDelete" style="document"/>
+            <input name="grantDelete">
+                <soap:body use="literal"/>
+            </input>
+            <output name="grantDeleteResponse">
+                <soap:body use="literal"/>
+            </output>
+            <fault name="EnvironmentFaultException">
+                <soap:fault name="EnvironmentFaultException" use="literal"/>
+            </fault>
+            <fault name="UserFaultException">
+                <soap:fault name="UserFaultException" use="literal"/>
+            </fault>
+        </operation>
+        <operation name="grantRestitute">
+            <soap:operation soapAction="Access:grantRestitute" style="document"/>
+            <input name="grantRestitute">
+                <soap:body use="literal"/>
+            </input>
+            <output name="grantRestituteResponse">
+                <soap:body use="literal"/>
+            </output>
+            <fault name="EnvironmentFaultException">
+                <soap:fault name="EnvironmentFaultException" use="literal"/>
+            </fault>
+            <fault name="UserFaultException">
+                <soap:fault name="UserFaultException" use="literal"/>
+            </fault>
+        </operation>    
+    </binding>
+
+</definitions>

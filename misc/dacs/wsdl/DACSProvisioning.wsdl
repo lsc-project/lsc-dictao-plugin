@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  	DACS API Disclaimer 
+
+	Copyright (c) 2014, Dictao.
+	
+	All rights reserved.
+	
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are met:
+   
+  - Redistributions of source code must retain the above copyright notice,
+    this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+  - Neither the name of the Dictao nor the names of its contributors may
+    be used to endorse or promote products derived from this software without
+    specific prior written permission.
+	 
+  THIS API IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+  CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+	
+	Additional conditions are available on Dictao Developer website:
+		http://www.dictao.com/developer/api/disclaimer
+	
+ -->
+ <wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tao="http://www.dictao.com/DACS/FrontEnd/Provisioning" name="DACSProvisioningFrontEnd" targetNamespace="http://www.dictao.com/DACS/FrontEnd/Provisioning">
+	
+    <wsdl:types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+			<xs:import namespace="http://www.dictao.com/DACS/FrontEnd/Provisioning" schemaLocation="../xsd/DACSProvisioning.xsd"/>
+		</xs:schema>
+	</wsdl:types>
+    
+	<wsdl:message name="AddUserListRequest">
+		<wsdl:part name="AddUserListRequest" element="tao:AddUserListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="AddUserListResponse">
+		<wsdl:part name="AddUserListResponse" element="tao:AddUserListResponse"/>
+	</wsdl:message>
+	<wsdl:message name="RemoveUserListRequest">
+		<wsdl:part name="RemoveAuthPluginInfoFromUserRequest" element="tao:RemoveUserListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="RemoveUserListResponse">
+		<wsdl:part name="RemoveAuthPluginInfoFromUserResponse" element="tao:RemoveUserListResponse"/>
+	</wsdl:message>
+	<wsdl:message name="UpdateUserInfoListRequest">
+		<wsdl:part name="UpdateUserInfoListRequest" element="tao:UpdateUserInfoListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="UpdateUserInfoListResponse">
+		<wsdl:part name="UpdateUserInfoListResponse" element="tao:UpdateUserInfoListResponse"/>
+	</wsdl:message>
+	<wsdl:message name="AddOrUpdateUserInfoListRequest">
+		<wsdl:part name="AddOrUpdateUserInfoListRequest" element="tao:AddOrUpdateUserInfoListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="AddOrUpdateUserInfoListResponse">
+		<wsdl:part name="AddOrUpdateUserInfoListResponse" element="tao:AddOrUpdateUserInfoListResponse"/>
+	</wsdl:message>
+	<wsdl:message name="AddCardsToUserRequest">
+		<wsdl:part name="AddCardsToUserRequest" element="tao:AddCardsToUserRequest"/>
+	</wsdl:message>
+	<wsdl:message name="AddCardsToUserResponse">
+		<wsdl:part name="AddCardsToUserResponse" element="tao:AddCardsToUserResponse"/>
+	</wsdl:message>
+	<wsdl:message name="RemoveCardsFromUserRequest">
+		<wsdl:part name="RemoveCardsFromUserRequest" element="tao:RemoveCardsFromUserRequest"/>
+	</wsdl:message>
+	<wsdl:message name="RemoveCardsFromUserResponse">
+		<wsdl:part name="RemoveCardsFromUserResponse" element="tao:RemoveCardsFromUserResponse"/>
+	</wsdl:message>
+	<wsdl:message name="AddAuthPluginInfoToUserRequest">
+		<wsdl:part name="AddAuthPluginInfoToUserRequest" element="tao:AddAuthPluginInfoToUserRequest"/>
+	</wsdl:message>
+	<wsdl:message name="AddAuthPluginInfoToUserResponse">
+		<wsdl:part name="AddAuthPluginInfoToUserResponse" element="tao:AddAuthPluginInfoToUserResponse"/>
+	</wsdl:message>
+	<wsdl:message name="RemoveAuthPluginInfoFromUserRequest">
+		<wsdl:part name="RemoveAuthPluginInfoFromUserRequest" element="tao:RemoveAuthPluginInfoFromUserRequest"/>
+	</wsdl:message>
+	<wsdl:message name="RemoveAuthPluginInfoFromUserResponse">
+		<wsdl:part name="RemoveAuthPluginInfoFromUserResponse" element="tao:RemoveAuthPluginInfoFromUserResponse"/>
+	</wsdl:message>
+	<wsdl:message name="AddAuthPluginInfoToUserListRequest">
+		<wsdl:part name="AddAuthPluginInfoToUserListRequest" element="tao:AddAuthPluginInfoToUserListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="AddAuthPluginInfoToUserListResponse">
+		<wsdl:part name="AddAuthPluginInfoToUserListResponse" element="tao:AddAuthPluginInfoToUserListResponse"/>
+	</wsdl:message>
+	<wsdl:message name="RemoveAuthPluginInfoFromUserListRequest">
+		<wsdl:part name="RemoveAuthPluginInfoFromUserListRequest" element="tao:RemoveAuthPluginInfoFromUserListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="RemoveAuthPluginInfoFromUserListResponse">
+		<wsdl:part name="RemoveAuthPluginInfoFromUserListResponse" element="tao:RemoveAuthPluginInfoFromUserListResponse"/>
+	</wsdl:message>
+	<wsdl:message name="AddAliasesToUserRequest">
+		<wsdl:part name="AddAliasesToUserRequest" element="tao:AddAliasesToUserRequest"/>
+	</wsdl:message>
+	<wsdl:message name="AddAliasesToUserResponse">
+		<wsdl:part name="AddAliasesToUserResponse" element="tao:AddAliasesToUserResponse"/>
+	</wsdl:message>
+	<wsdl:message name="RemoveAliasesFromUserRequest">
+		<wsdl:part name="RemoveAliasesFromUserRequest" element="tao:RemoveAliasesFromUserRequest"/>
+	</wsdl:message>
+	<wsdl:message name="RemoveAliasesFromUserResponse">
+		<wsdl:part name="RemoveAliasesFromUserResponse" element="tao:RemoveAliasesFromUserResponse"/>
+	</wsdl:message>
+	<wsdl:message name="AddIdentitiesToUserRequest">
+		<wsdl:part name="AddIdentitiesToUserRequest" element="tao:AddIdentitiesToUserRequest"/>
+	</wsdl:message>
+	<wsdl:message name="AddIdentitiesToUserResponse">
+		<wsdl:part name="AddIdentitiesToUserResponse" element="tao:AddIdentitiesToUserResponse"/>
+	</wsdl:message>
+	<wsdl:message name="RemoveIdentitiesFromUserRequest">
+		<wsdl:part name="RemoveIdentitiesFromUserRequest" element="tao:RemoveIdentitiesFromUserRequest"/>
+	</wsdl:message>
+	<wsdl:message name="RemoveIdentitiesFromUserResponse">
+		<wsdl:part name="RemoveIdentitiesFromUserResponse" element="tao:RemoveIdentitiesFromUserResponse"/>
+	</wsdl:message>
+	<wsdl:message name="AddApplicationsRequest">
+		<wsdl:part name="AddApplicationsRequest" element="tao:AddApplicationsRequest"/>
+	</wsdl:message>
+	<wsdl:message name="AddApplicationsResponse">
+		<wsdl:part name="AddApplicationsResponse" element="tao:AddApplicationsResponse"/>
+	</wsdl:message>
+    <wsdl:message name="GetUserListRequest">
+		<wsdl:part name="GetUserListRequest" element="tao:GetUserListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetUserListResponse">
+		<wsdl:part name="GetUserListResponse" element="tao:GetUserListResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetUserInfoRequest">
+		<wsdl:part name="GetUserInfoRequest" element="tao:GetUserInfoRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetUserInfoResponse">
+		<wsdl:part name="GetUserInfoResponse" element="tao:GetUserInfoResponse"/>
+	</wsdl:message>
+    <wsdl:message name="AddIdentityLoginToUserRequest">
+        <wsdl:part name="AddIdentityLoginToUserRequest" element="tao:AddIdentityLoginToUserRequest"/>
+    </wsdl:message>
+   <wsdl:message name="AddIdentityLoginToUserResponse">
+        <wsdl:part name="AddIdentityLoginToUserResponse" element="tao:AddIdentityLoginToUserResponse"/>
+    </wsdl:message>
+    <wsdl:message name="RemoveIdentityLoginFromUserRequest">
+        <wsdl:part name="RemoveIdentityLoginFromUserRequest" element="tao:RemoveIdentityLoginFromUserRequest"/>
+    </wsdl:message>
+   <wsdl:message name="RemoveIdentityLoginFromUserResponse">
+        <wsdl:part name="RemoveIdentityLoginFromUserResponse" element="tao:RemoveIdentityLoginFromUserResponse"/>
+    </wsdl:message>
+    
+    <wsdl:portType name="DACSProvisioningFrontEnd">
+		<wsdl:operation name="addUserList">
+			<wsdl:documentation>Add a list of users in Dictao ACS</wsdl:documentation>
+			<wsdl:input message="tao:AddUserListRequest"/>
+			<wsdl:output message="tao:AddUserListResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="updateUserInfoList">
+			<wsdl:documentation>Modify the user informations in Dictao ACS</wsdl:documentation>
+			<wsdl:input message="tao:UpdateUserInfoListRequest"/>
+			<wsdl:output message="tao:UpdateUserInfoListResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="addOrUpdateUserInfoList">
+			<wsdl:documentation>Modify the user informations in Dictao ACS</wsdl:documentation>
+			<wsdl:input message="tao:AddOrUpdateUserInfoListRequest"/>
+			<wsdl:output message="tao:AddOrUpdateUserInfoListResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="removeUserList">
+			<wsdl:documentation>Remove the users from Dictao ACS</wsdl:documentation>
+			<wsdl:input message="tao:RemoveUserListRequest"/>
+			<wsdl:output message="tao:RemoveUserListResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="addCardsToUser">
+			<wsdl:documentation>Add cards informations to the user in Dictao ACS</wsdl:documentation>
+			<wsdl:input message="tao:AddCardsToUserRequest"/>
+			<wsdl:output message="tao:AddCardsToUserResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="removeCardsFromUser">
+			<wsdl:documentation>Remove cards informations from the user in Dictao ACS</wsdl:documentation>
+			<wsdl:input message="tao:RemoveCardsFromUserRequest"/>
+			<wsdl:output message="tao:RemoveCardsFromUserResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="addAuthPluginInfoToUser">
+			<wsdl:documentation>Add authentification plugin informations to the user in Dictao ACS</wsdl:documentation>
+			<wsdl:input message="tao:AddAuthPluginInfoToUserRequest"/>
+			<wsdl:output message="tao:AddAuthPluginInfoToUserResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="removeAuthPluginInfoFromUser">
+			<wsdl:documentation>Remove authentification plugin informations from the user in Dictao ACS</wsdl:documentation>
+			<wsdl:input message="tao:RemoveAuthPluginInfoFromUserRequest"/>
+			<wsdl:output message="tao:RemoveAuthPluginInfoFromUserResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="addAuthPluginInfoToUserList">
+			<wsdl:documentation>Add authentification plugin informations to the user in Dictao ACS</wsdl:documentation>
+			<wsdl:input message="tao:AddAuthPluginInfoToUserListRequest"/>
+			<wsdl:output message="tao:AddAuthPluginInfoToUserListResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="removeAuthPluginInfoFromUserList">
+			<wsdl:documentation>Remove authentification plugin informations from the user in Dictao ACS</wsdl:documentation>
+			<wsdl:input message="tao:RemoveAuthPluginInfoFromUserListRequest"/>
+			<wsdl:output message="tao:RemoveAuthPluginInfoFromUserListResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="addAliasesToUser">
+			<wsdl:documentation>Add aliases to the user in Dictao ACS</wsdl:documentation>
+			<wsdl:input message="tao:AddAliasesToUserRequest"/>
+			<wsdl:output message="tao:AddAliasesToUserResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="removeAliasesFromUser">
+			<wsdl:documentation>Remove aliases from the user in Dictao ACS</wsdl:documentation>
+			<wsdl:input message="tao:RemoveAliasesFromUserRequest"/>
+			<wsdl:output message="tao:RemoveAliasesFromUserResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="addIdentitiesToUser">
+			<wsdl:documentation>Add identities informations to the user in Dictao ACS</wsdl:documentation>
+			<wsdl:input message="tao:AddIdentitiesToUserRequest"/>
+			<wsdl:output message="tao:AddIdentitiesToUserResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="removeIdentitiesFromUser">
+			<wsdl:documentation>Remove identities informations from the user in Dictao ACS</wsdl:documentation>
+			<wsdl:input message="tao:RemoveIdentitiesFromUserRequest"/>
+			<wsdl:output message="tao:RemoveIdentitiesFromUserResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="addApplications">
+			<wsdl:documentation>Add applications informations in Dictao ACS</wsdl:documentation>
+			<wsdl:input message="tao:AddApplicationsRequest"/>
+			<wsdl:output message="tao:AddApplicationsResponse"/>
+		</wsdl:operation>
+        <wsdl:operation name="getUserList">
+			<wsdl:documentation>Get the user list in Dictao ACS</wsdl:documentation>
+			<wsdl:input message="tao:GetUserListRequest"/>
+			<wsdl:output message="tao:GetUserListResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getUserInfo">
+			<wsdl:documentation>Get the user info in Dictao ACS</wsdl:documentation>
+			<wsdl:input message="tao:GetUserInfoRequest"/>
+			<wsdl:output message="tao:GetUserInfoResponse"/>
+		</wsdl:operation>
+        <wsdl:operation name="addIdentityLoginToUser">
+            <wsdl:documentation>Add an identity alias to a user of Dictao ACS</wsdl:documentation>
+            <wsdl:input message="tao:AddIdentityLoginToUserRequest"/>
+            <wsdl:output message="tao:AddIdentityLoginToUserResponse"/>
+        </wsdl:operation>
+        <wsdl:operation name="removeIdentityLoginFromUser">
+            <wsdl:documentation>Delete an identity alias from a user of Dictao ACS</wsdl:documentation>
+            <wsdl:input message="tao:RemoveIdentityLoginFromUserRequest"/>
+            <wsdl:output message="tao:RemoveIdentityLoginFromUserResponse"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    
+	<wsdl:binding name="DACSProvisioningFrontEndSOAP" type="tao:DACSProvisioningFrontEnd">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="addUserList">
+			<soap:operation soapAction="http://www.dictao.com/DACS/FrontEnd/AddUserList"/>
+			<wsdl:input>
+				<soap:body parts="AddUserListRequest" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body parts="AddUserListResponse" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="updateUserInfoList">
+			<soap:operation soapAction="http://www.dictao.com/DACS/FrontEnd/UpdateUserInfoList"/>
+			<wsdl:input>
+				<soap:body parts="UpdateUserInfoListRequest" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body parts="UpdateUserInfoListResponse" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addOrUpdateUserInfoList">
+			<soap:operation soapAction="http://www.dictao.com/DACS/FrontEnd/UpdateUserInfoList"/>
+			<wsdl:input>
+				<soap:body parts="AddOrUpdateUserInfoListRequest" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body parts="AddOrUpdateUserInfoListResponse" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="removeUserList">
+			<soap:operation soapAction="http://www.dictao.com/DACS/FrontEnd/RemoveUserList"/>
+			<wsdl:input>
+				<soap:body parts="RemoveAuthPluginInfoFromUserRequest" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body parts="RemoveAuthPluginInfoFromUserResponse" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addCardsToUser">
+			<soap:operation soapAction="http://www.dictao.com/DACS/FrontEnd/AddCardsToUser"/>
+			<wsdl:input>
+				<soap:body parts="AddCardsToUserRequest" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body parts="AddCardsToUserResponse" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="removeCardsFromUser">
+			<soap:operation soapAction="http://www.dictao.com/DACS/FrontEnd/RemoveCardsFromUser"/>
+			<wsdl:input>
+				<soap:body parts="RemoveCardsFromUserRequest" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body parts="RemoveCardsFromUserResponse" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addAuthPluginInfoToUser">
+			<soap:operation soapAction="http://www.dictao.com/DACS/FrontEnd/AddAuthPluginInfoToUser"/>
+			<wsdl:input>
+				<soap:body parts="AddAuthPluginInfoToUserRequest" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body parts="AddAuthPluginInfoToUserResponse" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="removeAuthPluginInfoFromUser">
+			<soap:operation soapAction="http://www.dictao.com/DACS/FrontEnd/RemoveAuthPluginInfoFromUser"/>
+			<wsdl:input>
+				<soap:body parts="RemoveAuthPluginInfoFromUserRequest" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body parts="RemoveAuthPluginInfoFromUserResponse" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addAuthPluginInfoToUserList">
+			<soap:operation soapAction="http://www.dictao.com/DACS/FrontEnd/AddAuthPluginInfoToUserList"/>
+			<wsdl:input>
+				<soap:body parts="AddAuthPluginInfoToUserListRequest" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body parts="AddAuthPluginInfoToUserListResponse" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="removeAuthPluginInfoFromUserList">
+			<soap:operation soapAction="http://www.dictao.com/DACS/FrontEnd/RemoveAuthPluginInfoFromUserList"/>
+			<wsdl:input>
+				<soap:body parts="RemoveAuthPluginInfoFromUserListRequest" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body parts="RemoveAuthPluginInfoFromUserListResponse" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addAliasesToUser">
+			<soap:operation soapAction="http://www.dictao.com/DACS/FrontEnd/AddAliasesToUser"/>
+			<wsdl:input>
+				<soap:body parts="AddAliasesToUserRequest" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body parts="AddAliasesToUserResponse" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="removeAliasesFromUser">
+			<soap:operation soapAction="http://www.dictao.com/DACS/FrontEnd/RemoveAliasesToUser"/>
+			<wsdl:input>
+				<soap:body parts="RemoveAliasesFromUserRequest" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body parts="RemoveAliasesFromUserResponse" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addIdentitiesToUser">
+			<soap:operation soapAction="http://www.dictao.com/DACS/FrontEnd/AddIdentitiesToUser"/>
+			<wsdl:input>
+				<soap:body parts="AddIdentitiesToUserRequest" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body parts="AddIdentitiesToUserResponse" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="removeIdentitiesFromUser">
+			<soap:operation soapAction="http://www.dictao.com/DACS/FrontEnd/RemoveIdentitiesFromUser"/>
+			<wsdl:input>
+				<soap:body parts="RemoveIdentitiesFromUserRequest" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body parts="RemoveIdentitiesFromUserResponse" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addApplications">
+			<soap:operation soapAction="http://www.dictao.com/DACS/FrontEnd/AddApplications"/>
+			<wsdl:input>
+				<soap:body parts="AddApplicationsRequest" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body parts="AddApplicationsResponse" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+        <wsdl:operation name="getUserList">
+        <soap:operation soapAction="http://www.dictao.com/DACS/FrontEnd/GetUserList"/>
+			<wsdl:input>
+				<soap:body parts="GetUserListRequest" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body parts="GetUserListResponse" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getUserInfo">
+			<soap:operation soapAction="http://www.dictao.com/DACS/FrontEnd/GetUserInfo"/>
+			<wsdl:input>
+				<soap:body parts="GetUserInfoRequest" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body parts="GetUserInfoResponse" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+        <wsdl:operation name="addIdentityLoginToUser">
+            <soap:operation soapAction="http://www.dictao.com/DACS/FrontEnd/AddIdentityLoginToUser"/>
+            <wsdl:input>
+                <soap:body parts="AddIdentityLoginToUserRequest" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="AddIdentityLoginToUserResponse" use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="removeIdentityLoginFromUser">
+            <soap:operation soapAction="http://www.dictao.com/DACS/FrontEnd/RemoveIdentityLoginFromUser"/>
+            <wsdl:input>
+                <soap:body parts="RemoveIdentityLoginFromUserRequest" use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body parts="RemoveIdentityLoginFromUserResponse" use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+	</wsdl:binding>
+    
+	<wsdl:service name="DACSProvisioningFrontEnd">
+		<wsdl:port name="DACSProvisioningFrontEndSOAP" binding="tao:DACSProvisioningFrontEndSOAP">
+			<soap:address location="https://www.dictao.com/"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>

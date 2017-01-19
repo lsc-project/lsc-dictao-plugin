@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+  	DVS API Disclaimer 
+
+	Copyright (c) 2014, Dictao.
+	
+	All rights reserved.
+	
+  Redistribution and use in source and binary forms, with or without
+  modification, are permitted provided that the following conditions are met:
+   
+  - Redistributions of source code must retain the above copyright notice,
+    this list of conditions and the following disclaimer.
+  - Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
+  - Neither the name of the Dictao nor the names of its contributors may
+    be used to endorse or promote products derived from this software without
+    specific prior written permission.
+	 
+  THIS API IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+  THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+  PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+  CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+  PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS;
+  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+  WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+  OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+  ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+	
+	Additional conditions are available on Dictao Developer website:
+		http://www.dictao.com/developer/api/disclaimer
+	
+ -->
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/"
+	xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/"
+	xmlns:tao="http://www.dictao.com/DVS/FrontEnd/Provisioning" 
+	name="DVSProvisioningFrontEnd" targetNamespace="http://www.dictao.com/DVS/FrontEnd/Provisioning">
+	<wsdl:types>
+		<s:schema xmlns:s="http://www.w3.org/2001/XMLSchema">
+			<s:import namespace="http://www.dictao.com/DVS/FrontEnd/Provisioning" schemaLocation="../xsd/DVSProvisioning.xsd"/>
+		</s:schema>
+	</wsdl:types>
+	<wsdl:message name="AddUserListRequest">
+		<wsdl:part name="AddUserListRequest" element="tao:AddUserListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="AddUserListResponse">
+		<wsdl:part name="AddUserListResponse" element="tao:AddUserListResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetUserListRequest">
+		<wsdl:part name="GetUserListRequest" element="tao:GetUserListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetUserListResponse">
+		<wsdl:part name="GetUserListResponse" element="tao:GetUserListResponse"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteUserInformationListRequest">
+		<wsdl:part name="DeleteUserInformationListRequest" element="tao:DeleteUserInformationListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteUserInformationListResponse">
+		<wsdl:part name="DeleteUserInformationListResponse" element="tao:DeleteUserInformationListResponse"/>
+	</wsdl:message>
+	<wsdl:message name="AddProfileListRequest">
+		<wsdl:part name="AddProfileListRequest" element="tao:AddProfileListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="AddProfileListResponse">
+		<wsdl:part name="AddProfileListResponse" element="tao:AddProfileListResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetProfileListRequest">
+		<wsdl:part name="GetProfileListRequest" element="tao:GetProfileListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetProfileListResponse">
+		<wsdl:part name="GetProfileListResponse" element="tao:GetProfileListResponse"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteProfileListRequest">
+		<wsdl:part name="DeleteProfileListRequest" element="tao:DeleteProfileListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="DeleteProfileListResponse">
+		<wsdl:part name="DeleteProfileListResponse" element="tao:DeleteProfileListResponse"/>
+	</wsdl:message>
+	<wsdl:message name="SynchronizeUserListRequest">
+		<wsdl:part name="SynchronizeUserListRequest" element="tao:SynchronizeUserListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="SynchronizeUserListResponse">
+		<wsdl:part name="SynchronizeUserListResponse" element="tao:SynchronizeUserListResponse"/>
+	</wsdl:message>
+
+	<wsdl:message name="GetDeviceSensitiveValueRequest">
+		<wsdl:part name="GetDeviceSensitiveValueRequest" element="tao:GetDeviceSensitiveValueRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetDeviceSensitiveValueResponse">
+		<wsdl:part name="GetDeviceSensitiveValueResponse" element="tao:GetDeviceSensitiveValueResponse"/>
+	</wsdl:message>
+	<wsdl:message name="LinkDeviceListRequest">
+		<wsdl:part name="LinkDeviceListRequest" element="tao:LinkDeviceListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="LinkDeviceListResponse">
+		<wsdl:part name="LinkDeviceListResponse" element="tao:LinkDeviceListResponse"/>
+	</wsdl:message>
+	<wsdl:message name="SearchTokenKeyListRequest">
+		<wsdl:part name="SearchTokenKeyListRequest" element="tao:SearchTokenKeyListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="SearchTokenKeyListResponse">
+		<wsdl:part name="SearchTokenKeyListResponse" element="tao:SearchTokenKeyListResponse"/>
+	</wsdl:message>
+	<wsdl:message name="GetTokenKeyValueRequest">
+		<wsdl:part name="GetTokenKeyValueRequest" element="tao:GetTokenKeyValueRequest"/>
+	</wsdl:message>
+	<wsdl:message name="GetTokenKeyValueResponse">
+		<wsdl:part name="GetTokenKeyValueResponse" element="tao:GetTokenKeyValueResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="DVSProvisioningFrontEnd">
+		<wsdl:operation name="AddUserList">
+			<wsdl:documentation>Add a list of users in Dictao Validation Server</wsdl:documentation>
+			<wsdl:input message="tao:AddUserListRequest"/>
+			<wsdl:output message="tao:AddUserListResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetUserList">
+			<wsdl:documentation>Add a list of users in Dictao Validation Server</wsdl:documentation>
+			<wsdl:input message="tao:GetUserListRequest"/>
+			<wsdl:output message="tao:GetUserListResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteUserInformationList">
+			<wsdl:documentation>Add a list of users in Dictao Validation Server</wsdl:documentation>
+			<wsdl:input message="tao:DeleteUserInformationListRequest"/>
+			<wsdl:output message="tao:DeleteUserInformationListResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="AddProfileList">
+			<wsdl:documentation>Add a list of users in Dictao Validation Server</wsdl:documentation>
+			<wsdl:input message="tao:AddProfileListRequest"/>
+			<wsdl:output message="tao:AddProfileListResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetProfileList">
+			<wsdl:documentation>Add a list of users in Dictao Validation Server</wsdl:documentation>
+			<wsdl:input message="tao:GetProfileListRequest"/>
+			<wsdl:output message="tao:GetProfileListResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteProfileList">
+			<wsdl:documentation>Add a list of users in Dictao Validation Server</wsdl:documentation>
+			<wsdl:input message="tao:DeleteProfileListRequest"/>
+			<wsdl:output message="tao:DeleteProfileListResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="SynchronizeUserList">
+			<wsdl:documentation>Add a list of users in Dictao Validation Server</wsdl:documentation>
+			<wsdl:input message="tao:SynchronizeUserListRequest"/>
+			<wsdl:output message="tao:SynchronizeUserListResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetDeviceSensitiveValue">
+			<wsdl:documentation>Add a list of users in Dictao Validation Server</wsdl:documentation>
+			<wsdl:input message="tao:GetDeviceSensitiveValueRequest"/>
+			<wsdl:output message="tao:GetDeviceSensitiveValueResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="LinkDeviceList">
+			<wsdl:documentation>Add a list of users in Dictao Validation Server</wsdl:documentation>
+			<wsdl:input message="tao:LinkDeviceListRequest"/>
+			<wsdl:output message="tao:LinkDeviceListResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="SearchTokenKeyList">
+			<wsdl:documentation>Add a list of users in Dictao Validation Server</wsdl:documentation>
+			<wsdl:input message="tao:SearchTokenKeyListRequest"/>
+			<wsdl:output message="tao:SearchTokenKeyListResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="GetTokenKeyValue">
+			<wsdl:documentation>Add a list of users in Dictao Validation Server</wsdl:documentation>
+			<wsdl:input message="tao:GetTokenKeyValueRequest"/>
+			<wsdl:output message="tao:GetTokenKeyValueResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="DVSProvisioningFrontEndSOAP" type="tao:DVSProvisioningFrontEnd">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="AddUserList">
+			<soap:operation soapAction="http://www.dictao.com/DVS/FrontEnd/AddUserList"/>
+			<wsdl:input>
+				<soap:body parts="AddUserListRequest" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body parts="AddUserListResponse" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetUserList">
+			<soap:operation soapAction="http://www.dictao.com/DVS/FrontEnd/GetUserList"/>
+			<wsdl:input>
+				<soap:body parts="GetUserListRequest" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body parts="GetUserListResponse" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteUserInformationList">
+			<soap:operation soapAction="http://www.dictao.com/DVS/FrontEnd/DeleteUserInformationList"/>
+			<wsdl:input>
+				<soap:body parts="DeleteUserInformationListRequest" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body parts="DeleteUserInformationListResponse" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="AddProfileList">
+			<soap:operation soapAction="http://www.dictao.com/DVS/FrontEnd/AddProfileList"/>
+			<wsdl:input>
+				<soap:body parts="AddProfileListRequest" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body parts="AddProfileListResponse" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetProfileList">
+			<soap:operation soapAction="http://www.dictao.com/DVS/FrontEnd/GetProfileList"/>
+			<wsdl:input>
+				<soap:body parts="GetProfileListRequest" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body parts="GetProfileListResponse" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="DeleteProfileList">
+			<soap:operation soapAction="http://www.dictao.com/DVS/FrontEnd/DeleteProfileList"/>
+			<wsdl:input>
+				<soap:body parts="DeleteProfileListRequest" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body parts="DeleteProfileListResponse" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SynchronizeUserList">
+			<soap:operation soapAction="http://www.dictao.com/DVS/FrontEnd/SynchronizeUserList"/>
+			<wsdl:input>
+				<soap:body parts="SynchronizeUserListRequest" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body parts="SynchronizeUserListResponse" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetDeviceSensitiveValue">
+			<soap:operation soapAction="http://www.dictao.com/DVS/FrontEnd/GetDeviceSensitiveValue"/>
+			<wsdl:input>
+				<soap:body parts="GetDeviceSensitiveValueRequest" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body parts="GetDeviceSensitiveValueResponse" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="LinkDeviceList">
+			<soap:operation soapAction="http://www.dictao.com/DVS/FrontEnd/LinkDeviceList"/>
+			<wsdl:input>
+				<soap:body parts="LinkDeviceListRequest" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body parts="LinkDeviceListResponse" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="SearchTokenKeyList">
+			<soap:operation soapAction="http://www.dictao.com/DVS/FrontEnd/SearchTokenKeyList"/>
+			<wsdl:input>
+				<soap:body parts="SearchTokenKeyListRequest" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body parts="SearchTokenKeyListResponse" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="GetTokenKeyValue">
+			<soap:operation soapAction="http://www.dictao.com/DVS/FrontEnd/GetTokenKeyValue"/>
+			<wsdl:input>
+				<soap:body parts="GetTokenKeyValueRequest" use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body parts="GetTokenKeyValueResponse" use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+
+	</wsdl:binding>
+	<wsdl:service name="DVSProvisioningFrontEnd">
+		<wsdl:port name="DVSProvisioningFrontEndSOAP" binding="tao:DVSProvisioningFrontEndSOAP">
+			<soap:address location="https://www.dictao.com/"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
